@@ -18,7 +18,11 @@ namespace MultipleUserLoginForm
         {
             NavigationStore store = new NavigationStore();
              ms = new MatricesViewModel();
-            //ms.Admins.Add(new SubjectViewModel(new Subject() { Login = "admin", Password = "admin",SecurityMark= SecurityMark.TopSecret }));
+            if(ms.Admins.Count < 1)
+            {
+
+                ms.Admins.Add(new SubjectViewModel(new Subject() { Login = "admin", Password = "admin",SecurityMark= SecurityMark.TopSecret }));
+            }
             MatricsStore matricsStore = new MatricsStore() { CurrentMatrics = ms };
             store.CurrentViewModel = new LoginViewModel(store,matricsStore);
             MainWindow = new MainWindow() { DataContext = new MainWindowViewModel(store) };

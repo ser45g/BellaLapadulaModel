@@ -9,7 +9,6 @@
     xmlns:local="clr-namespace:MultipleUserLoginForm.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    
     xmlns:utilities="clr-namespace:MultipleUserLoginForm.Utilities"
     xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
     x:Name="adminView"
@@ -17,7 +16,7 @@
     MinHeight="400"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{StaticResource PinkRadGrad}"
+    Background="{StaticResource BlueRadGrad}"
     mc:Ignorable="d">
 
     <Grid>
@@ -30,15 +29,53 @@
                     <x:Type TypeName="StyleAlias:SecurityMark" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+
+
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5,0" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="Red" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="Background" Value="#D9F" />
+
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="10,3" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Background" Value="{StaticResource controlColor}" />
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignBody1TextBlock}" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="5,0" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignDataGridComboBox}" TargetType="ComboBox">
+                <Setter Property="Margin" Value="10,5" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Background" Value="{StaticResource controlColor}" />
+            </Style>
+            <Style BasedOn="{StaticResource MaterialDesignTabItem}" TargetType="TabItem">
+                <Setter Property="Background" Value="AliceBlue" />
+                
+            </Style>
+                
+
         </Grid.Resources>
 
         <TabControl Margin="5">
 
-            <TabItem GotFocus="TabItem_GotFocus" Header="Access Matrix">
-
-
-
-
+            <TabItem Header="Access Matrix">
                 <Grid x:Name="grdMatrix">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5*" />
@@ -47,6 +84,7 @@
                     <TreeView
                         x:Name="treeView"
                         Grid.Column="0"
+                        Background="{StaticResource controlColor}"
                         ItemTemplate="{DynamicResource DepartmentTemplate}"
                         ItemsSource="{Binding TreeSource}"
                         Style="{x:Null}">
@@ -54,6 +92,7 @@
                             <i:EventTrigger EventName="SelectedItemChanged">
                                 <i:InvokeCommandAction Command="{Binding SetSelectedItemCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeView}" />
                             </i:EventTrigger>
+
                         </i:Interaction.Triggers>
 
                     </TreeView>
@@ -76,6 +115,25 @@
                             <CheckBox Content="Read" IsChecked="{Binding IsReadable}" />
                             <CheckBox Content="Write" IsChecked="{Binding IsWritable}" />
                             <CheckBox Content="Execute" IsChecked="{Binding IsExecutable}" />
+
+                            <TextBlock Margin="10 10 10 5" TextAlignment="Center">
+                                <TextBlock.Inlines>
+                                    <Run Text="The security mark of the " />
+                                    <LineBreak />
+                                    <Run Text="chosen" />
+                                    <Run Text="{Binding IsObjectOrSubject}" Foreground="Red" FontWeight="ExtraBold"/>
+                                    <LineBreak />
+                                    <Run Text=" [ " />
+                                    <Run Text="{Binding ChosenObjectName}" />
+                                    <Run Text=" ]:" />
+                                </TextBlock.Inlines>
+                            </TextBlock>
+                            <ComboBox
+                                IsHitTestVisible="False"
+                                Background="{StaticResource controlColor}"
+                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                                SelectedItem="{Binding ChosenObjectSecurityMark}" />
+
                         </StackPanel>
 
                     </DockPanel>
@@ -86,7 +144,7 @@
                 <Grid>
                     <ListBox
                         VerticalAlignment="Top"
-                        Background="AntiqueWhite"
+                        Background="{StaticResource controlColor}"
                         ItemsSource="{Binding Log}" />
                 </Grid>
             </TabItem>
@@ -100,26 +158,12 @@
                     <DataGrid
                         Grid.Row="0"
                         Margin="5,10"
+                        Background="{StaticResource controlColor}"
                         IsReadOnly="True"
                         ItemsSource="{Binding Subjects}"
                         SelectedItem="{Binding SelectedSubject, Mode=OneWayToSource}" />
                     <Grid Grid.Row="1">
-                        <Grid.Resources>
-                            <Style BasedOn="{StaticResource MaterialDesignBody1TextBlock}" TargetType="TextBlock">
-                                <Setter Property="FontSize" Value="16" />
-                                <Setter Property="Margin" Value="5,0" />
-                            </Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="FontSize" Value="16" />
-                                <Setter Property="Margin" Value="10,5" />
-                                <!--  Setter Property="VerticalAlignment" Value="Stretch"  -->
-                                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                                <Setter Property="Background" Value="White" />
-                                <Setter Property="Foreground" Value="Black" />
-                            </Style>
-                        </Grid.Resources>
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -174,41 +218,27 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             Text="{Binding SubjectLogin, UpdateSourceTrigger=PropertyChanged}"
-                            Validation.ErrorTemplate="{StaticResource Validation}"/>
+                            Validation.ErrorTemplate="{StaticResource Validation}" />
                         <TextBox
                             Grid.Row="4"
                             Grid.Column="1"
-                            Validation.ErrorTemplate="{StaticResource Validation}"
-                            Text="{Binding SubjectPassword, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding SubjectPassword, UpdateSourceTrigger=PropertyChanged}"
+                            Validation.ErrorTemplate="{StaticResource Validation}" />
                         <ComboBox
                             Grid.Row="5"
                             Grid.Column="1"
-                            Margin="10,5"
-                            VerticalAlignment="Top"
-                            VerticalContentAlignment="Top"
-                            Background="White"
-                            FontSize="16"
+                            Background="{StaticResource controlColor}"
                             ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                             SelectedItem="{Binding SubjectSecurityMark}" />
 
                     </Grid>
                     <Grid Grid.Row="2">
                         <UniformGrid Columns="4">
-                            <UniformGrid.Resources>
-                                <Style BasedOn="{StaticResource MaterialDesignPaperDarkButton}" TargetType="Button">
-                                    <Setter Property="Margin" Value="5,5" />
-                                    <Setter Property="Height" Value="30" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-
-                                </Style>
-                            </UniformGrid.Resources>
                             <Button Command="{Binding AddSubjectCommand}">Add</Button>
                             <Button Command="{Binding ChangeSubjectCommand}">Change</Button>
                             <Button Command="{Binding RemoveSubjectCommand}" Content="Remove" />
                             <Button Command="{Binding ClearSubjectCommand}">Clear</Button>
                         </UniformGrid>
-
                     </Grid>
 
                 </Grid>
@@ -224,33 +254,14 @@
                         x:Name="datgrdObjects"
                         Grid.Row="0"
                         Margin="5,10"
+                        Background="{StaticResource controlColor}"
                         IsReadOnly="True"
                         ItemsSource="{Binding Objects}"
                         SelectedValue="{Binding SelectedObject, Mode=OneWayToSource}"
                         SelectionMode="Single"
                         SelectionUnit="FullRow" />
                     <Grid Grid.Row="1">
-                        <Grid.Resources>
-                            <Style BasedOn="{StaticResource MaterialDesignBody1TextBlock}" TargetType="TextBlock">
-                                <Setter Property="FontSize" Value="16" />
-                                <Setter Property="Margin" Value="5,0" />
-                            </Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="FontSize" Value="16" />
-                                <Setter Property="Margin" Value="10,5" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <!--  Setter Property="VerticalAlignment" Value="Stretch"  -->
-                                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                                <Setter Property="Background" Value="White" />
-                                <Setter Property="Foreground" Value="Black" />
 
-
-
-
-                            </Style>
-
-                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -289,38 +300,35 @@
                             x:Name="txtObjectName"
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding ObjectName}" />
+                            Text="{Binding ObjectName, UpdateSourceTrigger=PropertyChanged}"
+                            Validation.ErrorTemplate="{StaticResource Validation}" />
 
-                        <Grid  Grid.Row="2"
-                                    Grid.Column="1">
+                        <Grid Grid.Row="2" Grid.Column="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="*" />
+
                             </Grid.ColumnDefinitions>
-                           
+
                             <TextBox
-                            x:Name="txtObjectPath"
-                            Margin="10 5 0 5"
-                            Grid.Column="0"
-                            Text="{Binding ObjectPath}" />
-                            <Button Content="Browse..." Style="{x:Null}"
-                                    
-                                    Grid.Column="1" Margin="0 5 10 5"
-                                    VerticalAlignment="Center" FontSize="16"
-                                    Command="{Binding BrowseObjectPathCommand}"/>
+                                x:Name="txtObjectPath"
+                                Grid.Column="0"
+                                Margin="10,0,5,0"
+                                Text="{Binding ObjectPath, UpdateSourceTrigger=PropertyChanged}"
+                                Validation.ErrorTemplate="{StaticResource Validation}" />
+                            <Button
+                                Grid.Column="2"
+                                Margin="0,0,10,0"
+                                Command="{Binding BrowseObjectPathCommand}"
+                                Content="Browse..." />
                         </Grid>
 
 
-                        
+
                         <ComboBox
                             x:Name="txtObjectSecurityMark"
                             Grid.Row="3"
                             Grid.Column="1"
-                            Margin="10,8"
-                            VerticalAlignment="Top"
-                            VerticalContentAlignment="Center"
-                            Background="White"
-                            FontSize="16"
                             ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                             SelectedItem="{Binding ObjectSecurityMark}" />
 
@@ -329,15 +337,7 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <UniformGrid Columns="4">
-                            <UniformGrid.Resources>
-                                <Style BasedOn="{StaticResource MaterialDesignPaperDarkButton}" TargetType="Button">
-                                    <Setter Property="Margin" Value="5,5" />
-                                    <Setter Property="Height" Value="30" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
 
-                                </Style>
-                            </UniformGrid.Resources>
                             <Button Command="{Binding AddObjectCommand}">Add</Button>
                             <Button Command="{Binding ChangeObjectCommand}">Change</Button>
                             <Button Command="{Binding RemoveObjectCommand}" Content="Remove" />
@@ -356,8 +356,9 @@
                         Orientation="Horizontal">
                         <GroupBox Margin="30,10" Header="Type of model">
                             <StackPanel Orientation="Vertical">
+
                                 <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource MaterialDesignAccentRadioButton}" TargetType="RadioButton">
+                                    <Style BasedOn="{StaticResource RadioButton}" TargetType="RadioButton">
                                         <Setter Property="Margin" Value="5" />
                                     </Style>
                                 </StackPanel.Resources>
@@ -375,16 +376,17 @@
                                     Content="Combined"
                                     IsChecked="{Binding IsCombinedChecked}" />
 
-                                <!--  <RadioButton  Content="Bella-Lapadula" x:Name="rbBelLap" Command="{Binding TypeModelCommand}" CommandParameter="{Binding ElementName=rbBelLap, Path=Content}"/>
- <RadioButton Content="Biba" x:Name="rbBiba" Command="{Binding TypeModelCommand}" CommandParameter="{Binding ElementName=rbBiba, Path=Content}"/>
- <RadioButton Content="Combined" x:Name="rbCombined" Command="{Binding TypeModelCommand}" CommandParameter="{Binding ElementName=rbCombined, Path=Content}"/>-->
-
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem x:Name="tbLogOut">
+                <i:Interaction.Triggers>
+                    <i:DataTrigger Binding="{Binding ElementName=tbLogOut, Path=IsSelected}" Value="True">
+                        <i:InvokeCommandAction Command="{Binding NavigateLoginCommand}" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
                 <TabItem.Header>
                     <Button
                         x:Name="btnLogOut"
@@ -394,14 +396,14 @@
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Command="{Binding NavigateLoginCommand}"
-                        Foreground="DarkGray"
+                        Foreground="{StaticResource DarkColor}"
                         Style="{StaticResource MaterialDesignFloatingActionButton}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="-10,-5" Orientation="Horizontal">
                             <materialDesign:PackIcon
-                                Width="25"
+                                Width="20"
                                 Height="25"
                                 VerticalAlignment="Center"
-                                Kind="LocationExit">
+                                Kind="ExitToApp">
                                 <materialDesign:PackIcon.RenderTransform>
                                     <RotateTransform Angle="180" CenterX="12.5" CenterY="12.5" />
                                 </materialDesign:PackIcon.RenderTransform>
@@ -410,6 +412,8 @@
                                 Width="65"
                                 Margin="5"
                                 VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="DemiBold"
                                 Text="Log out" />
                         </StackPanel>
                     </Button>

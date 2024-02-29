@@ -25,10 +25,101 @@ namespace MultipleUserLoginForm.ViewModel
     public class AdminViewModel:ViewModelBase, INotifyDataErrorInfo
     {
         private readonly MatricsStore _matricsStore;
+        private OpenFileDialog _openFileDialog=new OpenFileDialog();
 
-		//**********************************************************************
+        public AdminViewModel(NavigationStore ns, MatricsStore ms) {
 
-		private ObjectViewModel _selectedObject;
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
+				new NavigationService<LoginViewModel>(ns, () => new LoginViewModel(ns,_matricsStore)));
+
+			_matricsStore= ms;
+
+            subjects = _matricsStore.CurrentMatrics.Subjects;
+            objects = _matricsStore.CurrentMatrics.Objects;
+
+            _log = _matricsStore.CurrentMatrics.Log;
+
+            //Rights = new ObservableCollection<SecurityRightViewModel>(_matricsStore.CurrentMatrics.Rights);
+            Objects.CollectionChanged += ObjectsChanged ;
+            Subjects.CollectionChanged += SubjectsChanged;
+
+
+			AddObjectCommand=new RelayCommand((obj) => {
+                ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
+
+                ValidateStringIsNullOrEmpty(o.Name,nameof(ObjectName),_errorsObjectViewModel);
+                ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
+                if (CanCreateObj)
+                {
+                    LogObject(CommandAction.Add, o);
+			        Objects.Add(o);
+                }
+               
+            },(obj)=>CanCreateObj);
+			RemoveObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Remove, SelectedObject); Objects.Remove(SelectedObject); });
+			ClearObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Clear, null); Objects.Clear(); });
+            ChangeObjectCommand = new RelayCommand((obj) => { RemoveObjectCommand.Execute(obj); AddObjectCommand.Execute(obj); });			
+            
+			//*********************************************************************************
+			AddSubjectCommand=new RelayCommand((obj) => {
+                SubjectViewModel s = new SubjectViewModel(new Subject()
+                {
+                    Login = SubjectLogin,
+                    Password = SubjectPassword,
+                    SecurityMark = SubjectSecurityMark
+                })
+                {Name=SubjectName,SecondName=SubjectSecondName };
+                ValidateSubjectLogin(s.Login);
+                ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword),_errorsViewModel);
+                if (CanCreate)
+                {   
+                    LogSubject(CommandAction.Add, s);
+                    Subjects.Add(s);
+                }
+            },(obj)=>CanCreate);
+			RemoveSubjectCommand=new RelayCommand((obj)=> { LogSubject(CommandAction.Remove, SelectedSubject); Subjects.Remove(SelectedSubject); });
+			ClearSubjectCommand=new RelayCommand((obj) => { LogSubject(CommandAction.Clear, null); Subjects.Clear(); });
+			ChangeSubjectCommand = new RelayCommand((obj) => {
+
+                _errorsViewModel.ClearErrors(nameof(SubjectLogin));
+                SubjectViewModel s = new SubjectViewModel(new Subject()
+                {
+                    Login = SubjectLogin,
+                    Password = SubjectPassword,
+                    SecurityMark = SubjectSecurityMark
+                })
+                { Name = SubjectName, SecondName = SubjectSecondName };
+                ValidateStringIsNullOrEmpty (s.Login, nameof(SubjectLogin),_errorsViewModel);
+                ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword),_errorsViewModel);
+                SubjectViewModel old = Subjects.FirstOrDefault((obj) => { return obj.Login == SubjectLogin; });
+                if (CanCreate)
+                {
+                    LogSubject(CommandAction.Remove, old);
+                    Subjects.Remove(old);
+                    LogSubject(CommandAction.Add, s);
+                    Subjects.Add(s);
+
+                }
+            });
+
+            SetSelectedItemCommand = new RelayCommand((obj) => { TreeViewSelectedItem = obj; });
+
+            BrowseObjectPathCommand = new RelayCommand((obj) =>
+            {
+                if (_openFileDialog.ShowDialog() == true)
+                {
+                    ObjectPath = _openFileDialog.FileName;
+                }
+            });
+
+            _errorsViewModel = new ErrorsViewModel();
+            _errorsObjectViewModel = new ErrorsViewModel();
+            _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
+            _errorsObjectViewModel.ErrorsChanged += ErrorsObjectViewModel_Errorschanged;
+        }
+
+        #region Object Properties: Set of Objects
+        private ObjectViewModel _selectedObject;
 		public ObjectViewModel SelectedObject
 		{
 			get { return _selectedObject; }
@@ -49,14 +140,14 @@ namespace MultipleUserLoginForm.ViewModel
 
 		private string _objectName;
 		public string ObjectName { get { return _objectName; } set {
-                _errorsViewModel.ClearErrors(nameof(ObjectName));
+                _errorsObjectViewModel.ClearErrors(nameof(ObjectName));
 				_objectName = value;
 				OnPropertyChanged(nameof(ObjectName));
 			} }
 
         private string _objectPath;
         public string ObjectPath { get { return _objectPath; } set { 
-                _errorsViewModel.ClearErrors(nameof(ObjectPath));
+                _errorsObjectViewModel.ClearErrors(nameof(ObjectPath));
                 
                 _objectPath = value;
 				OnPropertyChanged(nameof(ObjectPath));
@@ -67,9 +158,9 @@ namespace MultipleUserLoginForm.ViewModel
 				_objectSecurityMark = value;
 				OnPropertyChanged(nameof(ObjectSecurityMark));
 			} }
+        #endregion
 
-        //*********************************************************************
-
+        #region Subject Properties: Set of Subjects
         private SubjectViewModel _selectedSubject;
         public SubjectViewModel SelectedSubject
         {
@@ -143,13 +234,10 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(SubjectSecurityMark));
             }
         }
+        #endregion
 
-		//*****************************************************************************
         
-        public ObservableCollection<SecurityRightViewModel> Rights { get;  }
 
-       
-        
 		private ObservableCollection<SubjectViewModel> subjects ;
 		public ObservableCollection<SubjectViewModel> Subjects {  get {
 				return subjects;
@@ -159,148 +247,21 @@ namespace MultipleUserLoginForm.ViewModel
 					objects; } }
 
 		public ICommand AddObjectCommand { get; }
-		public ICommand AddSubjectCommand { get; }
 		public ICommand ChangeObjectCommand { get; }
-		public ICommand ChangeSubjectCommand { get; }
 		public ICommand RemoveObjectCommand { get; }
+		public ICommand ClearObjectCommand { get; }
+
+		public ICommand AddSubjectCommand { get; }
+		public ICommand ChangeSubjectCommand { get; }
 		public ICommand RemoveSubjectCommand { get; }
 		public ICommand ClearSubjectCommand { get; }
-		public ICommand ClearObjectCommand { get; }
 
 		public ICommand NavigateLoginCommand { get; }
 
-        public AdminViewModel(NavigationStore ns, MatricsStore ms) {
+        public ICommand BrowseObjectPathCommand {  get; }
 
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
-				new NavigationService<LoginViewModel>(ns, () => new LoginViewModel(ns,_matricsStore)));
-
-			_matricsStore= ms;
-
-            subjects = _matricsStore.CurrentMatrics.Subjects;
-            objects = _matricsStore.CurrentMatrics.Objects;
-
-            _log = _matricsStore.CurrentMatrics.Log;
-
-            Rights = new ObservableCollection<SecurityRightViewModel>(_matricsStore.CurrentMatrics.Rights);
-            Objects.CollectionChanged += ObjectsChanged ;
-            Subjects.CollectionChanged += SubjectsChanged;
-
-
-			AddObjectCommand=new RelayCommand((obj) => {
-                ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
-
-                ValidateObjectName(o.Name);
-                ValidateObjectPath(o.Path);
-                if (CanCreateObj)
-                {
-                    LogObject(CommandAction.Add, o);
-			        Objects.Add(o);
-
-                }
-               
-            },(obj)=>CanCreate);
-			RemoveObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Remove, SelectedObject); Objects.Remove(SelectedObject); });
-			ClearObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Clear, null); Objects.Clear(); });
-			ChangeObjectCommand = new RelayCommand((obj) => { RemoveObjectCommand.Execute(obj); AddObjectCommand.Execute(obj); });
-			
-			AddSubjectCommand=new RelayCommand((obj) => {
-                SubjectViewModel s = new SubjectViewModel(new Subject()
-                {
-                    Login = SubjectLogin,
-                    Password = SubjectPassword,
-                    SecurityMark = SubjectSecurityMark
-                })
-                {Name=SubjectName,SecondName=SubjectSecondName };
-                ValidateSubjectLogin(s.Login);
-                ValidateSubjectPassword(s.Password);
-                if (CanCreate)
-                {   
-                    LogSubject(CommandAction.Add, s);
-                    Subjects.Add(s);
-
-                }
-                
-   
-            },(obj)=>CanCreate);
-			RemoveSubjectCommand=new RelayCommand((obj)=> { LogSubject(CommandAction.Remove, SelectedSubject); Subjects.Remove(SelectedSubject); });
-			ClearSubjectCommand=new RelayCommand((obj) => { LogSubject(CommandAction.Clear, null); Subjects.Clear(); });
-			ChangeSubjectCommand = new RelayCommand((obj) => { RemoveSubjectCommand?.Execute(obj); AddSubjectCommand?.Execute(obj); });
-
-            SetSelectedItemCommand = new RelayCommand((obj) => { TreeViewSelectedItem = obj; });
-
-            BrowseObjectPathCommand = new RelayCommand((obj) =>
-            {
-                if (_openFileDialog.ShowDialog() == true)
-                {
-                    ObjectPath = _openFileDialog.FileName;
-                }
-            });
-
-            _errorsViewModel = new ErrorsViewModel();
-            _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
-
-        }
-
-        private void ValidateSubjectLogin(string login)
-        {
-
-            var i = _matricsStore.CurrentMatrics.Subjects.FirstOrDefault(x => x.Login == login);
-            if ((string.IsNullOrEmpty(login))|| 
-                ( i!= null
-               ))
-            {
-                _errorsViewModel.AddError(nameof(SubjectLogin), "This login is not correct/available");
-            }
-            else{
-
-            }
-        }
-
-        private void ValidateSubjectPassword(string pwd)
-        {
-
-            if(string.IsNullOrEmpty(pwd))
-            {
-                _errorsViewModel.AddError(nameof(SubjectPassword), "The password field can't be empty");
-            }
-            
-        }
-
-
-        private void ValidateObjectName(string name)
-        {
-
-            if (string.IsNullOrEmpty(name))
-            {
-                _errorsViewModel.AddError(nameof(ObjectName), "The name field can't be empty");
-            }
-
-        }
-        private void ValidateObjectPath(string path)
-        {
-
-            if (string.IsNullOrEmpty(path))
-            {
-                _errorsViewModel.AddError(nameof(ObjectPath), "The path field can't be empty");
-            }
-
-        }
-
-
-        private void SubjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(TreeSource));
-        }
-
-        private void ObjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(TreeSource));
-        }
-
-        //********************************************************************
-
-
-
+      
+        #region Log
         private ObservableCollection<string> _log;
         public ObservableCollection<string> Log
         {
@@ -312,8 +273,8 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
 
-
         private enum CommandAction { Add, Remove,Change,Clear }
+
         void LogObject(CommandAction comAct, ObjectViewModel obj)
         {
             string str = "";
@@ -361,7 +322,7 @@ namespace MultipleUserLoginForm.ViewModel
             LogWithDataAndOrder(str);
 
         }
-        //*****************************************************************************
+
         void LogWithDataAndOrder(string str)
         {
             if (str != "")
@@ -369,19 +330,9 @@ namespace MultipleUserLoginForm.ViewModel
                 Log.Insert(0, $"{Log.Count}){str} at {DateTime.Now}");
             }
         }
-        private readonly ErrorsViewModel _errorsViewModel;
+        #endregion
 
-      
-        public IEnumerable GetErrors(string? propertyName)
-        {
-            return
-            _errorsViewModel.GetErrors(propertyName);
-        }
-        private void ErrorsViewModel_Errorschanged(object? sender, DataErrorsChangedEventArgs e)
-        {
-            ErrorsChanged?.Invoke(this, e);
-            OnPropertyChanged(nameof(CanCreate));
-        }
+        #region Type of Model: Settings
         public bool IsBelLapChecked { get { return _matricsStore.
                     CurrentMatrics.CurrentModelType == MatricesViewModel.ModelType.
                     BellaLapadula; }
@@ -423,23 +374,20 @@ namespace MultipleUserLoginForm.ViewModel
                 }
             } 
         }
+        #endregion
 
+        #region TreeView: Access Matrix
 
         private ObservableCollection<SubjectTreeViewModel> _treeSource;
-
         public ObservableCollection<SubjectTreeViewModel> TreeSource
         {
             get
             {
-                return new ObservableCollection<SubjectTreeViewModel>(from s in Subjects
-                                                                      select
-                                                                         new SubjectTreeViewModel(s, _matricsStore.CurrentMatrics));
+                return new ObservableCollection<SubjectTreeViewModel>(from s in Subjects select
+                         new SubjectTreeViewModel(s, _matricsStore.CurrentMatrics));
             }
            
         }
-        public ObservableCollection<SubjectViewModel> Rows => _matricsStore.CurrentMatrics.Subjects;
-        public ObservableCollection<SecurityRightViewModel> Columns => new ObservableCollection<SecurityRightViewModel>( _matricsStore.CurrentMatrics.Rights);
-        public ICommand AccessMatrixGotFocusCommand { get; }
 
         private object _treeViewSelectedItem;
         public object TreeViewSelectedItem
@@ -451,6 +399,19 @@ namespace MultipleUserLoginForm.ViewModel
                     IsReadable=s.IsReadable;
                     IsWritable=s.IsWritable;
                     IsExecutable=s.IsExecutable;
+
+                    ChosenObjectName = s.Object.Name;
+                    ChosenObjectSecurityMark = s.Object.SecurityMark;
+                    IsObjectOrSubject = "OBJECT";
+                }else if(value is SubjectTreeViewModel subj)
+                {
+                    IsReadable=false;
+                    IsWritable=false;
+                    IsExecutable=false;
+
+                    ChosenObjectName = subj.Subject.Name;
+                    ChosenObjectSecurityMark = subj.Subject.SecurityMark;
+                    IsObjectOrSubject = "SUBJECT";
                 }
                 OnPropertyChanged(nameof(TreeViewSelectedItem));
             }
@@ -479,16 +440,110 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(IsExecutable));
             }
         }
+        private string _chosenObjectName;
+        public string ChosenObjectName
+        {
+            get { return _chosenObjectName; }
+            set { _chosenObjectName = value;
+                OnPropertyChanged(nameof(ChosenObjectName));
+            }
+        }
+        private SecurityMark _chosenObjectSecurityMark;
+        public SecurityMark ChosenObjectSecurityMark
+        {
+            get { return _chosenObjectSecurityMark; }
+            set { _chosenObjectSecurityMark = value;
+                OnPropertyChanged(nameof(ChosenObjectSecurityMark));
+            }
+        }
+        private string _isObjectOrSubject;
+        public string IsObjectOrSubject
+        {
+            get { return _isObjectOrSubject; }
+            set
+            {
+                _isObjectOrSubject = value;
+                OnPropertyChanged(nameof(IsObjectOrSubject));
+            }
+        }
 
-        public ICommand BrowseObjectPathCommand {  get; }
 
-        public bool HasErrors => _errorsViewModel.HasErrors;
-        public bool CanCreate => !HasErrors;
-        public bool CanCreateObj => !HasErrors;
 
-        private OpenFileDialog _openFileDialog=new OpenFileDialog();
+        private void SubjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(TreeSource));
+        }
+
+        private void ObjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(TreeSource));
+        }
+        #endregion
+      
+        #region Validation
+
+        private void ValidateSubjectLogin(string login)
+        {
+            var i = _matricsStore.CurrentMatrics.Subjects.FirstOrDefault(x => x.Login == login);
+            if ((string.IsNullOrEmpty(login)) || (i != null))
+            {
+                _errorsViewModel.AddError(nameof(SubjectLogin), "This login is not correct/available");
+            }
+        }
+
+
+
+        private void ValidateStringIsNullOrEmpty(string str, string propName, ErrorsViewModel _errors)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                _errors.AddError(propName, $"The {propName} field can't be empty");
+            }
+
+        }
+
+
+
+        private readonly ErrorsViewModel _errorsViewModel;
+        private readonly ErrorsViewModel _errorsObjectViewModel;
+
+
+        public IEnumerable GetErrors(string? propertyName)
+        {
+
+            var subjErrors = _errorsViewModel.GetErrors(propertyName);
+            var objErrors = _errorsObjectViewModel.GetErrors(propertyName);
+            List<object> erros = new List<object>();
+            if (subjErrors != null)
+            {
+                foreach (var error in subjErrors) { erros.Add(error); }
+
+            }
+            if (objErrors != null)
+            {
+                foreach (var error in objErrors) { erros.Add(error); }
+            }
+            return erros;
+        }
+
+        private void ErrorsViewModel_Errorschanged(object? sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+            OnPropertyChanged(nameof(CanCreate));
+        }
+        private void ErrorsObjectViewModel_Errorschanged(object? sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+            OnPropertyChanged(nameof(CanCreateObj));
+        }
+        public bool HasErrors => _errorsViewModel.HasErrors||_errorsObjectViewModel.HasErrors;
+
+        public bool CanCreate => !_errorsViewModel.HasErrors;
+        public bool CanCreateObj => !_errorsObjectViewModel.HasErrors;
+
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        #endregion
     }
 
     public class SubjectTreeViewModel

@@ -26,8 +26,8 @@ namespace MultipleUserLoginForm.Model
         }
         private List<Subject> subjects;
         private List<Object> objects;
-        public List<Subject> Subjects { get { return subjects; } private set { subjects = value; UpdateRights(); } }
-        public List<Object> Objects { get { return objects; } private set { objects = value; UpdateRights(); } }
+        public List<Subject> Subjects { get { return subjects; } private set { subjects = value;  } }
+        public List<Object> Objects { get { return objects; } private set { objects = value; } }
 
         public List<SecurityRight> Rights { get; private set; }
         public Subject GetSubject(string login)
@@ -50,47 +50,32 @@ namespace MultipleUserLoginForm.Model
             }
             return l;
         }
-        void UpdateRights() {
-            List<SecurityRight> securityRights = new List<SecurityRight>(Subjects.Count * Objects.Count);
-            int k = 0;
-            for(int i = 0; i < Subjects.Count; ++i)
-            {
-                for(int j=0; j < Objects.Count; ++j)
-                {
-                    securityRights[k++] = GetRight(Subjects[i], Objects[j]);
-                }
-            }
-            Rights = securityRights;
-
-            //return (from o in Objects where o.SecurityMark <= s.SecurityMark 
-            //        select new SecurityRight() {Object=o,Subject=s,Right=Right.All }).ToList<SecurityRight>(); 
-        }
+       
         public void AddSubject(Subject subject)
         {
             Subjects.Add(subject);
-            UpdateRights();
+           
         }
         public void RemoveSubject(Subject subject)
         {
             Subjects.Remove(subject);
-            UpdateRights();
+           
         }
         public void AddObject(Object obj) {
             Objects.Add(obj); 
-            UpdateRights();
+            
         }
         public void RemoveObject(Object obj)
         {
             Objects.Remove(obj);
-            UpdateRights();
+           
         }
         SecurityRight GetRight(Subject s,Object o)
         {
             SecurityRight right= null;
             switch (CurrentModelType)
             {
-                case ModelType.BellaLapadula: right= ImplyBellaLapaduleModel(s,o);
-                    break;
+                case ModelType.BellaLapadula: right= ImplyBellaLapaduleModel(s,o); break;
                 case ModelType.Biba: right = ImplyBibaModel(s,o); break;
                 case ModelType.Combined: right = ImplyCombinedModel(s,o); break;
 

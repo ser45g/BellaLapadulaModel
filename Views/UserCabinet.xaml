@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="{StaticResource PinkRadGrad}"
+             Background="{StaticResource BlueRadGrad}"
              >
 
     <UserControl.Resources>
@@ -17,14 +17,15 @@
     </UserControl.Resources>
     <Grid Margin="10 5" >
         <DockPanel LastChildFill="True" >
-            <Grid DockPanel.Dock="Top">
+            <Grid DockPanel.Dock="Top" Margin="-10 -5">
                 <Button HorizontalAlignment="Right" Command="{Binding NavigateLoginCommand}">
                     <materialDesign:PackIcon Kind="EmergencyExit" 
-                                         Height="25" Width="25"/>
+                                         Height="25" Width="25"
+                                             />
                     
                 </Button>
-                <TextBlock  VerticalAlignment="Center"
-                           HorizontalAlignment="Center" FontSize="22"
+                <TextBlock  VerticalAlignment="Center" Foreground="{StaticResource DarkColor}"
+                           HorizontalAlignment="Center" FontSize="18"
                             TextAlignment="Center">
                     <TextBlock.Inlines>
                         <Run Text="All available objects for the user:"/>
@@ -35,13 +36,13 @@
                     </TextBlock.Inlines>
                 </TextBlock>
             </Grid>
-            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0 15 0 5"
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible"
                      ItemsSource="{Binding AvailableObjects}"
                      SelectedItem="{Binding SelectedItem}" >
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <GroupBox Header="{Binding Object.Name}">
+                        <GroupBox Header="{Binding Object.Name}" >
                             <StackPanel>
                                 <StackPanel.Resources>
                                     <Style TargetType="TextBlock">

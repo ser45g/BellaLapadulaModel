@@ -32,6 +32,7 @@ namespace MultipleUserLoginForm.Views
         }
 
         
+
         //void SetAccessMatrics()
         //{
         //    IEnumerable<string> source = (IEnumerable<string>)datgrdAccessMatrice.ItemsSource;

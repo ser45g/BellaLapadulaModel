@@ -69,9 +69,10 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 try
                 {
-                    if (!Directory.Exists(SelectedItem.Object.Path))
+                    bool b = File.Exists(SelectedItem.Object.Path);
+                    if (!b)
                     {
-                        MessageBox.Show("Such object doesn't exist");
+                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -88,22 +89,22 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Cannot read this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Cannot write to this file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
                 MessageBoxResult res = MessageBox.Show("The original file will be rewritten. Are you sure you want to continue?",
-                    SelectedItem.Object.Name, MessageBoxButton.YesNo);
+                    SelectedItem.Object.Name, MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if (res == MessageBoxResult.No)
                 {
                     return;
                 }
                 try
                 {
-                    if (!Directory.Exists(SelectedItem.Object.Path))
+                    if (!File.Exists(SelectedItem.Object.Path))
                     {
-                        MessageBox.Show("Such object doesn't exist");
+                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -141,7 +142,7 @@ namespace MultipleUserLoginForm.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Cannot read this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Cannot execute this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

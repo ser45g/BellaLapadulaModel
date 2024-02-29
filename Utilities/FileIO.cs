@@ -21,8 +21,12 @@ namespace MultipleUserLoginForm.Utilities
             bool fileExists = File.Exists(Path);
             if (!fileExists)
             {
-                File.CreateText(Path).Dispose();
-                return default(T);
+                //File.CreateText(Path).Dispose();
+                //return default(T);
+                using(var stream=File.Create(Path))
+                {
+
+                }
             }
             using (var reader = File.OpenText(Path))
             {
@@ -40,4 +44,7 @@ namespace MultipleUserLoginForm.Utilities
             }
         }
     }
+
+
+    
 }
