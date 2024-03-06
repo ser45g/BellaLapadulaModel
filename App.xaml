@@ -293,15 +293,17 @@
                                     KeyboardNavigation.DirectionalNavigation="Contained"
                                     KeyboardNavigation.TabIndex="2"
                                     KeyboardNavigation.TabNavigation="Local">
-                                    <Border.Background>
+                                    <!-- <Border.Background>
                                         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                           
                                             <GradientStop Offset="0" Color="{DynamicResource ContentAreaColorLight}" />
                                             <GradientStop Offset="1" Color="{DynamicResource ContentAreaColorDark}" />
                                         </LinearGradientBrush>
                                     </Border.Background>
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
-                                    </Border.BorderBrush>
+                                    </Border.BorderBrush>-->
+                                    
                                     <ContentPresenter
                                         x:Name="PART_SelectedContentHost"
                                         Margin="4"

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -19,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Documents;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -111,6 +113,7 @@ namespace MultipleUserLoginForm.ViewModel
                     ObjectPath = _openFileDialog.FileName;
                 }
             });
+            
 
             _errorsViewModel = new ErrorsViewModel();
             _errorsObjectViewModel = new ErrorsViewModel();
@@ -543,6 +546,75 @@ namespace MultipleUserLoginForm.ViewModel
 
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        #endregion
+
+        #region Information
+        public ICommand LoadInfo { get;}
+
+        /*private void LoadInfoWord()
+        {
+            OpenFileDialog ofd = new OpenFileDialog() { ValidateNames = true, Multiselect = false, Filter = "Word Doucment|*.docx|Word 97 - 2003 Document|*.doc"};
+            
+                if (ofd.ShowDialog() == true)
+                {
+                    object readOnly = true;
+                    object visible = true;
+                    object save = false;
+                    object fileName = ofd.FileName;
+                    object missing = Type.Missing;
+                    object newTemplate = false;
+                    object docType = 0;
+                    Microsoft.Office.Interop.Word._Document oDoc = null;
+                    Microsoft.Office.Interop.Word._Application oWord = new Microsoft.Office.Interop.Word.Application() { Visible = false };
+                    oDoc = oWord.Documents.Open(
+                            ref fileName, ref missing, ref readOnly, ref missing,
+                            ref missing, ref missing, ref missing, ref missing,
+                            ref missing, ref missing, ref missing, ref visible,
+                            ref missing, ref missing, ref missing, ref missing);
+                    oDoc.ActiveWindow.Selection.WholeStory();
+                    oDoc.ActiveWindow.Selection.Copy();
+                    IDataObject data = Clipboard.GetDataObject();
+                    Rtf = data.GetData(DataFormats.Rtf).ToString();
+                    oWord.Quit(ref missing, ref missing, ref missing);
+                }
+            
+        }*/
+
+       /* private void OnOpenFileClicked()
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                DefaultExt = ".docx",
+                Filter = "Word documents (.docx)|*.docx"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+                this.ReadDocx(openFileDialog.FileName);
+        }
+
+        private void ReadDocx(string path)
+        {
+            using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                var flowDocumentConverter = new DocxToFlowDocumentConverter(stream);
+                flowDocumentConverter.Read();
+                InfoDoc = flowDocumentConverter.Document;
+                //this.Title = Path.GetFileName(path);
+            }
+        }*/
+
+        public FlowDocument InfoDoc { get; set; }
+
+        private string _rtf;
+
+        public string Rtf
+        {
+            get { return _rtf; }
+            set { _rtf = value;
+                OnPropertyChanged(nameof(Rtf));
+            }
+        }
+
         #endregion
     }
 

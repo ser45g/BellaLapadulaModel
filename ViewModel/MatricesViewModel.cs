@@ -73,7 +73,8 @@ namespace MultipleUserLoginForm.ViewModel
         private FileIO<List<SubjectViewModel>> _fileIOSubj;
         private FileIO<List<SubjectViewModel>> _fileIOAdmins;
         private FileIO<List<ObjectViewModel>> _fileIOObj;
-        private FileStrings _fileIOLog; 
+        private FileStrings _fileIOLog;
+        private readonly int _logMaxLines = 100;
 
         public SubjectViewModel GetSubject(string login)
         {
@@ -207,7 +208,7 @@ namespace MultipleUserLoginForm.ViewModel
                     _fileIOAdmins.SaveData(Admins);
                     _fileIOObj.SaveData(objects.ToList());
                     _fileIOSubj.SaveData(subjects.ToList()); 
-                    _fileIOLog.SaveData(Log.ToList());
+                    _fileIOLog.SaveData(Log.Take(_logMaxLines));
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer

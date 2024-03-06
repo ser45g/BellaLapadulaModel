@@ -42,8 +42,9 @@ namespace MultipleUserLoginForm.Utilities
         {
             using (StreamWriter sw = new StreamWriter(Path))
             {
-
-                foreach (var item in list) { sw.WriteLine(item); }
+                foreach (var item in list) {
+                    sw.WriteLine(item); 
+                }
             }
         }
     }

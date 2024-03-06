@@ -11,11 +11,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utilities="clr-namespace:MultipleUserLoginForm.Utilities"
     xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
+    
+    xmlns:moon="clr-namespace:System.Data.MoonPdf.Wpf;assembly=NSystem.Data.MoonPdf.Wpf"
     x:Name="adminView"
-    MinWidth="600"
     MinHeight="400"
+    MinWidth="700"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="900"
     Background="{StaticResource BlueRadGrad}"
     mc:Ignorable="d">
 
@@ -53,6 +55,19 @@
                 <Setter Property="Foreground" Value="Black" />
             </Style>
 
+            <Style
+                x:Key="TabItemHeaderTextBlockStyle"
+                BasedOn="{StaticResource MaterialDesignBody1TextBlock}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14" />
+
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
+                <Setter Property="FontWeight" Value="DemiBold" />
+
+            </Style>
+
             <Style BasedOn="{StaticResource MaterialDesignBody1TextBlock}" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="Margin" Value="5,0" />
@@ -67,15 +82,20 @@
             </Style>
             <Style BasedOn="{StaticResource MaterialDesignTabItem}" TargetType="TabItem">
                 <Setter Property="Background" Value="AliceBlue" />
-                
+
+
+
             </Style>
-                
+
 
         </Grid.Resources>
 
-        <TabControl Margin="5">
+        <TabControl Margin="5" Style="{StaticResource MaterialDesignTabControl}">
 
-            <TabItem Header="Access Matrix">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Access Matrix" />
+                </TabItem.Header>
                 <Grid x:Name="grdMatrix">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5*" />
@@ -105,7 +125,7 @@
                             </TextBlock.Inlines>
                         </TextBlock>
 
-                        <StackPanel Margin="10">
+                        <StackPanel Margin="5">
                             <StackPanel.Resources>
                                 <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
                                     <Setter Property="IsHitTestVisible" Value="False" />
@@ -116,12 +136,15 @@
                             <CheckBox Content="Write" IsChecked="{Binding IsWritable}" />
                             <CheckBox Content="Execute" IsChecked="{Binding IsExecutable}" />
 
-                            <TextBlock Margin="10 10 10 5" TextAlignment="Center">
+                            <TextBlock Margin="10,10,10,5" TextAlignment="Center">
                                 <TextBlock.Inlines>
                                     <Run Text="The security mark of the " />
                                     <LineBreak />
                                     <Run Text="chosen" />
-                                    <Run Text="{Binding IsObjectOrSubject}" Foreground="Red" FontWeight="ExtraBold"/>
+                                    <Run
+                                        FontWeight="ExtraBold"
+                                        Foreground="Red"
+                                        Text="{Binding IsObjectOrSubject}" />
                                     <LineBreak />
                                     <Run Text=" [ " />
                                     <Run Text="{Binding ChosenObjectName}" />
@@ -129,8 +152,9 @@
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <ComboBox
-                                IsHitTestVisible="False"
+                                Margin="3"
                                 Background="{StaticResource controlColor}"
+                                IsHitTestVisible="False"
                                 ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                 SelectedItem="{Binding ChosenObjectSecurityMark}" />
 
@@ -140,7 +164,10 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Log">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Log" />
+                </TabItem.Header>
                 <Grid>
                     <ListBox
                         VerticalAlignment="Top"
@@ -148,7 +175,10 @@
                         ItemsSource="{Binding Log}" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Set of Subjects">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Set of Subjects" />
+                </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5.5*" />
@@ -243,7 +273,10 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Set of Objects">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Set of Objects" />
+                </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="6*" />
@@ -348,7 +381,10 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Settings">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Settings" />
+                </TabItem.Header>
                 <Grid Margin="10">
                     <StackPanel
                         HorizontalAlignment="Left"
@@ -381,6 +417,38 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Border
+                        VerticalAlignment="Center"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Style="{x:Null}">
+                        <StackPanel Margin="-10" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="25"
+                                Height="25"
+                                VerticalAlignment="Center"
+                                Kind="AboutOutline" />
+                            <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Information" />
+                        </StackPanel>
+                    </Border>
+                </TabItem.Header>
+
+                <DockPanel>
+                    <Button DockPanel.Dock="Bottom" Content="Load info" Click="Button_Click"
+                           />
+                    
+                    <moon:MoonPdfPanel ViewType="SinglePage"
+                                       x:Name="moonReader"
+                                       Background="White"
+                                       PageRowDisplay="ContinuousPageRows"
+                                       AllowDrop="True"
+                                       
+                                       />
+
+                </DockPanel>
+            </TabItem>
             <TabItem x:Name="tbLogOut">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding ElementName=tbLogOut, Path=IsSelected}" Value="True">
@@ -390,17 +458,19 @@
                 <TabItem.Header>
                     <Button
                         x:Name="btnLogOut"
-                        Width="80"
-                        HorizontalAlignment="Stretch"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Command="{Binding NavigateLoginCommand}"
                         Foreground="{StaticResource DarkColor}"
-                        Style="{StaticResource MaterialDesignFloatingActionButton}">
-                        <StackPanel Margin="-10,-5" Orientation="Horizontal">
+                        Style="{StaticResource MaterialDesignRaisedButton}">
+                        <StackPanel
+                            Margin="-10,-5"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
                             <materialDesign:PackIcon
-                                Width="20"
+                                Width="30"
                                 Height="25"
                                 VerticalAlignment="Center"
                                 Kind="ExitToApp">
@@ -408,13 +478,7 @@
                                     <RotateTransform Angle="180" CenterX="12.5" CenterY="12.5" />
                                 </materialDesign:PackIcon.RenderTransform>
                             </materialDesign:PackIcon>
-                            <TextBlock
-                                Width="65"
-                                Margin="5"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                FontWeight="DemiBold"
-                                Text="Log out" />
+                            <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="Exit" />
                         </StackPanel>
                     </Button>
 
