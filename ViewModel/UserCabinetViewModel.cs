@@ -1,4 +1,5 @@
 ﻿using MultipleUserLoginForm.Commands;
+using MultipleUserLoginForm.LocalizationHelper;
 using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Services;
 using MultipleUserLoginForm.Stores;
@@ -44,6 +45,13 @@ namespace MultipleUserLoginForm.ViewModel
             SelectedItem = (SecurityRightViewModel)obj;
             try
             {
+                if (!File.Exists(SelectedItem.Object.Path))
+                {
+                    MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
+                        LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 using (var reader = File.OpenText(SelectedItem.Object.Path))
                 {
                     string s = reader.ReadToEnd();
@@ -57,7 +65,8 @@ namespace MultipleUserLoginForm.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Cannot read this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LocalizedStrings.Instance["mesBoxCannotReadUserCabinet"], LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -69,10 +78,11 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 try
                 {
-                    bool b = File.Exists(SelectedItem.Object.Path);
-                    if (!b)
+                    if (!File.Exists(SelectedItem.Object.Path))
                     {
-                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
+                            LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                            MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -89,12 +99,13 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Cannot write to this file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(LocalizedStrings.Instance["mesBoxCannotWriteUserCabinet"], LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"], 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBoxResult res = MessageBox.Show("The original file will be rewritten. Are you sure you want to continue?",
+                MessageBoxResult res = MessageBox.Show(LocalizedStrings.Instance["mesBoxRewriteUserCabinet"],
                     SelectedItem.Object.Name, MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if (res == MessageBoxResult.No)
                 {
@@ -104,7 +115,8 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     if (!File.Exists(SelectedItem.Object.Path))
                     {
-                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                            MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -121,7 +133,8 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Cannot read this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(LocalizedStrings.Instance["mesBoxCannotReadUserCabinet"], LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -133,6 +146,13 @@ namespace MultipleUserLoginForm.ViewModel
 
             try
             {
+                if (!File.Exists(SelectedItem.Object.Path))
+                {
+                    MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
+                        LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 using (Process p = new Process())
                 {
                     p.StartInfo.FileName = SelectedItem.Object.Path;
@@ -142,7 +162,8 @@ namespace MultipleUserLoginForm.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Cannot execute this object", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LocalizedStrings.Instance["mesBoxCannotExecuteUserCabinet"], LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

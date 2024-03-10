@@ -1,80 +1,140 @@
-﻿<UserControl x:Class="MultipleUserLoginForm.Views.UserCabinet"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MultipleUserLoginForm.Views"
-             xmlns:conv="clr-namespace:MultipleUserLoginForm.ValueConvertors"
-             xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="{StaticResource BlueRadGrad}"
-             >
+﻿<UserControl
+    x:Class="MultipleUserLoginForm.Views.UserCabinet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MultipleUserLoginForm.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:valueConvertor="clr-namespace:MultipleUserLoginForm.ValueConvertors"
+    xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    lex:ResxLocalizationProvider.DefaultAssembly="MultipleUserLoginForm"
+    lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+    Background="{StaticResource BlueRadGrad}"
+    mc:Ignorable="d">
 
     <UserControl.Resources>
-        <conv:BoolToVisibilityConvertor x:Key="boolToVisibilityConverter"/>
+        <valueConvertor:BoolToVisibilityConvertor x:Key="boolToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid Margin="10 5" >
-        <DockPanel LastChildFill="True" >
-            <Grid DockPanel.Dock="Top" Margin="-10 -5">
-                <Button HorizontalAlignment="Right" Command="{Binding NavigateLoginCommand}">
-                    <materialDesign:PackIcon Kind="EmergencyExit" 
-                                         Height="25" Width="25"
-                                             />
-                    
+    <Grid Margin="10,5">
+        <DockPanel LastChildFill="True">
+            <Grid Margin="0,0,0,20" DockPanel.Dock="Top">
+                <Button HorizontalAlignment="Right" 
+                        Command="{Binding NavigateLoginCommand}"
+                        BorderBrush="{x:Null}"
+                        Background="{x:Null}"
+                        >
+                    <StackPanel
+                        Margin="-10,-5"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="30"
+                            Height="25"
+                            VerticalAlignment="Center"
+                            Foreground="{StaticResource DarkColor}"
+                            Kind="ExitToApp">
+                            <materialDesign:PackIcon.RenderTransform>
+                                <RotateTransform Angle="180" CenterX="12.5" CenterY="12.5" />
+                            </materialDesign:PackIcon.RenderTransform>
+                        </materialDesign:PackIcon>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Name="textBlockExitUserCabinet"
+                            Foreground="{StaticResource DarkColor}"
+                            TextWrapping="Wrap"
+                            Text="{lex:Loc}" />
+                    </StackPanel>
                 </Button>
-                <TextBlock  VerticalAlignment="Center" Foreground="{StaticResource DarkColor}"
-                           HorizontalAlignment="Center" FontSize="18"
-                            TextAlignment="Center">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="DemiBold"
+                    Foreground="{StaticResource DarkColor}"
+                    TextAlignment="Center">
                     <TextBlock.Inlines>
-                        <Run Text="All available objects for the user:"/>
-                        <Run Text="{Binding Account.Login}" FontWeight="Medium"/>
-                        <LineBreak/>
-                        <Run Text="with the Security Mark:"/>
-                        <Run Text="{Binding Account.SecurityMark}"/>
+                        <Run Name="runAllAvailableObjects" Text="{lex:Loc}" />
+                        <Run FontWeight="Medium" Text="{Binding Account.Login}" />
+                        <LineBreak />
+                        <Run Name="runWithSecurityMark" Text="{lex:Loc}" />
+                        <Run Text="{Binding Account.SecurityMark}" />
                     </TextBlock.Inlines>
                 </TextBlock>
             </Grid>
-            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible"
-                     ItemsSource="{Binding AvailableObjects}"
-                     SelectedItem="{Binding SelectedItem}" >
-                
+            <ListBox
+                ItemsSource="{Binding AvailableObjects}"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                SelectedItem="{Binding SelectedItem}"
+                Style="{StaticResource MaterialDesignNavigationListBox}"
+                ScrollViewer.CanContentScroll="False">
+                <ListBox.Resources>
+                    <valueConvertor:TreeViewActualSizeConverter x:Key="ConvertorWidthMinus100" />
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <GroupBox Header="{Binding Object.Name}" >
+                        <GroupBox
+                            Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth, Mode=OneWay, Converter={StaticResource ConvertorWidthMinus100}}"
+                            Header="{Binding Object.Name}"
+                            Style="{StaticResource groupBoxStyle}">
                             <StackPanel>
                                 <StackPanel.Resources>
                                     <Style TargetType="TextBlock">
-                                        
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
+
+                                        <Setter Property="VerticalAlignment" Value="Center" />
                                     </Style>
                                     <Style TargetType="StackPanel">
-                                        <Setter Property="Background" Value="AliceBlue"/>
+                                        <Setter Property="Background" Value="AliceBlue" />
                                     </Style>
                                 </StackPanel.Resources>
-                                <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="Security Mark:" Margin="10 5"/>
-                                    <TextBlock Text="{Binding Object.SecurityMark}" Margin="0 5 10 5"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        x:Name="textBlockSecurityMark"
+                                        Margin="10,5"
+                                        Text="{lex:Loc Key=textBlockSecurityMark}" />
+                                    <TextBlock Margin="0,5,10,5" Text="{Binding Object.SecurityMark}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="Path:" Margin="10 5"/>
-                                    <TextBlock Text="{Binding Object.Path}" Margin="0 5 10 5"/>
-                                </StackPanel >
-                                <StackPanel Orientation="Horizontal" >
-                                    
-                                    <Button Command="{Binding ReadCommand}" CommandParameter="{Binding}" Content="Read" Visibility="{Binding IsReadable,  Converter={StaticResource boolToVisibilityConverter}}"/>
-                                    <Button Command="{Binding WriteCommand}" CommandParameter="{Binding}" Content="Write" Visibility="{Binding IsWritable, Converter={StaticResource boolToVisibilityConverter}}"/>
-                                    <Button Command="{Binding ExecuteCommand}" CommandParameter="{Binding}" Content="Execute" Visibility="{Binding IsExecutable,Converter={StaticResource boolToVisibilityConverter}}"/>
-                            </StackPanel>
-                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Name="textBlockPath"
+                                        Margin="10,5"
+                                        Text="{lex:Loc Key=textBlockPath}" />
+                                    <TextBlock Margin="0,5,10,5" Text="{Binding Object.Path}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperDarkButton}">
+                                            <Setter Property="Margin" Value="5"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+
+                                    <Button
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="{lex:Loc Key=btnReadUserCabinet}"
+                                        Visibility="{Binding IsReadable, Converter={StaticResource boolToVisibilityConverter}}" />
+                                    <Button
+                                        Command="{Binding WriteCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="{lex:Loc Key=btnWriteUserCabinet}"
+                                        Visibility="{Binding IsWritable, Converter={StaticResource boolToVisibilityConverter}}" />
+                                    <Button
+                                        Command="{Binding ExecuteCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="{lex:Loc Key=btnExecuteUserCabinet}"
+                                        Visibility="{Binding IsExecutable, Converter={StaticResource boolToVisibilityConverter}}" />
+                                </StackPanel>
+
                             </StackPanel>
                         </GroupBox>
                     </DataTemplate>
-                    
+
                 </ListBox.ItemTemplate>
 
-                
+
 
             </ListBox>
         </DockPanel>

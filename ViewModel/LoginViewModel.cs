@@ -14,6 +14,7 @@ using MultipleUserLoginForm.Views;
 using System.ComponentModel;
 using System.Collections;
 using MultipleUserLoginForm.Validation;
+using MultipleUserLoginForm.LocalizationHelper;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -88,7 +89,7 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 if(s.Password!=Password)
                 {
-                    _errorsViewModel.AddError(nameof(Password), "Invalid password. Try again");
+                    _errorsViewModel.AddError(nameof(Password), LocalizedStrings.Instance["mesBoxInvalidPasswordLogin"]);
                     
                     
                 }
@@ -100,10 +101,10 @@ namespace MultipleUserLoginForm.ViewModel
             if (s == null)
             {
                
-                _errorsViewModel.AddError(nameof(Login), "There's no a user with such a login");
+                _errorsViewModel.AddError(nameof(Login), LocalizedStrings.Instance["mesBoxNoSuchUserLogin"]);
             }
             else if(s.Password!=Password){
-                _errorsViewModel.AddError(nameof(Password), "Invalid password. Try again");
+                _errorsViewModel.AddError(nameof(Password), LocalizedStrings.Instance["mesBoxInvalidPasswordLogin"]);
 
             }
             

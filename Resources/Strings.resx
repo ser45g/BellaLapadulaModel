@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="____________________Login_______" xml:space="preserve">
+    <value>_______________</value>
+  </data>
+  <data name="textBlockUserLogin" xml:space="preserve">
+    <value>User Login</value>
+  </data>
+  <data name="txtUserNameUserLoginHint" xml:space="preserve">
+    <value>Enter the username</value>
+  </data>
+  <data name="runForgotPwd" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="runResetPwd" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="mesBoxInvalidPasswordLogin" xml:space="preserve">
+    <value>Invalid password. Try again</value>
+  </data>
+  <data name="mesBoxNoSuchUserLogin" xml:space="preserve">
+    <value>There's no a user with such a login</value>
+  </data>
+  <data name="textBlockOBJECTAccessMatrix" xml:space="preserve">
+    <value>OBJECT</value>
+  </data>
+  <data name="textBlockSUBJECTAccessMatrix" xml:space="preserve">
+    <value>SUBJECT</value>
+  </data>
+  <data name="logTypeOfModelChangedToBella-LapadulaAdmin" xml:space="preserve">
+    <value>The Type of the model was changed to Bella-Lapadula</value>
+  </data>
+  <data name="logTypeOfModelChangedToCombinedAdmin" xml:space="preserve">
+    <value>The Type of the model was changed to Combined</value>
+  </data>
+  <data name="logTypeOfModelChangedToBibaAdmin" xml:space="preserve">
+    <value>The Type of the model was changed to Biba</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="_______________User_Cabinet________" xml:space="preserve">
+    <value>____________</value>
+  </data>
+  <data name="runAllAvailableObjects" xml:space="preserve">
+    <value>All available objects for the user:</value>
+  </data>
+  <data name="runWithSecurityMark" xml:space="preserve">
+    <value>with the Security Mark:</value>
+  </data>
+  <data name="textBlockSecurityMark" xml:space="preserve">
+    <value>Security Mark:</value>
+  </data>
+  <data name="textBlockPath" xml:space="preserve">
+    <value>Path:</value>
+  </data>
+  <data name="mesBoxTitleErrorUserCabinet" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="mesBoxCannotReadUserCabinet" xml:space="preserve">
+    <value>Cannot read this object</value>
+  </data>
+  <data name="mesBoxCannotWriteUserCabinet" xml:space="preserve">
+    <value>Cannot write to this object</value>
+  </data>
+  <data name="mesBoxCannotExecuteUserCabinet" xml:space="preserve">
+    <value>Cannot execute this object</value>
+  </data>
+  <data name="mesBoxCannotFindFileUserCabinet" xml:space="preserve">
+    <value>Cannot find this file:</value>
+  </data>
+  <data name="mesBoxRewriteUserCabinet" xml:space="preserve">
+    <value>The original file will be rewritten. Are you sure you want to continue?</value>
+  </data>
+  <data name="btnReadUserCabinet" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="btnWriteUserCabinet" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="btnExecuteUserCabinet" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="___________________Admin_________________" xml:space="preserve">
+    <value>_____________</value>
+  </data>
+  <data name="__Access_Matrix_____Admin___________________" xml:space="preserve">
+    <value>______________________</value>
+  </data>
+  <data name="textBlockAccessMatrix" xml:space="preserve">
+    <value>Access Matrix</value>
+  </data>
+  <data name="textBlockLog" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="textBlockSetOfSubjects" xml:space="preserve">
+    <value>Set of Subjects</value>
+  </data>
+  <data name="textBlockSetOfObjects" xml:space="preserve">
+    <value>Set of Objects</value>
+  </data>
+  <data name="textBlockSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="textBlockInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="textBlockExitAdmin" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="runAvailableRightsAccessMatrix" xml:space="preserve">
+    <value>The rights which are available for this subject:</value>
+  </data>
+  <data name="chboxRead" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="chboxWrite" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="chboxExecute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="runSecurityMarkOfChosen" xml:space="preserve">
+    <value>The security mark of the chosen</value>
+  </data>
+  <data name="__Log_____Admin_________" xml:space="preserve">
+    <value>_____________________</value>
+  </data>
+  <data name="__Set_of_Subjects______Admin___________" xml:space="preserve">
+    <value>_____________________</value>
+  </data>
+  <data name="textBlockNameSetSubjects" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="textBlockSecondNameSetSubjects" xml:space="preserve">
+    <value>Second Name:</value>
+  </data>
+  <data name="textBlockLoginSetSubjects" xml:space="preserve">
+    <value>Login:</value>
+  </data>
+  <data name="textBlockPasswordSetSubjects" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="textBlockSecurityMarkSetSubjects" xml:space="preserve">
+    <value>Security Mark:</value>
+  </data>
+  <data name="btnAddSetSubjects" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="btnChangeSetSubjects" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="btnRemoveSetSubjects" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="btnClearSetSubjects" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="datGridTextColLoginSetSubjects" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="datGridTexColPasswordSetSubjects" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="datGridComboBoxColSecurityMarkSetSubjects" xml:space="preserve">
+    <value>Security Mark</value>
+  </data>
+  <data name="datGridTextColNameSetSubjects" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="datGridTextColSecondNameSetSubjects" xml:space="preserve">
+    <value>Second Name</value>
+  </data>
+  <data name="___Set_of_Objects_____Admin_____" xml:space="preserve">
+    <value>____________________</value>
+  </data>
+  <data name="textBlockNameSetObjects" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="textBlockPathSetObjects" xml:space="preserve">
+    <value>Path:</value>
+  </data>
+  <data name="textBlockSecurityMarkSetObjects" xml:space="preserve">
+    <value>Security Mark:</value>
+  </data>
+  <data name="btnBrowseSetObjects" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="btnAddObject" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="btnChangeObject" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="btnRemoveObject" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="btnClearObject" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="___Settings______Admin______" xml:space="preserve">
+    <value>_____________________</value>
+  </data>
+  <data name="rbBelLap" xml:space="preserve">
+    <value>Bella-Lapadula</value>
+  </data>
+  <data name="rbBiba" xml:space="preserve">
+    <value>Biba</value>
+  </data>
+  <data name="rbCombined" xml:space="preserve">
+    <value>Combined</value>
+  </data>
+  <data name="groupBoxTypeOfModel" xml:space="preserve">
+    <value>Type of Model</value>
+  </data>
+  <data name="groupBoxLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="datGridTextColNameSetObjects" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="datGridTexColPathSetObjects" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="datGridComboBoxColSecurityMarkSetObjects" xml:space="preserve">
+    <value>Security Mark</value>
+  </data>
+  <data name="___Validation____Admin________" xml:space="preserve">
+    <value>___________________</value>
+  </data>
+  <data name="errorInvalidLoginAdmin" xml:space="preserve">
+    <value>This login is not correct/available</value>
+  </data>
+  <data name="errorFieldIsEmptyAdmin" xml:space="preserve">
+    <value>field can't be empty</value>
+  </data>
+  <data name="logAllSubjectsWerePurgedAdmin" xml:space="preserve">
+    <value>All the subjects were purged</value>
+  </data>
+  <data name="logAllObjectsWerePurgedAdmin" xml:space="preserve">
+    <value>All the objects were purged</value>
+  </data>
+  <data name="logTheSubjectAdmin" xml:space="preserve">
+    <value>The subject</value>
+  </data>
+  <data name="logTheObjectAdmin" xml:space="preserve">
+    <value>The object</value>
+  </data>
+  <data name="logWithTheLoginAdmin" xml:space="preserve">
+    <value>with the login</value>
+  </data>
+  <data name="logWithThePathAdmin" xml:space="preserve">
+    <value>with the path</value>
+  </data>
+  <data name="logWasChangedAdmin" xml:space="preserve">
+    <value>was changed</value>
+  </data>
+  <data name="logWasAddedAdmin" xml:space="preserve">
+    <value>was added</value>
+  </data>
+  <data name="logWasRemovedAdmin" xml:space="preserve">
+    <value>was removed</value>
+  </data>
+  <data name="textBlockExitUserCabinet" xml:space="preserve">
+    <value>Leave the cabinet</value>
+  </data>
+  <data name="textBlockReturnToUserCabinetReadWriteObject" xml:space="preserve">
+    <value>Return to the cabinet</value>
+  </data>
+</root>

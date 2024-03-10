@@ -5,6 +5,7 @@
     xmlns:local="clr-namespace:MultipleUserLoginForm"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Application.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -15,6 +16,7 @@
                 <!-- <ResourceDictionary Source="pack://application:,,,/MultipleUserLoginForm;component/SubjectObjectMatrixTemplates.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
 
+            
             <LinearGradientBrush x:Key="RedLinGrad" StartPoint="1 1" EndPoint="0 0">
                 <GradientStop Offset="0" Color="DarkRed" />
                 <GradientStop Offset="0.2" Color="Red" />
@@ -69,7 +71,7 @@
 
             <SolidColorBrush x:Key="DarkColor" Color="#113" />
 
-            <Style TargetType="{x:Type GroupBox}">
+            <Style TargetType="{x:Type GroupBox}" x:Key="groupBoxStyle">
                 <Setter Property="Background" Value="{StaticResource controlColor}" />
                 <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
                 <Setter Property="FontSize" Value="16" />
@@ -399,6 +401,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
+            
+            
+            
 
         </ResourceDictionary>
     </Application.Resources>

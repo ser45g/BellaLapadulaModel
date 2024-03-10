@@ -1,10 +1,12 @@
-﻿using MultipleUserLoginForm.Model;
+﻿using MultipleUserLoginForm.LocalizationHelper;
+using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Stores;
 using MultipleUserLoginForm.Utilities;
 using MultipleUserLoginForm.ViewModel;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using WPFLocalizeExtension.Engine;
 
 namespace MultipleUserLoginForm
 {
@@ -16,6 +18,10 @@ namespace MultipleUserLoginForm
         private MatricesViewModel ms;
         protected override void OnStartup(StartupEventArgs e)
         {
+            //LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+            //LocalizeDictionary.Instance.SetCultureCommand.Execute(MultipleUserLoginForm.Properties.Settings.Default.CurrentCulture);
+            LocalizedStrings.Instance.SetCulture(MultipleUserLoginForm.Properties.Settings.Default.CurrentCulture);
+
             NavigationStore store = new NavigationStore();
              ms = new MatricesViewModel();
             if(ms.Admins.Count < 1)
@@ -32,6 +38,7 @@ namespace MultipleUserLoginForm
         protected override void OnExit(ExitEventArgs e)
         {
             ms.Dispose();
+            MultipleUserLoginForm.Properties.Settings.Default.Save();
             base.OnExit(e);
         }
     }

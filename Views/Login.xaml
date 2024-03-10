@@ -7,11 +7,17 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pwd="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    lex:ResxLocalizationProvider.DefaultAssembly="MultipleUserLoginForm"
+    lex:ResxLocalizationProvider.DefaultDictionary="Strings"
     
     Background="{StaticResource BlueRadGrad}"
     mc:Ignorable="d">
+    <!--  Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth, Mode=OneWay}" 
+     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=ActualHeight, Mode=OneWay}" 
+      -->
     <Grid>
-        
+
 
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -23,35 +29,37 @@
             </Style>
 
             <Style TargetType="materialDesign:PackIcon">
-                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
-            
+
 
         </Grid.Resources>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock
                 Margin="20"
-                FontFamily="Kaufmann BT"
+                 
                 FontSize="38"
                 Foreground="White"
-                Text="User Login"
-                TextAlignment="Center" />
+                Name="textBlockUserLogin"
+                Text="{lex:Loc}"
+                TextAlignment="Center" FontFamily="Rage Italic" />
             <Grid>
-                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <materialDesign:PackIcon Kind="Login"
-                                     Foreground="AliceBlue"
-                                     HorizontalAlignment="Center"
-                                     Width="60"
-                                     Height="60"
-                                         Margin="30 5"/>
+                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Width="60"
+                        Height="60"
+                        Margin="30,5"
+                        HorizontalAlignment="Center"
+                        Foreground="AliceBlue"
+                        Kind="Login" />
 
-                    
+
                 </WrapPanel>
             </Grid>
-           
-            
+
+
             <StackPanel
-                Margin="20 10"
+                Margin="20,10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <materialDesign:PackIcon
@@ -60,27 +68,24 @@
                     Foreground="AliceBlue"
                     Kind="User" />
                 <TextBox
-                    Validation.ErrorTemplate="{StaticResource Validation}"
-                    Name="txtUserName"
+                    Name="txtUserNameUserLoginHint"
                     Width="250"
                     Margin="20,0"
-                    materialDesign:HintAssist.Hint="Enter the username"
+                    materialDesign:HintAssist.Hint="{lex:Loc}"
                     BorderBrush="AliceBlue"
                     CaretBrush="CadetBlue"
                     FontSize="20"
                     Foreground="AliceBlue"
-                    SelectionBrush="Coral" 
-                   >
+                    SelectionBrush="Coral"
+                    Validation.ErrorTemplate="{StaticResource Validation}">
                     <TextBox.Text>
-                        <Binding Path="Login" UpdateSourceTrigger="PropertyChanged">
-                           
-                        </Binding>
-                        
+                        <Binding Path="Login" UpdateSourceTrigger="PropertyChanged" />
+
                     </TextBox.Text>
                 </TextBox>
             </StackPanel>
             <StackPanel
-                Margin="20 10"
+                Margin="20,10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <materialDesign:PackIcon
@@ -89,49 +94,49 @@
                     Foreground="AliceBlue"
                     Kind="Lock" />
                 <pwd:BindablePasswordBox
-                    Password="{Binding Password}"
-                    Validation.ErrorTemplate="{StaticResource Validation}"
                     Name="txtPwd"
                     Width="250"
                     Margin="20,0"
                     materialDesign:HintAssist.Hint="********"
                     BorderBrush="AliceBlue"
-                    ToolTip="Password"
                     FontSize="20"
                     Foreground="AliceBlue"
+                    Password="{Binding Password}"
                     
-                    />
+                    Validation.ErrorTemplate="{StaticResource Validation}" />
             </StackPanel>
-            
 
-            <Grid HorizontalAlignment="Center" Margin="20 10">
-                 <TextBlock 
-                       HorizontalAlignment="Right"
-                       FontSize="16"
-                       Foreground="#CCC"
-                       Margin="90 5 30 5">
-                <TextBlock.Inlines>
-                    <Run Text="Forgot your password?"/>
-                   
-                    <Run Text="Reset" FontWeight="DemiBold"
-                         Foreground="AntiqueWhite"/>
-                </TextBlock.Inlines>
-                 
-            </TextBlock>
-            
-           </Grid>
-            
-            <StackPanel Margin="20 20 20 60" HorizontalAlignment="Center">
-                <Button
-                    Command="{Binding LoginCommand}"
-                    Name="btnLogin"
+            <!--   <Grid Margin="20,10" HorizontalAlignment="Center">
+                <TextBlock
+                    Margin="90,5,30,5"
+                    HorizontalAlignment="Right"
+                    FontSize="16"
                     
+                    Foreground="#CCC">
+                    <TextBlock.Inlines>
+                        <Run Text="{lex:Loc}" x:Name="runForgotPwd"/>
+
+                        <Run
+                            FontWeight="DemiBold"
+                            Foreground="AntiqueWhite"
+                            Text="{lex:Loc}" 
+                            x:Name="runResetPwd"/>
+                    </TextBlock.Inlines>
+
+                </TextBlock>
+
+            </Grid> -->
+           
+
+            <StackPanel Margin="20,60,20,60" HorizontalAlignment="Center">
+                <Button
+                    Name="btnLogin"
                     Width="100"
                     Height="40"
                     materialDesign:ButtonAssist.CornerRadius="10"
                     Background="#D94448"
-                    
-                    Content="Login"
+                    Command="{Binding LoginCommand}"
+                    Content="{lex:Loc}"
                     Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     ToolTip="Login" />

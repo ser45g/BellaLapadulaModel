@@ -21,6 +21,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Documents;
+using WPFLocalizeExtension.Engine;
+using System.Resources;
+using MultipleUserLoginForm.Properties;
+using MultipleUserLoginForm.LocalizationHelper;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -41,68 +45,19 @@ namespace MultipleUserLoginForm.ViewModel
 
             _log = _matricsStore.CurrentMatrics.Log;
 
-            //Rights = new ObservableCollection<SecurityRightViewModel>(_matricsStore.CurrentMatrics.Rights);
             Objects.CollectionChanged += ObjectsChanged ;
             Subjects.CollectionChanged += SubjectsChanged;
 
 
-			AddObjectCommand=new RelayCommand((obj) => {
-                ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
-
-                ValidateStringIsNullOrEmpty(o.Name,nameof(ObjectName),_errorsObjectViewModel);
-                ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
-                if (CanCreateObj)
-                {
-                    LogObject(CommandAction.Add, o);
-			        Objects.Add(o);
-                }
-               
-            },(obj)=>CanCreateObj);
-			RemoveObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Remove, SelectedObject); Objects.Remove(SelectedObject); });
-			ClearObjectCommand=new RelayCommand((obj) => { LogObject(CommandAction.Clear, null); Objects.Clear(); });
-            ChangeObjectCommand = new RelayCommand((obj) => { RemoveObjectCommand.Execute(obj); AddObjectCommand.Execute(obj); });			
+            AddObjectCommand = new RelayCommand((obj) => AddObject(obj), (obj) => CanCreateObj); ;
+			RemoveObjectCommand=new RelayCommand((obj) => RemoveObject(obj));
+			ClearObjectCommand=new RelayCommand((obj) => ClearObjects(obj));
+            ChangeObjectCommand = new RelayCommand((obj) => ChangeObject(obj));			
             
-			//*********************************************************************************
-			AddSubjectCommand=new RelayCommand((obj) => {
-                SubjectViewModel s = new SubjectViewModel(new Subject()
-                {
-                    Login = SubjectLogin,
-                    Password = SubjectPassword,
-                    SecurityMark = SubjectSecurityMark
-                })
-                {Name=SubjectName,SecondName=SubjectSecondName };
-                ValidateSubjectLogin(s.Login);
-                ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword),_errorsViewModel);
-                if (CanCreate)
-                {   
-                    LogSubject(CommandAction.Add, s);
-                    Subjects.Add(s);
-                }
-            },(obj)=>CanCreate);
-			RemoveSubjectCommand=new RelayCommand((obj)=> { LogSubject(CommandAction.Remove, SelectedSubject); Subjects.Remove(SelectedSubject); });
-			ClearSubjectCommand=new RelayCommand((obj) => { LogSubject(CommandAction.Clear, null); Subjects.Clear(); });
-			ChangeSubjectCommand = new RelayCommand((obj) => {
-
-                _errorsViewModel.ClearErrors(nameof(SubjectLogin));
-                SubjectViewModel s = new SubjectViewModel(new Subject()
-                {
-                    Login = SubjectLogin,
-                    Password = SubjectPassword,
-                    SecurityMark = SubjectSecurityMark
-                })
-                { Name = SubjectName, SecondName = SubjectSecondName };
-                ValidateStringIsNullOrEmpty (s.Login, nameof(SubjectLogin),_errorsViewModel);
-                ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword),_errorsViewModel);
-                SubjectViewModel old = Subjects.FirstOrDefault((obj) => { return obj.Login == SubjectLogin; });
-                if (CanCreate)
-                {
-                    LogSubject(CommandAction.Remove, old);
-                    Subjects.Remove(old);
-                    LogSubject(CommandAction.Add, s);
-                    Subjects.Add(s);
-
-                }
-            });
+			AddSubjectCommand=new RelayCommand((obj) => AddSubject(obj),(obj)=>CanCreate);
+			RemoveSubjectCommand=new RelayCommand((obj)=> RemoveSubject(obj));
+			ClearSubjectCommand=new RelayCommand((obj) => ClearSubjects(obj));
+			ChangeSubjectCommand = new RelayCommand((obj) => ChangeSubject(obj));
 
             SetSelectedItemCommand = new RelayCommand((obj) => { TreeViewSelectedItem = obj; });
 
@@ -161,6 +116,39 @@ namespace MultipleUserLoginForm.ViewModel
 				_objectSecurityMark = value;
 				OnPropertyChanged(nameof(ObjectSecurityMark));
 			} }
+
+        private void AddObject(object obj)
+        {
+            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
+
+            ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
+            ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
+            if (CanCreateObj)
+            {
+                LogObject(CommandAction.Add, o);
+                Objects.Add(o);
+            }
+
+        }
+
+        private void RemoveObject(object obj)
+        { 
+            LogObject(CommandAction.Remove, SelectedObject); 
+            Objects.Remove(SelectedObject);
+        }
+
+        private void ChangeObject(object obj)
+        {
+            RemoveObject(obj);
+            AddObject(obj); 
+
+        }
+
+        private void ClearObjects(object obj)
+        {
+            LogObject(CommandAction.Clear, null);
+            Objects.Clear(); 
+        }
         #endregion
 
         #region Subject Properties: Set of Subjects
@@ -237,11 +225,65 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(SubjectSecurityMark));
             }
         }
+
+        private void AddSubject(object obj)
+        {
+            SubjectViewModel s = new SubjectViewModel(new Subject()
+            {
+                Login = SubjectLogin,
+                Password = SubjectPassword,
+                SecurityMark = SubjectSecurityMark
+            })
+            { Name = SubjectName, SecondName = SubjectSecondName };
+            ValidateSubjectLogin(s.Login);
+            ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
+            if (CanCreate)
+            {
+                LogSubject(CommandAction.Add, s);
+                Subjects.Add(s);
+            }
+        }
+
+        private void ChangeSubject(object obj)
+        {
+
+            _errorsViewModel.ClearErrors(nameof(SubjectLogin));
+            SubjectViewModel s = new SubjectViewModel(new Subject()
+            {
+                Login = SubjectLogin,
+                Password = SubjectPassword,
+                SecurityMark = SubjectSecurityMark
+            })
+            { Name = SubjectName, SecondName = SubjectSecondName };
+            ValidateStringIsNullOrEmpty(s.Login, nameof(SubjectLogin), _errorsViewModel);
+            ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
+            SubjectViewModel old = Subjects.FirstOrDefault((obj) => { return obj.Login == SubjectLogin; });
+            if (CanCreate)
+            {
+                LogSubject(CommandAction.Remove, old);
+                Subjects.Remove(old);
+                LogSubject(CommandAction.Add, s);
+                Subjects.Add(s);
+
+            }
+        }
+
+        private void RemoveSubject(object obj)
+        {
+            LogSubject(CommandAction.Remove, SelectedSubject); 
+            Subjects.Remove(SelectedSubject); 
+        }
+        
+        private void ClearSubjects(object obj)
+        { 
+            LogSubject(CommandAction.Clear, null);
+            Subjects.Clear();
+        }
         #endregion
 
-        
 
-		private ObservableCollection<SubjectViewModel> subjects ;
+
+        private ObservableCollection<SubjectViewModel> subjects ;
 		public ObservableCollection<SubjectViewModel> Subjects {  get {
 				return subjects;
             } }
@@ -283,18 +325,24 @@ namespace MultipleUserLoginForm.ViewModel
             string str = "";
             switch (comAct) {
                 case CommandAction.Add:
-                    str=$"The object {obj?.Name} with the path {obj?.Path} was added ";
+                    str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
+                        $" {obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path}" +
+                        $" {LocalizedStrings.Instance["logWasAddedAdmin"]} ";
                     break;
                 case CommandAction.Remove:
-                    str=$"The object {obj?.Name} with the path {obj?.Path} was removed";
+                    str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
+                        $" {obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
+                        $"{LocalizedStrings.Instance["logWasRemovedAdmin"]}";
 
                     break;
                 case CommandAction.Change:
-                    str=$"The object {obj?.Name} with the path {obj?.Path} was changed";
+                    str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
+                        $"{obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
+                        $"{LocalizedStrings.Instance["logWasChangedAdmin"]}";
 
                     break;
                 case CommandAction.Clear:
-                    str="All the objects were purged";
+                    str=LocalizedStrings.Instance["logAllObjectsWerePurgedAdmin"];
 
                     break;
             }
@@ -307,18 +355,24 @@ namespace MultipleUserLoginForm.ViewModel
             switch (comAct)
             {
                 case CommandAction.Add:
-                    str=  $"The subject {subj?.Name} {subj?.SecondName} with the login {subj?.Login} was added";
+                    str=  $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName}" +
+                        $" {LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
+                        $"{LocalizedStrings.Instance["logWasAddedAdmin"]}";
                     break;
                 case CommandAction.Remove:
-                    str= $"The subject {subj?.Name} {subj?.SecondName} with the login {subj?.Login} was removed";
+                    str= $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName} " +
+                        $"{LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
+                        $"{LocalizedStrings.Instance["logWasRemovedAdmin"]}";
 
                     break;
                 case CommandAction.Change:
-                    str= $"The subject {subj?.Name} {subj?.SecondName} with the login {subj?.Login} was changed";
+                    str= $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName}" +
+                        $" {LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
+                        $"{LocalizedStrings.Instance["logWasChangedAdmin"]}";
 
                     break;
                 case CommandAction.Clear:
-                    str= "All the subjects were purged";
+                    str= LocalizedStrings.Instance["logAllSubjectsWerePurgedAdmin"];
 
                     break;
             }
@@ -330,7 +384,7 @@ namespace MultipleUserLoginForm.ViewModel
         {
             if (str != "")
             {
-                Log.Insert(0, $"{Log.Count}){str} at {DateTime.Now}");
+                Log.Insert(0, $"{Log.Count}){str} - {DateTime.Now}");
             }
         }
         #endregion
@@ -343,7 +397,7 @@ namespace MultipleUserLoginForm.ViewModel
                 if(value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.BellaLapadula)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.BellaLapadula;
-                    LogWithDataAndOrder("The Type of the model was changed to BellaLapadula");
+                    LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToBella-LapadulaAdmin"]);
                     OnPropertyChanged(nameof(TreeSource));
 
                 }
@@ -357,9 +411,8 @@ namespace MultipleUserLoginForm.ViewModel
                 if (value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.Biba)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.Biba;
-                    LogWithDataAndOrder("The Type of the model was changed to Biba");
+                    LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToBibaAdmin"]);
                     OnPropertyChanged(nameof(TreeSource));
-
                 }
             } 
         }
@@ -371,12 +424,42 @@ namespace MultipleUserLoginForm.ViewModel
                 if (value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.Combined)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.Combined;
-                    LogWithDataAndOrder("The Type of the model was changed to BellaLapadula");
+                    LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToCombinedAdmin"]);
                     OnPropertyChanged(nameof(TreeSource));
-
                 }
             } 
         }
+
+        public bool IsEnglishChecked
+        {
+            get { return Settings.Default.CurrentCulture =="en-US"; }
+            set {
+                if(value)
+                {
+                    Settings.Default.CurrentCulture = "en-US";
+                    LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                    LocalizeDictionary.Instance.SetCultureCommand.Execute("en-US");
+                }
+                    OnPropertyChanged(nameof(IsEnglishChecked));
+            }
+        }
+
+        public bool IsRussianChecked
+        {
+            get { return Settings.Default.CurrentCulture == "ru-RU"; }
+            set {
+                if (value == true)
+                {   
+                    Settings.Default.CurrentCulture = "ru-RU";
+                    LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                    LocalizeDictionary.Instance.SetCultureCommand.Execute("ru-RU");
+
+                }
+                    OnPropertyChanged(nameof(IsRussianChecked));
+                
+            }
+        }
+
         #endregion
 
         #region TreeView: Access Matrix
@@ -405,8 +488,9 @@ namespace MultipleUserLoginForm.ViewModel
 
                     ChosenObjectName = s.Object.Name;
                     ChosenObjectSecurityMark = s.Object.SecurityMark;
-                    IsObjectOrSubject = "OBJECT";
-                }else if(value is SubjectTreeViewModel subj)
+                    IsObjectOrSubject = LocalizedStrings.Instance["textBlockOBJECTAccessMatrix"];
+                }
+                else if(value is SubjectTreeViewModel subj)
                 {
                     IsReadable=false;
                     IsWritable=false;
@@ -414,7 +498,7 @@ namespace MultipleUserLoginForm.ViewModel
 
                     ChosenObjectName = subj.Subject.Name;
                     ChosenObjectSecurityMark = subj.Subject.SecurityMark;
-                    IsObjectOrSubject = "SUBJECT";
+                    IsObjectOrSubject = LocalizedStrings.Instance["textBlockSUBJECTAccessMatrix"];
                 }
                 OnPropertyChanged(nameof(TreeViewSelectedItem));
             }
@@ -470,8 +554,6 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
 
-
-
         private void SubjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(TreeSource));
@@ -490,7 +572,7 @@ namespace MultipleUserLoginForm.ViewModel
             var i = _matricsStore.CurrentMatrics.Subjects.FirstOrDefault(x => x.Login == login);
             if ((string.IsNullOrEmpty(login)) || (i != null))
             {
-                _errorsViewModel.AddError(nameof(SubjectLogin), "This login is not correct/available");
+                _errorsViewModel.AddError(nameof(SubjectLogin), LocalizedStrings.Instance["errorInvalidLoginAdmin"]);
             }
         }
 
@@ -500,7 +582,7 @@ namespace MultipleUserLoginForm.ViewModel
         {
             if (string.IsNullOrEmpty(str))
             {
-                _errors.AddError(propName, $"The {propName} field can't be empty");
+                _errors.AddError(propName, $"{propName} {LocalizedStrings.Instance["errorFieldIsEmptyAdmin"]}");
             }
 
         }
@@ -548,87 +630,5 @@ namespace MultipleUserLoginForm.ViewModel
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         #endregion
 
-        #region Information
-        public ICommand LoadInfo { get;}
-
-        /*private void LoadInfoWord()
-        {
-            OpenFileDialog ofd = new OpenFileDialog() { ValidateNames = true, Multiselect = false, Filter = "Word Doucment|*.docx|Word 97 - 2003 Document|*.doc"};
-            
-                if (ofd.ShowDialog() == true)
-                {
-                    object readOnly = true;
-                    object visible = true;
-                    object save = false;
-                    object fileName = ofd.FileName;
-                    object missing = Type.Missing;
-                    object newTemplate = false;
-                    object docType = 0;
-                    Microsoft.Office.Interop.Word._Document oDoc = null;
-                    Microsoft.Office.Interop.Word._Application oWord = new Microsoft.Office.Interop.Word.Application() { Visible = false };
-                    oDoc = oWord.Documents.Open(
-                            ref fileName, ref missing, ref readOnly, ref missing,
-                            ref missing, ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing, ref visible,
-                            ref missing, ref missing, ref missing, ref missing);
-                    oDoc.ActiveWindow.Selection.WholeStory();
-                    oDoc.ActiveWindow.Selection.Copy();
-                    IDataObject data = Clipboard.GetDataObject();
-                    Rtf = data.GetData(DataFormats.Rtf).ToString();
-                    oWord.Quit(ref missing, ref missing, ref missing);
-                }
-            
-        }*/
-
-       /* private void OnOpenFileClicked()
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                DefaultExt = ".docx",
-                Filter = "Word documents (.docx)|*.docx"
-            };
-
-            if (openFileDialog.ShowDialog() == true)
-                this.ReadDocx(openFileDialog.FileName);
-        }
-
-        private void ReadDocx(string path)
-        {
-            using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                var flowDocumentConverter = new DocxToFlowDocumentConverter(stream);
-                flowDocumentConverter.Read();
-                InfoDoc = flowDocumentConverter.Document;
-                //this.Title = Path.GetFileName(path);
-            }
-        }*/
-
-        public FlowDocument InfoDoc { get; set; }
-
-        private string _rtf;
-
-        public string Rtf
-        {
-            get { return _rtf; }
-            set { _rtf = value;
-                OnPropertyChanged(nameof(Rtf));
-            }
-        }
-
-        #endregion
     }
-
-    public class SubjectTreeViewModel
-    {
-        public SubjectViewModel Subject { get; }
-        public ObservableCollection<SecurityRightViewModel> Objects { get; }
-
-        public SubjectTreeViewModel(SubjectViewModel subject,MatricesViewModel matrix)
-        {
-            this.Subject = subject;
-            Objects = new ObservableCollection<SecurityRightViewModel>( matrix.GetObjectsForSubj(Subject.Login));
-        }
-       
-    }
-
 }

@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="____________________Login_______" xml:space="preserve">
+    <value>__________________________</value>
+  </data>
+  <data name="textBlockUserLogin" xml:space="preserve">
+    <value>Авторизация</value>
+  </data>
+  <data name="txtUserNameUserLoginHint" xml:space="preserve">
+    <value>Введите имя пользователя</value>
+  </data>
+  <data name="runForgotPwd" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
+  <data name="runResetPwd" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
+  <data name="mesBoxInvalidPasswordLogin" xml:space="preserve">
+    <value>Неверный пароль. Попробуйте ещё раз</value>
+  </data>
+  <data name="mesBoxNoSuchUserLogin" xml:space="preserve">
+    <value>Не существует пользователя с таким логином</value>
+  </data>
+  <data name="textBlockOBJECTAccessMatrix" xml:space="preserve">
+    <value>ОБЪЕКТА</value>
+  </data>
+  <data name="textBlockSUBJECTAccessMatrix" xml:space="preserve">
+    <value>СУБЪЕКТА</value>
+  </data>
+  <data name="logTypeOfModelChangedToBella-LapadulaAdmin" xml:space="preserve">
+    <value>Тип модели был изменён на модель Бэлла-Лападула</value>
+  </data>
+  <data name="logTypeOfModelChangedToCombinedAdmin" xml:space="preserve">
+    <value>Тип модели был изменён на Комбинированную модель</value>
+  </data>
+  <data name="logTypeOfModelChangedToBibaAdmin" xml:space="preserve">
+    <value>Тип модели был изменён на модель Биби</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="runAllAvailableObjects" xml:space="preserve">
+    <value>Доступные объекты для пользователя:</value>
+  </data>
+  <data name="runWithSecurityMark" xml:space="preserve">
+    <value>с Меткой Безопасности:</value>
+  </data>
+  <data name="textBlockSecurityMark" xml:space="preserve">
+    <value>Метка Безопасности:</value>
+  </data>
+  <data name="textBlockPath" xml:space="preserve">
+    <value>Путь:</value>
+  </data>
+  <data name="mesBoxTitleErrorUserCabinet" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="mesBoxCannotReadUserCabinet" xml:space="preserve">
+    <value>Невозможно чтение данного объекта</value>
+  </data>
+  <data name="mesBoxCannotWriteUserCabinet" xml:space="preserve">
+    <value>Невозможна запись в данный объект</value>
+  </data>
+  <data name="mesBoxCannotExecuteUserCabinet" xml:space="preserve">
+    <value>Невозможно исполнение данного объекта</value>
+  </data>
+  <data name="mesBoxCannotFindFileUserCabinet" xml:space="preserve">
+    <value>Невозможно найти файл:</value>
+  </data>
+  <data name="mesBoxRewriteUserCabinet" xml:space="preserve">
+    <value>Оригинальный файл будет перезаписан. Вы уверены что хотите продолжить?</value>
+  </data>
+  <data name="btnReadUserCabinet" xml:space="preserve">
+    <value>Чтение</value>
+  </data>
+  <data name="btnWriteUserCabinet" xml:space="preserve">
+    <value>Запись</value>
+  </data>
+  <data name="btnExecuteUserCabinet" xml:space="preserve">
+    <value>Исполнение</value>
+  </data>
+  <data name="___________________Admin_________________" xml:space="preserve">
+    <value>________________</value>
+  </data>
+  <data name="textBlockAccessMatrix" xml:space="preserve">
+    <value>Матрица</value>
+  </data>
+  <data name="_______________User_Cabinet________" xml:space="preserve">
+    <value>__________________</value>
+  </data>
+  <data name="textBlockLog" xml:space="preserve">
+    <value>Активности</value>
+  </data>
+  <data name="textBlockSetOfSubjects" xml:space="preserve">
+    <value>Субъекты</value>
+  </data>
+  <data name="textBlockSetOfObjects" xml:space="preserve">
+    <value>Объекты</value>
+  </data>
+  <data name="textBlockSettings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="textBlockInformation" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="textBlockExitAdmin" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="runAvailableRightsAccessMatrix" xml:space="preserve">
+    <value>Доступные для данного субъекта права:</value>
+  </data>
+  <data name="chboxRead" xml:space="preserve">
+    <value>Чтение</value>
+  </data>
+  <data name="chboxWrite" xml:space="preserve">
+    <value>Запись</value>
+  </data>
+  <data name="chboxExecute" xml:space="preserve">
+    <value>Исполнение</value>
+  </data>
+  <data name="runSecurityMarkOfChosen" xml:space="preserve">
+    <value>Метка Безопасности выбранного</value>
+  </data>
+  <data name="__Access_Matrix_____Admin___________________" xml:space="preserve">
+    <value>____________________________</value>
+  </data>
+  <data name="__Log_____Admin_________" xml:space="preserve">
+    <value>____________________________</value>
+  </data>
+  <data name="__Set_of_Subjects______Admin___________" xml:space="preserve">
+    <value>_____________________________</value>
+  </data>
+  <data name="textBlockNameSetSubjects" xml:space="preserve">
+    <value>Имя субъекта:</value>
+  </data>
+  <data name="textBlockSecondNameSetSubjects" xml:space="preserve">
+    <value>Фамилия:</value>
+  </data>
+  <data name="textBlockLoginSetSubjects" xml:space="preserve">
+    <value>Логин:</value>
+  </data>
+  <data name="textBlockPasswordSetSubjects" xml:space="preserve">
+    <value>Пароль:</value>
+  </data>
+  <data name="textBlockSecurityMarkSetSubjects" xml:space="preserve">
+    <value>Метка Безопасности:</value>
+  </data>
+  <data name="btnAddSetSubjects" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="btnChangeSetSubjects" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="btnRemoveSetSubjects" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="btnClearSetSubjects" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="datGridTextColLoginSetSubjects" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="datGridTexColPasswordSetSubjects" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="datGridComboBoxColSecurityMarkSetSubjects" xml:space="preserve">
+    <value>Метка Безопасности</value>
+  </data>
+  <data name="datGridTextColNameSetSubjects" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="datGridTextColSecondNameSetSubjects" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="___Set_of_Objects_____Admin_____" xml:space="preserve">
+    <value>____________________________</value>
+  </data>
+  <data name="textBlockNameSetObjects" xml:space="preserve">
+    <value>Имя объекта:</value>
+  </data>
+  <data name="textBlockPathSetObjects" xml:space="preserve">
+    <value>Путь:</value>
+  </data>
+  <data name="textBlockSecurityMarkSetObjects" xml:space="preserve">
+    <value>Метка Безопасности:</value>
+  </data>
+  <data name="btnBrowseSetObjects" xml:space="preserve">
+    <value>Найти...</value>
+  </data>
+  <data name="btnAddObject" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="btnChangeObject" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="btnRemoveObject" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="btnClearObject" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="___Settings______Admin______" xml:space="preserve">
+    <value>_____________________________</value>
+  </data>
+  <data name="rbBelLap" xml:space="preserve">
+    <value>Бэлла-Лападула</value>
+  </data>
+  <data name="rbBiba" xml:space="preserve">
+    <value>Биба</value>
+  </data>
+  <data name="rbCombined" xml:space="preserve">
+    <value>Комбинированная</value>
+  </data>
+  <data name="groupBoxTypeOfModel" xml:space="preserve">
+    <value>Тип модели</value>
+  </data>
+  <data name="groupBoxLanguage" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="datGridTextColNameSetObjects" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="datGridTexColPathSetObjects" xml:space="preserve">
+    <value>Путь</value>
+  </data>
+  <data name="datGridComboBoxColSecurityMarkSetObjects" xml:space="preserve">
+    <value>Метка Безопасности</value>
+  </data>
+  <data name="___Validation____Admin________" xml:space="preserve">
+    <value>_______________________________</value>
+  </data>
+  <data name="errorInvalidLoginAdmin" xml:space="preserve">
+    <value>Недопустимый логин</value>
+  </data>
+  <data name="errorFieldIsEmptyAdmin" xml:space="preserve">
+    <value>поле не может быть пустым</value>
+  </data>
+  <data name="logAllSubjectsWerePurgedAdmin" xml:space="preserve">
+    <value>Все субъекты были удалены</value>
+  </data>
+  <data name="logAllObjectsWerePurgedAdmin" xml:space="preserve">
+    <value>Все объекты были удалены</value>
+  </data>
+  <data name="logTheSubjectAdmin" xml:space="preserve">
+    <value>Субъект</value>
+  </data>
+  <data name="logTheObjectAdmin" xml:space="preserve">
+    <value>Объект</value>
+  </data>
+  <data name="logWithTheLoginAdmin" xml:space="preserve">
+    <value>с логином</value>
+  </data>
+  <data name="logWithThePathAdmin" xml:space="preserve">
+    <value>с путём</value>
+  </data>
+  <data name="logWasChangedAdmin" xml:space="preserve">
+    <value>был изменён</value>
+  </data>
+  <data name="logWasAddedAdmin" xml:space="preserve">
+    <value>был добавлен</value>
+  </data>
+  <data name="logWasRemovedAdmin" xml:space="preserve">
+    <value>был удалён</value>
+  </data>
+  <data name="textBlockExitUserCabinet" xml:space="preserve">
+    <value>Покинуть кабинет</value>
+  </data>
+  <data name="textBlockReturnToUserCabinetReadWriteObject" xml:space="preserve">
+    <value>Вернуться в кабинет</value>
+  </data>
+</root>
