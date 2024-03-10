@@ -369,8 +369,8 @@
   <data name="logWithThePathAdmin" xml:space="preserve">
     <value>с путём</value>
   </data>
-  <data name="logWasChangedAdmin" xml:space="preserve">
-    <value>был изменён</value>
+  <data name="logWasChangedToAdmin" xml:space="preserve">
+    <value>был изменён на</value>
   </data>
   <data name="logWasAddedAdmin" xml:space="preserve">
     <value>был добавлен</value>
@@ -383,5 +383,8 @@
   </data>
   <data name="textBlockReturnToUserCabinetReadWriteObject" xml:space="preserve">
     <value>Вернуться в кабинет</value>
+  </data>
+  <data name="logAndPasswordAdmin" xml:space="preserve">
+    <value>и паролем</value>
   </data>
 </root>

@@ -369,8 +369,8 @@
   <data name="logWithThePathAdmin" xml:space="preserve">
     <value>with the path</value>
   </data>
-  <data name="logWasChangedAdmin" xml:space="preserve">
-    <value>was changed</value>
+  <data name="logWasChangedToAdmin" xml:space="preserve">
+    <value>was changed to</value>
   </data>
   <data name="logWasAddedAdmin" xml:space="preserve">
     <value>was added</value>
@@ -383,5 +383,8 @@
   </data>
   <data name="textBlockReturnToUserCabinetReadWriteObject" xml:space="preserve">
     <value>Return to the cabinet</value>
+  </data>
+  <data name="logAndPasswordAdmin" xml:space="preserve">
+    <value>and password</value>
   </data>
 </root>

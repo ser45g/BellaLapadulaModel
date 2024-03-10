@@ -68,7 +68,6 @@ namespace MultipleUserLoginForm.ViewModel
                     ObjectPath = _openFileDialog.FileName;
                 }
             });
-            
 
             _errorsViewModel = new ErrorsViewModel();
             _errorsObjectViewModel = new ErrorsViewModel();
@@ -89,10 +88,8 @@ namespace MultipleUserLoginForm.ViewModel
 					ObjectName= _selectedObject.Name;
 					ObjectPath=_selectedObject.Path;
 					ObjectSecurityMark= _selectedObject.SecurityMark;
-
 				}
 				OnPropertyChanged(nameof(SelectedObject));
-				
 			}
 		}
 
@@ -115,7 +112,8 @@ namespace MultipleUserLoginForm.ViewModel
 		public SecurityMark ObjectSecurityMark { get { return _objectSecurityMark; } set {
 				_objectSecurityMark = value;
 				OnPropertyChanged(nameof(ObjectSecurityMark));
-			} }
+			} 
+        }
 
         private void AddObject(object obj)
         {
@@ -128,7 +126,6 @@ namespace MultipleUserLoginForm.ViewModel
                 LogObject(CommandAction.Add, o);
                 Objects.Add(o);
             }
-
         }
 
         private void RemoveObject(object obj)
@@ -139,9 +136,17 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void ChangeObject(object obj)
         {
-            RemoveObject(obj);
-            AddObject(obj); 
+            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
 
+            ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
+            ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
+            ObjectViewModel old = Objects.FirstOrDefault((obj) => { return obj.Name == ObjectName; });
+            if (CanCreateObj)
+            {
+                LogObject(CommandAction.Change, o,old);
+                Objects.Remove(old);
+                Objects.Add(o);
+            }
         }
 
         private void ClearObjects(object obj)
@@ -152,6 +157,7 @@ namespace MultipleUserLoginForm.ViewModel
         #endregion
 
         #region Subject Properties: Set of Subjects
+
         private SubjectViewModel _selectedSubject;
         public SubjectViewModel SelectedSubject
         {
@@ -232,9 +238,10 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 Login = SubjectLogin,
                 Password = SubjectPassword,
-                SecurityMark = SubjectSecurityMark
-            })
-            { Name = SubjectName, SecondName = SubjectSecondName };
+                SecurityMark = SubjectSecurityMark,
+                Name = SubjectName,
+                SecondName = SubjectSecondName
+            });
             ValidateSubjectLogin(s.Login);
             ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
             if (CanCreate)
@@ -247,22 +254,22 @@ namespace MultipleUserLoginForm.ViewModel
         private void ChangeSubject(object obj)
         {
 
-            _errorsViewModel.ClearErrors(nameof(SubjectLogin));
+            //_errorsViewModel.ClearErrors(nameof(SubjectLogin));
             SubjectViewModel s = new SubjectViewModel(new Subject()
             {
                 Login = SubjectLogin,
                 Password = SubjectPassword,
-                SecurityMark = SubjectSecurityMark
-            })
-            { Name = SubjectName, SecondName = SubjectSecondName };
+                SecurityMark = SubjectSecurityMark,
+                Name = SubjectName,
+                SecondName = SubjectSecondName }
+            );
             ValidateStringIsNullOrEmpty(s.Login, nameof(SubjectLogin), _errorsViewModel);
             ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
             SubjectViewModel old = Subjects.FirstOrDefault((obj) => { return obj.Login == SubjectLogin; });
             if (CanCreate)
             {
-                LogSubject(CommandAction.Remove, old);
+                LogSubject(CommandAction.Change, s,old);
                 Subjects.Remove(old);
-                LogSubject(CommandAction.Add, s);
                 Subjects.Add(s);
 
             }
@@ -320,25 +327,26 @@ namespace MultipleUserLoginForm.ViewModel
 
         private enum CommandAction { Add, Remove,Change,Clear }
 
-        void LogObject(CommandAction comAct, ObjectViewModel obj)
+        void LogObject(CommandAction comAct, ObjectViewModel obj,ObjectViewModel old=null)
         {
             string str = "";
             switch (comAct) {
                 case CommandAction.Add:
                     str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
-                        $" {obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path}" +
-                        $" {LocalizedStrings.Instance["logWasAddedAdmin"]} ";
+                        $"{obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
+                        $"{LocalizedStrings.Instance["logWasAddedAdmin"]} ";
                     break;
                 case CommandAction.Remove:
                     str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
-                        $" {obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
+                        $"{obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
                         $"{LocalizedStrings.Instance["logWasRemovedAdmin"]}";
 
                     break;
                 case CommandAction.Change:
                     str=$"{LocalizedStrings.Instance["logTheObjectAdmin"]} " +
-                        $"{obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path} " +
-                        $"{LocalizedStrings.Instance["logWasChangedAdmin"]}";
+                        $"{old?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {old?.Path} " +
+                        $"{LocalizedStrings.Instance["logWasChangedToAdmin"]} {LocalizedStrings.Instance["logTheObjectAdmin"]} " +
+                        $"{obj?.Name} {LocalizedStrings.Instance["logWithThePathAdmin"]} {obj?.Path}";
 
                     break;
                 case CommandAction.Clear:
@@ -349,31 +357,34 @@ namespace MultipleUserLoginForm.ViewModel
             LogWithDataAndOrder(str);
         }
 
-        void LogSubject(CommandAction comAct, SubjectViewModel subj)
+        void LogSubject(CommandAction comAct, SubjectViewModel subj,SubjectViewModel old = null)
         {
             string str = "";
             switch (comAct)
             {
                 case CommandAction.Add:
-                    str=  $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName}" +
-                        $" {LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
+                    str=$"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName} " +
+                        $"{LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
                         $"{LocalizedStrings.Instance["logWasAddedAdmin"]}";
                     break;
                 case CommandAction.Remove:
-                    str= $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName} " +
+                    str=$"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName} " +
                         $"{LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
                         $"{LocalizedStrings.Instance["logWasRemovedAdmin"]}";
 
                     break;
                 case CommandAction.Change:
-                    str= $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName}" +
-                        $" {LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
-                        $"{LocalizedStrings.Instance["logWasChangedAdmin"]}";
+                    str=$"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {old?.Name} {old?.SecondName} " +
+                        $"{LocalizedStrings.Instance["logWithTheLoginAdmin"]} {old?.Login} " +
+                        $"{LocalizedStrings.Instance["logAndPasswordAdmin"]} {old?.Password}" +
+                        $"{LocalizedStrings.Instance["logWasChangedToAdmin"]} " +
+                        $"{LocalizedStrings.Instance["logTheSubjectAdmin"]} {subj?.Name} {subj?.SecondName} " +
+                        $"{LocalizedStrings.Instance["logWithTheLoginAdmin"]} {subj?.Login} " +
+                        $"{LocalizedStrings.Instance["logAndPasswordAdmin"]} {subj?.Password}";
 
                     break;
                 case CommandAction.Clear:
                     str= LocalizedStrings.Instance["logAllSubjectsWerePurgedAdmin"];
-
                     break;
             }
             LogWithDataAndOrder(str);

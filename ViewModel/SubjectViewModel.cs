@@ -10,11 +10,13 @@ namespace MultipleUserLoginForm.ViewModel
     public class SubjectViewModel:ViewModelBase
     {
         private Model.Subject _subject;
+
         public SubjectViewModel(Model.Subject subj)
         {
             this._subject = subj;
         }
         public SubjectViewModel() { _subject = new Subject(); }
+
         public string Login { get {return _subject.Login; }
             set { _subject.Login = value; OnPropertyChanged(nameof(Login)); }
         }
@@ -23,9 +25,7 @@ namespace MultipleUserLoginForm.ViewModel
             get { return _subject.Password; }
             set { _subject.Password = value; OnPropertyChanged(nameof(Password)); }
         }
-        /// <summary>
-        /// not cool, I better improve it
-        /// </summary>
+      
         public SecurityMark SecurityMark
         {
             get { return _subject.SecurityMark; }
@@ -34,17 +34,17 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(SecurityMark));
             }
         }
-        private string _name;
         public string Name
         {
-            get { return _name; }
-            set { _name = value; OnPropertyChanged(nameof(Name)); }
+            get { return _subject.Name; }
+            set { _subject.Name = value; 
+                OnPropertyChanged(nameof(Name)); }
         }
-        private string _secondName;
         public string SecondName
         {
-            get { return _secondName; }
-            set { _secondName = value; OnPropertyChanged(nameof(SecondName)); }
+            get { return _subject.SecondName; }
+            set { _subject.SecondName = value; 
+                OnPropertyChanged(nameof(SecondName)); }
         }
     }
 }

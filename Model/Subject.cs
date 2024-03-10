@@ -11,5 +11,7 @@ namespace MultipleUserLoginForm.Model
         public string Login { get; set; }
         public string Password { get; set; }
         public SecurityMark SecurityMark { get; set; }
+        public string Name{ get; set; }
+        public string SecondName{ get; set; }
     }
 }
