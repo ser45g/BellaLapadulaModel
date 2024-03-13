@@ -1,4 +1,5 @@
-﻿using MultipleUserLoginForm.Model;
+﻿using MultipleUserLoginForm.LocalizationHelper;
+using MultipleUserLoginForm.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultipleUserLoginForm.ViewModel
 {
-    public class SubjectViewModel:ViewModelBase
+    public class SubjectViewModel : ViewModelBase
     {
         private Model.Subject _subject;
 
@@ -17,7 +18,9 @@ namespace MultipleUserLoginForm.ViewModel
         }
         public SubjectViewModel() { _subject = new Subject(); }
 
-        public string Login { get {return _subject.Login; }
+        public Subject GetSubject() => _subject;
+
+        public string Login { get { return _subject.Login; }
             set { _subject.Login = value; OnPropertyChanged(nameof(Login)); }
         }
         public string Password
@@ -25,15 +28,17 @@ namespace MultipleUserLoginForm.ViewModel
             get { return _subject.Password; }
             set { _subject.Password = value; OnPropertyChanged(nameof(Password)); }
         }
-      
+
         public SecurityMark SecurityMark
         {
             get { return _subject.SecurityMark; }
             set {
                 _subject.SecurityMark = value;
+                OnPropertyChanged(nameof(SecurityMarkName));
                 OnPropertyChanged(nameof(SecurityMark));
             }
         }
+        public string SecurityMarkName { get => LocalizedStrings.Instance[$"SecurityMark{SecurityMark.ToString()}"]; }
         public string Name
         {
             get { return _subject.Name; }

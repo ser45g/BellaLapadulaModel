@@ -387,4 +387,64 @@
   <data name="logAndPasswordAdmin" xml:space="preserve">
     <value>и паролем</value>
   </data>
+  <data name="mesBoxToRemoveObjectNeedToSelectAdmin" xml:space="preserve">
+    <value>Для удаления объекта необходимо выбрать объект из таблицы. Попробуйте ещё раз</value>
+  </data>
+  <data name="mesBoxWarningAdmin" xml:space="preserve">
+    <value>Предупреждение</value>
+  </data>
+  <data name="mesBoxToRemoveSubjectNeedToSelectAdmin" xml:space="preserve">
+    <value>Для удаления субъекта необходимо выбрать субъект в таблице. Попробуйте ещё раз</value>
+  </data>
+  <data name="mesBoxAreYouSureDeleteAllObjectsAdmin" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить все объекты? Вы не сможете восстановить их далее</value>
+  </data>
+  <data name="mesBoxAreYouSureDeleteAllSubjectsAdmin" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить все субъекты? Вы не сможете восстановить их далее</value>
+  </data>
+  <data name="SecurityMarkUnclassified" xml:space="preserve">
+    <value>Публичная</value>
+  </data>
+  <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
+    <value>ДСП</value>
+  </data>
+  <data name="SecurityMarkConfidential" xml:space="preserve">
+    <value>Конфиденциальная</value>
+  </data>
+  <data name="SecurityMarkSecret" xml:space="preserve">
+    <value>Секретная</value>
+  </data>
+  <data name="SecurityMarkTopSecret" xml:space="preserve">
+    <value>Совершенно секретная</value>
+  </data>
+  <data name="hintSearchForAnObjectUserCabinet" xml:space="preserve">
+    <value>Найти объект с именем...</value>
+  </data>
+  <data name="hintSearchForASubjectAccessMatrixAdmin" xml:space="preserve">
+    <value>Найти субъект с логином...</value>
+  </data>
+  <data name="mesError" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="mesThisTypeOfFileINotSupportedUserCabinet" xml:space="preserve">
+    <value>Тип данного файла не поддерживается этой программой</value>
+  </data>
+  <data name="msgToChangeObjectNeedSelectAdmin" xml:space="preserve">
+    <value>Для изменения объекта необходимо выбрать объект в таблице. Попробуйте ещё раз</value>
+  </data>
+  <data name="msgToChangeSubjectNeedSelectAdmin" xml:space="preserve">
+    <value>Для изменения субъекта необходимо выбрать субъект в таблице. Попробуйте ещё раз</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>Чтение</value>
+  </data>
+  <data name="Write" xml:space="preserve">
+    <value>Запись</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Нет</value>
+  </data>
 </root>

@@ -172,7 +172,7 @@
 
             <Grid HorizontalAlignment="Stretch"
              Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=ActualWidth, Mode=OneWay,
-                Converter={StaticResource TreeViewActualSizeConverter}}" Height="50"  
+                Converter={StaticResource TreeViewActualSizeConverter}}" Height="Auto"  
                   
                  >
                 <Grid.ColumnDefinitions>
@@ -194,9 +194,10 @@
                 <TextBlock
                     Grid.Column="2" FontSize="16"
                     VerticalAlignment="Center"
+                    Margin="5"
                     FontWeight="Bold"
                     Foreground="Red"
-                    Text="{Binding Right}" />
+                    Text="{Binding RightName}" />
 
 
 
@@ -215,7 +216,7 @@
         <Border BorderBrush="DarkBlue" BorderThickness="2.5" CornerRadius="10">
               <Grid HorizontalAlignment="Stretch"
                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=ActualWidth, Mode=OneWay,
-    Converter={StaticResource TreeViewActualSizeConverter}}" Height="75"
+    Converter={StaticResource TreeViewActualSizeConverter}}" Height="Auto"
               >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -234,11 +235,12 @@
                 FontWeight="SemiBold"
                     TextWrapping="Wrap"
                 Text="{Binding Subject.Login}" 
-                    FontSize="16"/>
+                    FontSize="16"
+                    />
 
-            <TextBlock Grid.Column="2" VerticalAlignment="Center"
-                       FontSize="16" TextWrapping="Wrap">
-                <TextBlock.Inlines>
+                <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                       FontSize="16" TextWrapping="Wrap" Margin="5">
+                    <TextBlock.Inlines>
                     <Run FontWeight="Medium" Text="{Binding Subject.Name}" />
 
                     <Run FontWeight="Medium" Text="{Binding Subject.SecondName}" />

@@ -1,4 +1,5 @@
 ﻿using MultipleUserLoginForm.Commands;
+using MultipleUserLoginForm.LocalizationHelper;
 using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Services;
 using MultipleUserLoginForm.Stores;
@@ -21,6 +22,7 @@ namespace MultipleUserLoginForm.ViewModel
         private SubjectViewModel _subject;
         public SubjectViewModel Subject { get { return _subject; } set { _subject = value; OnPropertyChanged(nameof(Subject)); } }
         public Right Right { get; set; }
+        public string RightName { get => LocalizedStrings.Instance[Right.ToString()]; }
 
         public ICommand ReadCommand { get; set; }
         public ICommand WriteCommand { get; set;}

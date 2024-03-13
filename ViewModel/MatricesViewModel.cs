@@ -1,4 +1,5 @@
-﻿using MultipleUserLoginForm.Model;
+﻿using MultipleUserLoginForm.Data;
+using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Utilities;
 using System;
 using System.Collections.Generic;
@@ -31,14 +32,15 @@ namespace MultipleUserLoginForm.ViewModel
 
         public MatricesViewModel()
         {
-            objects = new ObservableCollection<ObjectViewModel>();
-            subjects = new ObservableCollection<SubjectViewModel>();
+            Objects = new ObservableCollection<ObjectViewModel>();
+            Subjects = new ObservableCollection<SubjectViewModel>();
             _log = new ObservableCollection<string>();
+            Admins = new List<SubjectViewModel>();
 
             string path = Environment.CurrentDirectory;
             _fileIOAdmins = new FileIO<List<SubjectViewModel>>(path+@"\Admins.json");
-            _fileIOObj = new FileIO<List<ObjectViewModel>>(path + @"\Objects.json");
-            _fileIOSubj = new FileIO<List<SubjectViewModel>>(path + @"\Subjects.json");
+            //_fileIOObj = new FileIO<List<ObjectViewModel>>(path + @"\Objects.json");
+            //_fileIOSubj = new FileIO<List<SubjectViewModel>>(path + @"\Subjects.json");
             _fileIOLog= new FileStrings(path+@"\Log.txt");
             Load();         
         }
@@ -47,13 +49,17 @@ namespace MultipleUserLoginForm.ViewModel
         {
             try
             {
-                objects= new ObservableCollection<ObjectViewModel>(_fileIOObj.LoadData());
-                subjects= new ObservableCollection<SubjectViewModel>(_fileIOSubj.LoadData());
+               // objects= new ObservableCollection<ObjectViewModel>(_fileIOObj.LoadData());
+                //subjects= new ObservableCollection<SubjectViewModel>(_fileIOSubj.LoadData());
+
+                Objects= new ObservableCollection<ObjectViewModel>((from o in ModelData.GetObjects() select new ObjectViewModel(o)).ToList());
+                Subjects= new ObservableCollection<SubjectViewModel>((from s in ModelData.GetSubjects() select new SubjectViewModel(s)).ToList());
                 Log= new ObservableCollection<string>(_fileIOLog.LoadData());
                 Admins= _fileIOAdmins.LoadData();
+
             }catch (Exception ex)
             {
-                MessageBox.Show("Cannot load data", "Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error",MessageBoxButton.OK,MessageBoxImage.Error);
                 Application.Current.Shutdown();
             }
         }
@@ -196,7 +202,7 @@ namespace MultipleUserLoginForm.ViewModel
 
         }
 
-        public List<SubjectViewModel> Admins { get; set; }=new List<SubjectViewModel>();
+        public List<SubjectViewModel> Admins { get; set; }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -206,8 +212,8 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     // TODO: dispose managed state (managed objects)
                     _fileIOAdmins.SaveData(Admins);
-                    _fileIOObj.SaveData(objects.ToList());
-                    _fileIOSubj.SaveData(subjects.ToList()); 
+                   // _fileIOObj.SaveData(objects.ToList());
+                   // _fileIOSubj.SaveData(subjects.ToList()); 
                     _fileIOLog.SaveData(Log.Take(_logMaxLines));
                 }
 

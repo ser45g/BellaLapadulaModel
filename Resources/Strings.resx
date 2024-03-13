@@ -387,4 +387,64 @@
   <data name="logAndPasswordAdmin" xml:space="preserve">
     <value>and password</value>
   </data>
+  <data name="mesBoxToRemoveObjectNeedToSelectAdmin" xml:space="preserve">
+    <value>To remove an object you have to select one in the data grid. Please, try again</value>
+  </data>
+  <data name="mesBoxWarningAdmin" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="mesBoxToRemoveSubjectNeedToSelectAdmin" xml:space="preserve">
+    <value>To remove a subject you have to select one in the data grid. Please, try again</value>
+  </data>
+  <data name="mesBoxAreYouSureDeleteAllObjectsAdmin" xml:space="preserve">
+    <value>Are you sure you want to delete all the objects? There's no way you could resore them</value>
+  </data>
+  <data name="mesBoxAreYouSureDeleteAllSubjectsAdmin" xml:space="preserve">
+    <value>Are you sure you want to delete all the subjects? There's no way you could resore them</value>
+  </data>
+  <data name="SecurityMarkUnclassified" xml:space="preserve">
+    <value>Unclassified</value>
+  </data>
+  <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
+    <value>UnclassifiedButSensetive</value>
+  </data>
+  <data name="SecurityMarkConfidential" xml:space="preserve">
+    <value>Confidential</value>
+  </data>
+  <data name="SecurityMarkSecret" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="SecurityMarkTopSecret" xml:space="preserve">
+    <value>TopSecret</value>
+  </data>
+  <data name="hintSearchForAnObjectUserCabinet" xml:space="preserve">
+    <value>Search for an object called...</value>
+  </data>
+  <data name="hintSearchForASubjectAccessMatrixAdmin" xml:space="preserve">
+    <value>Search for a subject with the login...</value>
+  </data>
+  <data name="mesError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="mesThisTypeOfFileINotSupportedUserCabinet" xml:space="preserve">
+    <value>Sorry! This type of file isn't supported for now, it can't be worked with</value>
+  </data>
+  <data name="msgToChangeObjectNeedSelectAdmin" xml:space="preserve">
+    <value>To change an object you need to select one in the grid. Please, try again</value>
+  </data>
+  <data name="msgToChangeSubjectNeedSelectAdmin" xml:space="preserve">
+    <value>To change an subject you need to select one in the grid. Please, try again</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="Write" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

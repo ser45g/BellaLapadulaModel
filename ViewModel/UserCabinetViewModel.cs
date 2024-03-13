@@ -6,13 +6,16 @@ using MultipleUserLoginForm.Stores;
 using MultipleUserLoginForm.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -40,9 +43,16 @@ namespace MultipleUserLoginForm.ViewModel
         }
 
 
-        private void Read(object obj)
+        private  void Read(object obj)
         {
             SelectedItem = (SecurityRightViewModel)obj;
+            bool isSupported = SupportedExtensions(SelectedItem.Object.Path);
+            if (!isSupported)
+            {
+                MessageBox.Show(LocalizedStrings.Instance["mesThisTypeOfFileINotSupportedUserCabinet"],
+                    LocalizedStrings.Instance["mesError"],MessageBoxButton.OK,MessageBoxImage.Stop);
+                return;
+            }
             try
             {
                 if (!File.Exists(SelectedItem.Object.Path))
@@ -54,7 +64,8 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 using (var reader = File.OpenText(SelectedItem.Object.Path))
                 {
-                    string s = reader.ReadToEnd();
+                    //string s = await reader.ReadToEndAsync();
+                    string s= reader.ReadToEnd();
                     NavigateCommand<ReadWriteObjectViewModel> navigateCommand = new NavigateCommand<ReadWriteObjectViewModel>(
                         new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel(s, true,
                         SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
@@ -72,8 +83,17 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void Write(object obj)
         {
+           
+           
             SelectedItem = (SecurityRightViewModel)obj;
-
+            
+            bool isSupported=SupportedExtensions(SelectedItem.Object.Path);
+            if (isSupported==false)
+            {
+                MessageBox.Show(LocalizedStrings.Instance["mesThisTypeOfFileINotSupportedUserCabinet"],
+                     LocalizedStrings.Instance["msgError"], MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
             if (SelectedItem.Right == Right.All)
             {
                 try
@@ -167,6 +187,25 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
 
+        private bool SupportedExtensions(string fullPath)
+        {
+            string ext=Path.GetExtension(fullPath);
+            if (ext == ".pdf" || ext == ".doc"||ext==".docx"||ext==".xlsx"||ext==".rtf")
+                return false;
+            return true;
+        }
+
+        public ICollectionView FilteredView { get; set; }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText;}
+            set { _searchText = value;
+                FilteredView.Filter = DoescollectionContainName;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
         public ICommand NavigateLoginCommand { get; }
 
         public SubjectViewModel Account { get { return _account; } }
@@ -185,7 +224,11 @@ namespace MultipleUserLoginForm.ViewModel
                 
             
             } 
-
+        private bool DoescollectionContainName(object obj)
+        {
+            SecurityRightViewModel s = obj as SecurityRightViewModel;
+            return s.Object.Name.ToLower().Contains(SearchText.ToLower());
+        }
         public UserCabinetViewModel(SubjectViewModel account,NavigationStore ns, MatricsStore ms)
         {
             _matricsStore = ms;
@@ -196,6 +239,8 @@ namespace MultipleUserLoginForm.ViewModel
             ReadCommand = new RelayCommand(Read);
             WriteCommand = new RelayCommand(Write);
             ExecuteCommand = new RelayCommand(Execute);
+
+            FilteredView = new CollectionViewSource { Source = AvailableObjects }.View;
         }
     }
 }

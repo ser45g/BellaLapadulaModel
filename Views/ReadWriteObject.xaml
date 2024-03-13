@@ -15,23 +15,30 @@
     lex:ResxLocalizationProvider.DefaultDictionary="Strings"
     Background="AliceBlue"
     mc:Ignorable="d">
-    <DockPanel>
-        <Grid Margin="10,5" DockPanel.Dock="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="10,5" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
+            <ScrollViewer Grid.Column="1"
+                Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+                 <TextBlock
+                
                 Margin="0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 TextWrapping="Wrap"
                 FontSize="22"
                 Text="{Binding Object.Name}" />
+            </ScrollViewer>
+           
             <Button 
                 Grid.Column="3"
                     Command="{Binding NavigateLoginCommand}"
@@ -62,7 +69,7 @@
             </Button>
         </Grid>
 
-        <Grid>
+        <Grid Grid.Row="1">
             <TextBox
                 Margin="10,5"
                 HorizontalAlignment="Stretch"
@@ -71,10 +78,11 @@
                 AcceptsReturn="True"
                 Background="AliceBlue"
                 Foreground="Black"
+                VerticalScrollBarVisibility="Auto"
                 IsReadOnly="{Binding IsReadonly}"
                 Text="{Binding Text}"
-                TextWrapping="Wrap" />
+                TextWrapping="Wrap"  />
         </Grid>
-    </DockPanel>
+    </Grid>
 
 </UserControl>

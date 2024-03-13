@@ -6,15 +6,37 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>lock_padlock_icon_231468.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="ICON4801.png" />
+    <None Remove="Images\lock_folder_padlock_file_security_icon_219522.ico" />
+    <None Remove="Images\log-in.png" />
+    <None Remove="ObjectIcons\doc.png" />
+    <None Remove="ObjectIcons\pdf.png" />
+    <None Remove="ObjectIcons\rtf.png" />
+    <None Remove="ObjectIcons\txt.png" />
+    <None Remove="ObjectIcons\unknown.png" />
+    <None Remove="ObjectIcons\xlsx.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="lock_padlock_icon_231468.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\lock_folder_padlock_file_security_icon_219522.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.27">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
     <PackageReference Include="WPFLocalizeExtension" Version="3.10.0" />
@@ -36,6 +58,13 @@
     <Resource Include="Images\ICON4801.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\log-in.png" />
+    <Resource Include="ObjectIcons\doc.png" />
+    <Resource Include="ObjectIcons\pdf.png" />
+    <Resource Include="ObjectIcons\rtf.png" />
+    <Resource Include="ObjectIcons\txt.png" />
+    <Resource Include="ObjectIcons\unknown.png" />
+    <Resource Include="ObjectIcons\xlsx.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,10 +107,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

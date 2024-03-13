@@ -61,11 +61,65 @@ namespace MultipleUserLoginForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to en-US.
+        ///   Looks up a localized string similar to /ObjectIcons/unknown.png.
         /// </summary>
-        public static string CurrentCulture {
+        public static string _default {
             get {
-                return ResourceManager.GetString("CurrentCulture", resourceCulture);
+                return ResourceManager.GetString("default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/doc.png.
+        /// </summary>
+        public static string doc {
+            get {
+                return ResourceManager.GetString("doc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/doc.png.
+        /// </summary>
+        public static string docx {
+            get {
+                return ResourceManager.GetString("docx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/pdf.png.
+        /// </summary>
+        public static string pdf {
+            get {
+                return ResourceManager.GetString("pdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/rtf.png.
+        /// </summary>
+        public static string rtf {
+            get {
+                return ResourceManager.GetString("rtf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/txt.png.
+        /// </summary>
+        public static string txt {
+            get {
+                return ResourceManager.GetString("txt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /ObjectIcons/xlsx.png.
+        /// </summary>
+        public static string xlsx {
+            get {
+                return ResourceManager.GetString("xlsx", resourceCulture);
             }
         }
     }

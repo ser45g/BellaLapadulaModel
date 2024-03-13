@@ -34,12 +34,16 @@
 
 
         </Grid.Resources>
+
+       
+        
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock
                 Margin="20"
                  
                 FontSize="38"
                 Foreground="White"
+                TextWrapping="Wrap"
                 Name="textBlockUserLogin"
                 Text="{lex:Loc}"
                 TextAlignment="Center" FontFamily="Rage Italic" />
@@ -58,75 +62,67 @@
             </Grid>
 
 
-            <StackPanel
-                Margin="20,10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                <materialDesign:PackIcon
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="icons"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                
+                
+                
+                 <materialDesign:PackIcon
+                       Margin="10"
                     Width="25"
                     Height="25"
                     Foreground="AliceBlue"
-                    Kind="User" />
+                    Kind="User" Grid.Column="0" />
                 <TextBox
                     Name="txtUserNameUserLoginHint"
-                    Width="250"
-                    Margin="20,0"
+                    Grid.Column="1" 
+                    Margin="10"
                     materialDesign:HintAssist.Hint="{lex:Loc}"
                     BorderBrush="AliceBlue"
-                    CaretBrush="CadetBlue"
+                   
                     FontSize="20"
                     Foreground="AliceBlue"
-                    SelectionBrush="Coral"
+                   TextWrapping="Wrap"
                     Validation.ErrorTemplate="{StaticResource Validation}">
                     <TextBox.Text>
                         <Binding Path="Login" UpdateSourceTrigger="PropertyChanged" />
 
                     </TextBox.Text>
                 </TextBox>
-            </StackPanel>
-            <StackPanel
-                Margin="20,10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
+                
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="icons"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon
                     Width="25"
                     Height="25"
                     Foreground="AliceBlue"
-                    Kind="Lock" />
+                    Kind="Lock" 
+                     Margin="10"
+                     Grid.Column="0" />
                 <pwd:BindablePasswordBox
                     Name="txtPwd"
-                    Width="250"
-                    Margin="20,0"
-                    materialDesign:HintAssist.Hint="********"
+                   
+                    Margin="10"
+                    materialDesign:HintAssist.Hint="***********"
                     BorderBrush="AliceBlue"
                     FontSize="20"
                     Foreground="AliceBlue"
                     Password="{Binding Password}"
-                    
-                    Validation.ErrorTemplate="{StaticResource Validation}" />
-            </StackPanel>
-
-            <!--   <Grid Margin="20,10" HorizontalAlignment="Center">
-                <TextBlock
-                    Margin="90,5,30,5"
-                    HorizontalAlignment="Right"
-                    FontSize="16"
-                    
-                    Foreground="#CCC">
-                    <TextBlock.Inlines>
-                        <Run Text="{lex:Loc}" x:Name="runForgotPwd"/>
-
-                        <Run
-                            FontWeight="DemiBold"
-                            Foreground="AntiqueWhite"
-                            Text="{lex:Loc}" 
-                            x:Name="runResetPwd"/>
-                    </TextBlock.Inlines>
-
-                </TextBlock>
-
-            </Grid> -->
-           
+                     Grid.Column="1" Grid.Row="1"
+                    Validation.ErrorTemplate="{StaticResource Validation}" /> 
+            </Grid>
+                
+         
+         
 
             <StackPanel Margin="20,60,20,60" HorizontalAlignment="Center">
                 <Button

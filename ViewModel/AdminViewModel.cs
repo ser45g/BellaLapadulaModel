@@ -25,6 +25,9 @@ using WPFLocalizeExtension.Engine;
 using System.Resources;
 using MultipleUserLoginForm.Properties;
 using MultipleUserLoginForm.LocalizationHelper;
+using MultipleUserLoginForm.Data;
+using System.Windows.Data;
+using System.Reflection;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -60,6 +63,7 @@ namespace MultipleUserLoginForm.ViewModel
 			ChangeSubjectCommand = new RelayCommand((obj) => ChangeSubject(obj));
 
             SetSelectedItemCommand = new RelayCommand((obj) => { TreeViewSelectedItem = obj; });
+            TreeSourceFiltered = new CollectionViewSource { Source = TreeSource }.View;
 
             BrowseObjectPathCommand = new RelayCommand((obj) =>
             {
@@ -73,6 +77,11 @@ namespace MultipleUserLoginForm.ViewModel
             _errorsObjectViewModel = new ErrorsViewModel();
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
             _errorsObjectViewModel.ErrorsChanged += ErrorsObjectViewModel_Errorschanged;
+
+
+            //ComboSource = new List<KeyValuePair<SecurityMark, string>>();
+            //SecurityMark mark = SecurityMark.Secret;
+            //ComboSource=mark.GetValuesForComboBox<SecurityMark>();
         }
 
         #region Object Properties: Set of Objects
@@ -114,9 +123,12 @@ namespace MultipleUserLoginForm.ViewModel
 				OnPropertyChanged(nameof(ObjectSecurityMark));
 			} 
         }
-
+        bool _objectBeingAdded = false;
         private void AddObject(object obj)
         {
+            if (_objectBeingAdded == true)
+                return;
+            _objectBeingAdded = true;
             ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
 
             ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
@@ -124,14 +136,27 @@ namespace MultipleUserLoginForm.ViewModel
             if (CanCreateObj)
             {
                 LogObject(CommandAction.Add, o);
+                ModelData.AddObjectToDb(o);
                 Objects.Add(o);
             }
+            _objectBeingAdded = false;
         }
 
         private void RemoveObject(object obj)
         { 
-            LogObject(CommandAction.Remove, SelectedObject); 
-            Objects.Remove(SelectedObject);
+            if(SelectedObject != null)
+            {   
+                LogObject(CommandAction.Remove, SelectedObject); 
+                ModelData.RemoveObjectToDb(SelectedObject);
+                Objects.Remove(SelectedObject);
+
+            }
+            else
+            {
+                MessageBox.Show(LocalizedStrings.Instance["mesBoxToRemoveObjectNeedToSelectAdmin"], 
+                    LocalizedStrings.Instance["mesBoxWarningAdmin"], MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+           
         }
 
         private void ChangeObject(object obj)
@@ -140,18 +165,29 @@ namespace MultipleUserLoginForm.ViewModel
 
             ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
             ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
-            ObjectViewModel old = Objects.FirstOrDefault((obj) => { return obj.Name == ObjectName; });
+            ObjectViewModel old = SelectedObject;
+            if (old == null) {
+                MessageBox.Show(LocalizedStrings.Instance["msgToChangeObjectNeedSelectAdmin"], LocalizedStrings.Instance["mesBoxWarningAdmin"],
+                    MessageBoxButton.OK,MessageBoxImage.Warning);
+                return; 
+            }
             if (CanCreateObj)
             {
                 LogObject(CommandAction.Change, o,old);
+                ModelData.ChangeObjectToDb(o,old);
                 Objects.Remove(old);
                 Objects.Add(o);
+
             }
         }
 
         private void ClearObjects(object obj)
         {
+            bool clear = MessageBox.Show(LocalizedStrings.Instance["mesBoxAreYouSureDeleteAllObjectsAdmin"],
+                LocalizedStrings.Instance["mesBoxWarningAdmin"], MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK;
+            if (!clear) { return; }
             LogObject(CommandAction.Clear, null);
+            ModelData.ClearObjectsDb();
             Objects.Clear(); 
         }
         #endregion
@@ -248,13 +284,13 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 LogSubject(CommandAction.Add, s);
                 Subjects.Add(s);
+                ModelData.AddSubjectToDb(s);
             }
         }
 
         private void ChangeSubject(object obj)
         {
 
-            //_errorsViewModel.ClearErrors(nameof(SubjectLogin));
             SubjectViewModel s = new SubjectViewModel(new Subject()
             {
                 Login = SubjectLogin,
@@ -265,10 +301,17 @@ namespace MultipleUserLoginForm.ViewModel
             );
             ValidateStringIsNullOrEmpty(s.Login, nameof(SubjectLogin), _errorsViewModel);
             ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
-            SubjectViewModel old = Subjects.FirstOrDefault((obj) => { return obj.Login == SubjectLogin; });
+            SubjectViewModel old = SelectedSubject;
+            if (old == null)
+            {
+                MessageBox.Show(LocalizedStrings.Instance["msgToChangeSubjectNeedSelectAdmin"], LocalizedStrings.Instance["mesBoxWarningAdmin"],
+                   MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             if (CanCreate)
             {
                 LogSubject(CommandAction.Change, s,old);
+                ModelData.ChangeSubjectToDb(s,old);
                 Subjects.Remove(old);
                 Subjects.Add(s);
 
@@ -277,13 +320,30 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void RemoveSubject(object obj)
         {
-            LogSubject(CommandAction.Remove, SelectedSubject); 
-            Subjects.Remove(SelectedSubject); 
+            if(SelectedSubject != null)
+            {   
+                LogSubject(CommandAction.Remove, SelectedSubject); 
+                ModelData.RemoveSubjectToDb(SelectedSubject);
+                Subjects.Remove(SelectedSubject);
+
+            }
+            else
+            {
+                MessageBox.Show(LocalizedStrings.Instance["mesBoxToRemoveSubjectNeedToSelectAdmin"],
+                    LocalizedStrings.Instance["mesBoxWarningAdmin"], MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            }
+
         }
         
         private void ClearSubjects(object obj)
         { 
+            bool clear= MessageBox.Show(LocalizedStrings.Instance["mesBoxAreYouSureDeleteAllSubjectsAdmin"],
+                 LocalizedStrings.Instance["mesBoxWarningAdmin"],
+                 MessageBoxButton.OKCancel, MessageBoxImage.Information)==MessageBoxResult.OK;
+            if (!clear) { return; }
             LogSubject(CommandAction.Clear, null);
+            ModelData.ClearSubjectsDb();
             Subjects.Clear();
         }
         #endregion
@@ -292,11 +352,21 @@ namespace MultipleUserLoginForm.ViewModel
 
         private ObservableCollection<SubjectViewModel> subjects ;
 		public ObservableCollection<SubjectViewModel> Subjects {  get {
-				return subjects;
-            } }
+				return (subjects);
+            }
+            set {
+                subjects = value;
+                OnPropertyChanged(nameof(Subjects));
+            }
+        }
 		private ObservableCollection<ObjectViewModel> objects ;
-		public ObservableCollection<ObjectViewModel> Objects {  get { return 
-					objects; } }
+		public ObservableCollection<ObjectViewModel> Objects {  get {
+                return (objects); 
+            }
+            set { objects = value;
+                OnPropertyChanged(nameof(Objects)); 
+            }
+        }
 
 		public ICommand AddObjectCommand { get; }
 		public ICommand ChangeObjectCommand { get; }
@@ -312,7 +382,21 @@ namespace MultipleUserLoginForm.ViewModel
 
         public ICommand BrowseObjectPathCommand {  get; }
 
-      
+        public List<string> _comboSource;
+        public List< string> ComboSource { get=>_comboSource; set { 
+                _comboSource = value;
+                OnPropertyChanged(nameof(ComboSource));
+            } }
+
+        private void SetLocalizedComboSource() {
+            if (ComboSource == null) return;
+            ComboSource.Clear();
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"]);
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensetive"]);
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkConfidential"]);
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkSecret"]);
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"]);
+        }
         #region Log
         private ObservableCollection<string> _log;
         public ObservableCollection<string> Log
@@ -388,7 +472,7 @@ namespace MultipleUserLoginForm.ViewModel
                     break;
             }
             LogWithDataAndOrder(str);
-
+            
         }
 
         void LogWithDataAndOrder(string str)
@@ -409,6 +493,7 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.BellaLapadula;
                     LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToBella-LapadulaAdmin"]);
+                    
                     OnPropertyChanged(nameof(TreeSource));
 
                 }
@@ -451,6 +536,8 @@ namespace MultipleUserLoginForm.ViewModel
                     LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                     LocalizeDictionary.Instance.SetCultureCommand.Execute("en-US");
                 }
+                Objects = new ObservableCollection<ObjectViewModel>(Objects);
+                Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsEnglishChecked));
             }
         }
@@ -466,7 +553,9 @@ namespace MultipleUserLoginForm.ViewModel
                     LocalizeDictionary.Instance.SetCultureCommand.Execute("ru-RU");
 
                 }
-                    OnPropertyChanged(nameof(IsRussianChecked));
+                OnPropertyChanged(nameof(Objects));
+                OnPropertyChanged(nameof(Subjects));
+                OnPropertyChanged(nameof(IsRussianChecked));
                 
             }
         }
@@ -480,10 +569,44 @@ namespace MultipleUserLoginForm.ViewModel
         {
             get
             {
-                return new ObservableCollection<SubjectTreeViewModel>(from s in Subjects select
+                _treeSource = new ObservableCollection<SubjectTreeViewModel>(from s in Subjects
+                            where DoesSubjectContain(s) select
                          new SubjectTreeViewModel(s, _matricsStore.CurrentMatrics));
+
+                return _treeSource;
             }
            
+           
+        }
+        private ICollectionView _treeSourceFiltered;
+        public ICollectionView TreeSourceFiltered { get { return _treeSourceFiltered; }
+            set
+            {
+                _treeSourceFiltered=value;
+                OnPropertyChanged(nameof(TreeSourceFiltered));
+            }
+        }
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get { return _searchText; }
+            set { _searchText = value;
+                OnPropertyChanged(nameof(TreeSource));
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
+        //private bool DoesTreeSubjectContain(object subject)
+        //{
+        //    SubjectTreeViewModel subjectTree = (SubjectTreeViewModel)subject;
+        //    return subjectTree.Subject.Login.ToLower().Contains(SearchText.ToLower());
+        //}
+        private bool DoesSubjectContain(SubjectViewModel subject)
+        {
+            if (SearchText == null)
+                return true;
+            return subject.Login.ToLower().Contains(SearchText.ToLower());
         }
 
         private object _treeViewSelectedItem;
@@ -507,7 +630,7 @@ namespace MultipleUserLoginForm.ViewModel
                     IsWritable=false;
                     IsExecutable=false;
 
-                    ChosenObjectName = subj.Subject.Name;
+                    ChosenObjectName = subj.Subject.Login;
                     ChosenObjectSecurityMark = subj.Subject.SecurityMark;
                     IsObjectOrSubject = LocalizedStrings.Instance["textBlockSUBJECTAccessMatrix"];
                 }
@@ -567,15 +690,17 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void SubjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(TreeSource));
+           OnPropertyChanged(nameof(TreeSource));
         }
 
         private void ObjectsChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
+            
             OnPropertyChanged(nameof(TreeSource));
+
         }
         #endregion
-      
+
         #region Validation
 
         private void ValidateSubjectLogin(string login)
@@ -642,4 +767,29 @@ namespace MultipleUserLoginForm.ViewModel
         #endregion
 
     }
+    public static class ExtensionMethods
+    {
+        public static List<KeyValuePair<T, string>> GetValuesForComboBox<T>(this Enum theEnum)
+        {
+            List<KeyValuePair<T, string>> _comboBoxItemSource = null;
+            if (_comboBoxItemSource == null)
+            {
+                _comboBoxItemSource = new List<KeyValuePair<T, string>>();
+                foreach (T level in Enum.GetValues(typeof(T)))
+                {
+                    string Description = string.Empty;
+                    FieldInfo fieldInfo = level.GetType().GetField(level.ToString());
+                    DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                    if (attributes != null && attributes.Length > 0)
+                    {
+                        Description = attributes.FirstOrDefault().Description;
+                    }
+                    KeyValuePair<T, string> TypeKeyValue = new KeyValuePair<T, string>(level, Description);
+                    _comboBoxItemSource.Add(TypeKeyValue);
+                }
+            }
+            return _comboBoxItemSource;
+        }
+    }
+
 }

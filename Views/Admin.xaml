@@ -10,8 +10,8 @@
     xmlns:local="clr-namespace:MultipleUserLoginForm.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:valueConvertor="clr-namespace:MultipleUserLoginForm.ValueConvertors"
     xmlns:utilities="clr-namespace:MultipleUserLoginForm.Utilities"
+    xmlns:valueConvertor="clr-namespace:MultipleUserLoginForm.ValueConvertors"
     xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
     x:Name="adminView"
     MinWidth="700"
@@ -74,7 +74,7 @@
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="Margin" Value="5,0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="TextWrapping" Value="Wrap" />
 
                 <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
             </Style>
@@ -88,15 +88,18 @@
             </Style>
             <Style BasedOn="{StaticResource MaterialDesignTabItem}" TargetType="TabItem">
                 <Setter Property="Background" Value="AliceBlue" />
+            </Style>
 
-
-
+            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
             </Style>
 
 
         </Grid.Resources>
 
-        <TabControl Margin="5" Style="{StaticResource MaterialDesignTabControl}">
+        <TabControl Margin="5" Style="{StaticResource MaterialDesignTabControl}"
+                    SelectionChanged="TabControl_SelectionChanged">
 
             <TabItem>
                 <TabItem.Header>
@@ -110,87 +113,143 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TreeView
-                        x:Name="treeView"
-                        ScrollViewer.CanContentScroll="False"
-                        Grid.Column="0"
-                        Background="{StaticResource controlColor}"
-                        ItemTemplate="{DynamicResource DepartmentTemplate}"
-                        ItemsSource="{Binding TreeSource}"
-                        Style="{x:Null}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectedItemChanged">
-                                <i:InvokeCommandAction Command="{Binding SetSelectedItemCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeView}" />
-                            </i:EventTrigger>
 
-                        </i:Interaction.Triggers>
+                    <DockPanel Grid.Column="0">
+                        <Grid Margin="20,0,0,0" DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
 
-                    </TreeView>
-                    <DockPanel Grid.Column="1">
-                        <TextBlock
-                            DockPanel.Dock="Top"
-                            FontWeight="DemiBold"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap">
-                            <TextBlock.Inlines>
-                                <Run Name="runAvailableRightsAccessMatrix" Text="{lex:Loc}" />
-                            </TextBlock.Inlines>
-                        </TextBlock>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Resources />
+
+                            <TextBox
+                                Grid.Column="0"
+                                Margin="5,5,0,5"
+                                HorizontalAlignment="Stretch"
+                                materialDesign:HintAssist.Hint="{lex:Loc Key=hintSearchForASubjectAccessMatrixAdmin}"
+                                Background="{StaticResource controlColor}"
+                                FontSize="14"
+                                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                            <materialDesign:PackIcon
+                                Grid.Column="1"
+                                Width="25"
+                                Height="25"
+                                Margin="5"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource DarkColor}"
+                                Kind="Magnify" />
 
 
+                        </Grid>
+                        <TreeView
+                            x:Name="treeView"
+                            Background="{StaticResource controlColor}"
+                            ItemTemplate="{DynamicResource DepartmentTemplate}"
+                            ItemsSource="{Binding TreeSource}"
+                            ScrollViewer.CanContentScroll="False"
+                            Style="{x:Null}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedItemChanged">
+                                    <i:InvokeCommandAction Command="{Binding SetSelectedItemCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeView}" />
+                                </i:EventTrigger>
 
-                        <StackPanel DockPanel.Dock="Bottom" Margin="5 10 5 20">
+                            </i:Interaction.Triggers>
+
+                        </TreeView>
+                    </DockPanel>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
                             <TextBlock
-                                Margin="10,10,10,5"
-                                FontWeight="Medium"
+                                DockPanel.Dock="Top"
+                                FontWeight="DemiBold"
                                 TextAlignment="Center"
                                 TextWrapping="Wrap">
                                 <TextBlock.Inlines>
-                                    <Run Name="runSecurityMarkOfChosen" Text="{lex:Loc}" />
-                                    <Run
-                                        FontWeight="ExtraBold"
-                                        Foreground="BlueViolet"
-                                        Text="{Binding IsObjectOrSubject}" />
-
-                                    <Run Text=" [ " />
-                                    <Run Text="{Binding ChosenObjectName}" />
-                                    <Run Text=" ]:" />
+                                    <Run Name="runAvailableRightsAccessMatrix" Text="{lex:Loc}" />
                                 </TextBlock.Inlines>
                             </TextBlock>
+
+
+
+                            <StackPanel Margin="5">
+                                <StackPanel.Resources>
+                                    <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+                                        <Setter Property="IsHitTestVisible" Value="False" />
+                                        <Setter Property="Margin" Value="5" />
+                                        <Setter Property="FontSize" Value="16" />
+                                        <Setter Property="FontWeight" Value="Medium" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <CheckBox
+                                    Name="chboxRead"
+                                    Content="{lex:Loc}"
+                                    IsChecked="{Binding IsReadable}" />
+                                <CheckBox
+                                    Name="chboxWrite"
+                                    Content="{lex:Loc}"
+                                    IsChecked="{Binding IsWritable}" />
+                                <CheckBox
+                                    Name="chboxExecute"
+                                    Content="{lex:Loc}"
+                                    IsChecked="{Binding IsExecutable}" />
+
+
+
+                            </StackPanel>
+                        </DockPanel>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+
+                            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="10,10,10,5"
+                                    VerticalAlignment="Bottom"
+                                    FontWeight="Medium"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.Inlines>
+                                        <Run Name="runSecurityMarkOfChosen" Text="{lex:Loc}" />
+                                        <Run
+                                            FontWeight="ExtraBold"
+                                            Foreground="BlueViolet"
+                                            Text="{Binding IsObjectOrSubject}" />
+
+                                        <Run Text=" [ " />
+                                        <Run Text="{Binding ChosenObjectName}" />
+                                        <Run Text=" ]:" />
+                                    </TextBlock.Inlines>
+                                </TextBlock>
+                            </ScrollViewer>
+
                             <ComboBox
-                                Margin="7 0 7 0"
+                                Grid.Row="1"
+                                Margin="7,0,7,0"
                                 HorizontalContentAlignment="Center"
                                 Background="{StaticResource controlColor}"
                                 IsHitTestVisible="False"
                                 ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                 SelectedItem="{Binding ChosenObjectSecurityMark}" />
-                        </StackPanel>
-                        <StackPanel Margin="5">
-                            <StackPanel.Resources>
-                                <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
-                                    <Setter Property="IsHitTestVisible" Value="False" />
-                                    <Setter Property="Margin" Value="5" />
-                                    <Setter Property="FontSize" Value="16" />
-                                    <Setter Property="FontWeight" Value="Medium" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <CheckBox
-                                Name="chboxRead"
-                                Content="{lex:Loc}"
-                                IsChecked="{Binding IsReadable}" />
-                            <CheckBox
-                                Name="chboxWrite"
-                                Content="{lex:Loc}"
-                                IsChecked="{Binding IsWritable}" />
-                            <CheckBox
-                                Name="chboxExecute"
-                                Content="{lex:Loc}"
-                                IsChecked="{Binding IsExecutable}" />
 
 
 
-                        </StackPanel>
-                    </DockPanel>
+
+
+                        </Grid>
+
+                    </Grid>
 
                 </Grid>
             </TabItem>
@@ -209,87 +268,112 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <DataGrid
-                        ScrollViewer.CanContentScroll="False"
                         Grid.Row="0"
                         Margin="5,10"
                         AutoGenerateColumns="False"
                         Background="{StaticResource controlColor}"
                         IsReadOnly="True"
                         ItemsSource="{Binding Subjects}"
-                        SelectedItem="{Binding SelectedSubject, Mode=OneWayToSource}"
-                        >
+                        ScrollViewer.CanContentScroll="False"
+                        SelectedItem="{Binding SelectedSubject, Mode=OneWayToSource}">
                         <DataGrid.Resources>
-                            <Style TargetType="TextBlock" x:Key="DataGridHeaders"
-                                   BasedOn="{StaticResource TabItemHeaderTextBlockStyle}"/>
+                            <Style
+                                x:Key="DataGridHeaders"
+                                BasedOn="{StaticResource TabItemHeaderTextBlockStyle}"
+                                TargetType="TextBlock" />
+
+
                         </DataGrid.Resources>
+
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 x:Name="datGridTextColLoginSetSubjects"
-                                Binding="{Binding Login}"
-                                
-                                Width="*">
+                                Width="*"
+                                Binding="{Binding Login}">
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text= "{lex:Loc Key=datGridTextColLoginSetSubjects}"
-                                               Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                    <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColLoginSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
                                     </StackPanel>
-                                    
+
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
                             <DataGridTextColumn
                                 x:Name="datGridTexColPasswordSetSubjects"
-                                Binding="{Binding Password}"
-                                Width="*">
+                                Width="*"
+                                Binding="{Binding Password}">
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
-                                         <TextBlock Text="{lex:Loc Key=datGridTexColPasswordSetSubjects}"
-                                               Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                    <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTexColPasswordSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
                                     </StackPanel>
-                                   
+
                                 </DataGridTextColumn.Header>
-                                </DataGridTextColumn>
-                            <DataGridComboBoxColumn
+                            </DataGridTextColumn>
+
+                            <!-- <DataGridComboBoxColumn
                                 x:Name="datGridComboBoxColSecurityMarkSetSubjects"
+                                Width="1.5*"
                                 ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                 SelectedItemBinding="{Binding SecurityMark}"
-                                SelectedValueBinding="{Binding SecurityMark}" 
-                                Width="1.5*"
-                                >
+                                SelectedValueBinding="{Binding SecurityMark}">
                                 <DataGridComboBoxColumn.Header>
                                     <StackPanel>
-                                         <TextBlock Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetSubjects}"
-                                                Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                    <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
                                     </StackPanel>
-                                   
+
                                 </DataGridComboBoxColumn.Header>
-                            </DataGridComboBoxColumn>
+                            </DataGridComboBoxColumn>-->
+                            <DataGridTextColumn Width="*" Binding="{Binding SecurityMarkName}">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+                                    </StackPanel>
+
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
                             <DataGridTextColumn
                                 x:Name="datGridTextColNameSetSubjects"
-                                Binding="{Binding Name}"
-                                Width="*">
+                                Width="*"
+                                Binding="{Binding Name}">
                                 <DataGridTextColumn.Header>
-                                    <StackPanel >
-                                        <TextBlock Text="{lex:Loc Key=datGridTextColNameSetSubjects}"  
-                                               Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                        <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColNameSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
                                     </StackPanel>
-                                    
+
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
                             <DataGridTextColumn
                                 x:Name="datGridTextColSecondNameSetSubjects"
-                                Binding="{Binding SecondName}"
-                                Width="*">
+                                Width="*"
+                                Binding="{Binding SecondName}">
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text="{lex:Loc Key=datGridTextColSecondNameSetSubjects}"
-                                               Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                        <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColSecondNameSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
                                     </StackPanel>
-                                    
+
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
                         </DataGrid.Columns>
@@ -358,7 +442,9 @@
                             Grid.Column="1"
                             Background="{StaticResource controlColor}"
                             ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                            SelectedItem="{Binding SubjectSecurityMark}" />
+                            SelectedItem="{Binding SubjectSecurityMark}" 
+                            DisplayMemberPath="{Binding SecurityMarkName}"
+                            />
 
                     </Grid>
                     <Grid Grid.Row="2">
@@ -399,58 +485,77 @@
                     </Grid.RowDefinitions>
                     <DataGrid
                         x:Name="datgrdObjects"
-                        ScrollViewer.CanContentScroll="False"
                         Grid.Row="0"
                         Margin="5,10"
                         AutoGenerateColumns="False"
                         Background="{StaticResource controlColor}"
                         IsReadOnly="True"
                         ItemsSource="{Binding Objects}"
+                        ScrollViewer.CanContentScroll="False"
                         SelectedValue="{Binding SelectedObject, Mode=OneWayToSource}"
                         SelectionMode="Single"
                         SelectionUnit="FullRow">
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 x:Name="datGridTextColNameSetObjects"
-                                Binding="{Binding Name}"
-                                Width="*">
+                                Width="*"
+                                Binding="{Binding Name}">
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text="{lex:Loc Key=datGridTextColNameSetObjects}"
-                                                   Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                        <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColNameSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
 
                                     </StackPanel>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
                             <DataGridTextColumn
                                 x:Name="datGridTexColPathSetObjects"
-                                Binding="{Binding Path}"
-                                Width="3*">
+                                Width="3*"
+                                Binding="{Binding Path}">
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text="{lex:Loc Key=datGridTexColPathSetObjects}" 
-                                                   Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                        <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTexColPathSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
 
                                     </StackPanel>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-                            <DataGridComboBoxColumn
+
+                            <!--<DataGridComboBoxColumn
                                 x:Name="datGridComboBoxColSecurityMarkSetObjects"
+                                Width="1.5*"
                                 ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                 SelectedItemBinding="{Binding SecurityMark}"
-                                SelectedValueBinding="{Binding SecurityMark}" 
-                                Width="1.5*" >
+                                SelectedValueBinding="{Binding SecurityMark}">
                                 <DataGridComboBoxColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}"
-                                                   Style="{StaticResource TabItemHeaderTextBlockStyle}"/>
-                                        <Border Height="3" BorderThickness="1.5" BorderBrush="Red"/>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
 
                                     </StackPanel>
                                 </DataGridComboBoxColumn.Header>
-                            </DataGridComboBoxColumn>
+                            </DataGridComboBoxColumn>-->
+                            <DataGridTextColumn Width="*" Binding="{Binding SecurityMarkName}">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -466,6 +571,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <valueConvertor:EnumToStringConvertor x:Key="enumConv"/>
+                        </Grid.Resources>
 
                         <TextBlock
                             Name="textBlockNameSetObjects"
@@ -558,25 +666,24 @@
                 <Grid Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource groupBoxStyle}" TargetType="GroupBox">
-                                <Setter Property="Margin" Value="10"/>
+                                <Setter Property="Margin" Value="10" />
 
                             </Style>
                         </Grid.Resources>
                         <GroupBox
                             Name="groupBoxTypeOfModel"
-                            Grid.Column="0"
                             Grid.Row="0"
-                           
+                            Grid.Column="0"
                             Header="{lex:Loc}">
                             <StackPanel Orientation="Vertical">
 
@@ -603,9 +710,8 @@
                         </GroupBox>
                         <GroupBox
                             Name="groupBoxLanguage"
-                           
-                            Grid.Column="1"
                             Grid.Row="0"
+                            Grid.Column="1"
                             Header="{lex:Loc}">
                             <StackPanel>
                                 <StackPanel.Resources>
@@ -629,19 +735,22 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem x:Name="info">
                 <TabItem.Header>
                     <Border
+                       
                         VerticalAlignment="Center"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Style="{x:Null}">
-                        <StackPanel Margin="-10" Orientation="Horizontal">
+                        <StackPanel Margin="-10" Orientation="Horizontal"
+                                   >
                             <materialDesign:PackIcon
                                 Width="25"
                                 Height="25"
                                 VerticalAlignment="Center"
-                                Kind="AboutOutline" />
+                                Kind="AboutOutline" 
+                                />
                             <TextBlock
                                 Name="textBlockInformation"
                                 Style="{StaticResource TabItemHeaderTextBlockStyle}"
@@ -650,9 +759,9 @@
                     </Border>
                 </TabItem.Header>
 
-                <Grid >
-                    <WebBrowser Name="webBrowser" /> 
-                   
+                <Grid>
+                    <WebBrowser Name="webBrowser" />
+
 
 
                 </Grid>
@@ -666,27 +775,32 @@
                 </TabItem.Header>
                 <Grid>
                     <ListBox
-                        ScrollViewer.CanContentScroll="False"
                         VerticalAlignment="Top"
                         Background="{StaticResource controlColor}"
-                        ItemsSource="{Binding Log}" >
+                        ItemsSource="{Binding Log}"
+                        ScrollViewer.CanContentScroll="False">
                         <ListBox.Resources>
-                            <valueConvertor:TreeViewActualSizeConverter x:Key="convertorMinus100"/>
+                            <valueConvertor:TreeViewActualSizeConverter x:Key="convertorMinus100" />
                         </ListBox.Resources>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding}" Margin="10 5"
-                                           Foreground="{StaticResource DarkColor}"
-                                           FontWeight="SemiBold"
-                                           FontSize="16" FontFamily="Palatino Linotype"
-                                               TextWrapping="Wrap"
-                                           />
-                                    <Border Height="2" BorderThickness="1" BorderBrush="DarkBlue" 
-                                            Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth, Mode=OneWay}"/>
+                                    <TextBlock
+                                        Margin="10,5"
+                                        FontFamily="Palatino Linotype"
+                                        FontSize="16"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource DarkColor}"
+                                        Text="{Binding}"
+                                        TextWrapping="Wrap" />
+                                    <Border
+                                        Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth, Mode=OneWay}"
+                                        Height="2"
+                                        BorderBrush="DarkBlue"
+                                        BorderThickness="1" />
 
                                 </StackPanel>
-                                
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

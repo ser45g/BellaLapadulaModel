@@ -24,15 +24,28 @@ namespace MultipleUserLoginForm.Views
 
         private void rbRussian_Checked(object sender, RoutedEventArgs e)
         {
-            webBrowser.Navigate("file:///" + CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
+          
             //SetDocumentViewer(CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
         }
 
         private void rbEnglish_Checked(object sender, RoutedEventArgs e)
         {
-            webBrowser.Navigate("file:///"+CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
+            //webBrowser.Navigate("file:///"+CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
             //SetDocumentViewer(CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
         }
+
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string tabItem = ((sender as TabControl).SelectedItem as TabItem).Name;
+            if(tabItem == "info")
+            {
+                webBrowser.Navigate("file:///" + CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
+
+            }
+        }
+
+      
 
         //private void SetDocumentViewer(string pathPdf)
         //{   

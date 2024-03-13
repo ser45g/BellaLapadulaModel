@@ -1,4 +1,6 @@
-﻿using MultipleUserLoginForm.LocalizationHelper;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using MultipleUserLoginForm.Data;
+using MultipleUserLoginForm.LocalizationHelper;
 using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Stores;
 using MultipleUserLoginForm.Utilities;
@@ -18,8 +20,12 @@ namespace MultipleUserLoginForm
         private MatricesViewModel ms;
         protected override void OnStartup(StartupEventArgs e)
         {
-            //LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-            //LocalizeDictionary.Instance.SetCultureCommand.Execute(MultipleUserLoginForm.Properties.Settings.Default.CurrentCulture);
+            base.OnStartup(e);
+
+            DatabaseFacade databaseFacade = new DatabaseFacade(new ModelContext());
+            databaseFacade.EnsureCreated();
+
+
             LocalizedStrings.Instance.SetCulture(MultipleUserLoginForm.Properties.Settings.Default.CurrentCulture);
 
             NavigationStore store = new NavigationStore();
@@ -33,7 +39,6 @@ namespace MultipleUserLoginForm
             store.CurrentViewModel = new LoginViewModel(store,matricsStore);
             MainWindow = new MainWindow() { DataContext = new MainWindowViewModel(store) };
             MainWindow.Show();
-            base.OnStartup(e);
         }
         protected override void OnExit(ExitEventArgs e)
         {
