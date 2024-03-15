@@ -26,6 +26,13 @@ namespace MultipleUserLoginForm.ViewModel
             _iconsDictionary.Add(".pdf", "/ObjectIcons/pdf.png");
             _iconsDictionary.Add(".xlsx", "/ObjectIcons/xlsx.png");
             _iconsDictionary.Add(".rtf", "/ObjectIcons/rtf.png");
+
+
+            _iconsDictionary.Add(".png", "/ObjectIcons/1491253396-5document-image_82883.png");
+            _iconsDictionary.Add(".bmp", "/ObjectIcons/1491253396-5document-image_82883.png");
+            _iconsDictionary.Add(".jpg", "/ObjectIcons/1491253396-5document-image_82883.png");
+            _iconsDictionary.Add(".jpeg", "/ObjectIcons/1491253396-5document-image_82883.png");
+            _iconsDictionary.Add(".ico", "/ObjectIcons/1491253396-5document-image_82883.png");
         }
 
         public ObjectViewModel(Model.Object o)

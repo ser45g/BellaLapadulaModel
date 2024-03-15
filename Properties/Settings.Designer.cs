@@ -34,5 +34,17 @@ namespace MultipleUserLoginForm.Properties {
                 this["CurrentCulture"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Biba")]
+        public string CurrentTypeOfModel {
+            get {
+                return ((string)(this["CurrentTypeOfModel"]));
+            }
+            set {
+                this["CurrentTypeOfModel"] = value;
+            }
+        }
     }
 }

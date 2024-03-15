@@ -41,7 +41,6 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
         private string _login;
-
         
 
         public LoginViewModel(Stores.NavigationStore navigationStore, MatricsStore ms)
@@ -54,6 +53,8 @@ namespace MultipleUserLoginForm.ViewModel
             //    () => new AdminViewModel(navigationStore)));
             _matricsStore=ms;
             _navigationStore = navigationStore;
+            TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleLogin"]} - " +
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
             _errorsViewModel = new ErrorsViewModel();
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
             LoginCommand = new RelayCommand(Navigate,(o)=>CanCreate);

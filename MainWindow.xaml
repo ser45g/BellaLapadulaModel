@@ -12,10 +12,10 @@
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
     lex:ResxLocalizationProvider.DefaultAssembly="MultipleUserLoginForm"
     lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-    Title="Security Policy"
+    Title="{Binding TitleStore.Instance.Title}"
     Name="mainWindow"
     Icon="./Images/lock_folder_padlock_file_security_icon_219522.ico"
-    Width="800" MinWidth="900"
+    Width="920" MinWidth="920"
     Height="600" MinHeight="600"
     ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen"
@@ -36,6 +36,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:ReadWriteObjectViewModel}">
                 <views:ReadWriteObject/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OpenImageViewmodel}">
+                <views:OpenImage/>
             </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>

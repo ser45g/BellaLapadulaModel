@@ -199,7 +199,7 @@
     <value>________________</value>
   </data>
   <data name="textBlockAccessMatrix" xml:space="preserve">
-    <value>Матрица</value>
+    <value>Обзор доступа</value>
   </data>
   <data name="_______________User_Cabinet________" xml:space="preserve">
     <value>__________________</value>
@@ -319,7 +319,7 @@
     <value>_____________________________</value>
   </data>
   <data name="rbBelLap" xml:space="preserve">
-    <value>Бэлла-Лападула</value>
+    <value>Белла-Лападула</value>
   </data>
   <data name="rbBiba" xml:space="preserve">
     <value>Биба</value>
@@ -403,19 +403,19 @@
     <value>Вы уверены, что хотите удалить все субъекты? Вы не сможете восстановить их далее</value>
   </data>
   <data name="SecurityMarkUnclassified" xml:space="preserve">
-    <value>Публичная</value>
+    <value>Не секретно</value>
   </data>
   <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
     <value>ДСП</value>
   </data>
   <data name="SecurityMarkConfidential" xml:space="preserve">
-    <value>Конфиденциальная</value>
+    <value>Секретно</value>
   </data>
   <data name="SecurityMarkSecret" xml:space="preserve">
-    <value>Секретная</value>
+    <value>Совершенно секретно</value>
   </data>
   <data name="SecurityMarkTopSecret" xml:space="preserve">
-    <value>Совершенно секретная</value>
+    <value>Особой важности</value>
   </data>
   <data name="hintSearchForAnObjectUserCabinet" xml:space="preserve">
     <value>Найти объект с именем...</value>
@@ -446,5 +446,26 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>Нет</value>
+  </data>
+  <data name="titleAdmin" xml:space="preserve">
+    <value>Администратор</value>
+  </data>
+  <data name="modelTypeBellaLapadula" xml:space="preserve">
+    <value>Белла-Лападула</value>
+  </data>
+  <data name="modelTypeBiba" xml:space="preserve">
+    <value>Биба</value>
+  </data>
+  <data name="modelTypeCombined" xml:space="preserve">
+    <value>Комбинированная</value>
+  </data>
+  <data name="titleLogin" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="titleUserCabinet" xml:space="preserve">
+    <value>Кабинет пользователя</value>
+  </data>
+  <data name="titleReadWrite" xml:space="preserve">
+    <value>Доступные права для субъекта </value>
   </data>
 </root>

@@ -441,9 +441,9 @@
                             Grid.Row="4"
                             Grid.Column="1"
                             Background="{StaticResource controlColor}"
-                            ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                            SelectedItem="{Binding SubjectSecurityMark}" 
-                            DisplayMemberPath="{Binding SecurityMarkName}"
+                            ItemsSource="{Binding ComboSource}"
+                            SelectedItem="{Binding SubjectSecurityMarkDisplay}" 
+                            
                             />
 
                     </Grid>
@@ -625,8 +625,10 @@
                             x:Name="txtObjectSecurityMark"
                             Grid.Row="2"
                             Grid.Column="1"
-                            ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                            SelectedItem="{Binding ObjectSecurityMark}" />
+                            ItemsSource="{Binding ComboSource}"
+                            SelectedItem="{Binding ObjectSecurityMarkDisplay}"
+                              />
+                        <!--SelectedItem="{Binding ObjectSecurityMark}" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"-->
 
 
 

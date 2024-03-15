@@ -13,6 +13,7 @@
     <None Remove="ICON4801.png" />
     <None Remove="Images\lock_folder_padlock_file_security_icon_219522.ico" />
     <None Remove="Images\log-in.png" />
+    <None Remove="ObjectIcons\1491253396-5document-image_82883.png" />
     <None Remove="ObjectIcons\doc.png" />
     <None Remove="ObjectIcons\pdf.png" />
     <None Remove="ObjectIcons\rtf.png" />
@@ -50,7 +51,7 @@
       <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Word\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
     <Reference Include="PasswordBoxMVVM">
-      <HintPath>..\MVVM WPF\NavigationMVVM\bin\Debug\netcoreapp3.1\PasswordBoxMVVM.dll</HintPath>
+      <HintPath>bin\Debug\net6.0-windows7.0\PasswordBoxMVVM.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -59,6 +60,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\log-in.png" />
+    <Resource Include="ObjectIcons\1491253396-5document-image_82883.png" />
     <Resource Include="ObjectIcons\doc.png" />
     <Resource Include="ObjectIcons\pdf.png" />
     <Resource Include="ObjectIcons\rtf.png" />

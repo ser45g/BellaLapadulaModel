@@ -29,7 +29,14 @@ namespace MultipleUserLoginForm
             LocalizedStrings.Instance.SetCulture(MultipleUserLoginForm.Properties.Settings.Default.CurrentCulture);
 
             NavigationStore store = new NavigationStore();
-             ms = new MatricesViewModel();
+             ms = new MatricesViewModel(); //ms.CurrentModelType=
+                MatricesViewModel.ModelType currentModelType;
+            if(Enum.TryParse<MatricesViewModel.ModelType>( MultipleUserLoginForm.Properties.Settings.Default.CurrentTypeOfModel,out currentModelType))
+            {
+                ms.CurrentModelType = currentModelType;
+            }
+            
+
             if(ms.Admins.Count < 1)
             {
 

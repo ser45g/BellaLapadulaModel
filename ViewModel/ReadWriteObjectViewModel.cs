@@ -1,4 +1,5 @@
 ﻿using MultipleUserLoginForm.Commands;
+using MultipleUserLoginForm.LocalizationHelper;
 using MultipleUserLoginForm.Model;
 using MultipleUserLoginForm.Stores;
 using System;
@@ -38,6 +39,9 @@ namespace MultipleUserLoginForm.ViewModel
             Text = text;
             NavigateCommand<UserCabinetViewModel> navCom = new NavigateCommand<UserCabinetViewModel>(new Services.NavigationService<UserCabinetViewModel>(ns,
                 () => new UserCabinetViewModel(subj, ns, ms)));
+            TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleReadWrite"]} {subj.Login} - " +
+                LocalizedStrings.Instance[$"modelType{ms.CurrentMatrics.CurrentModelType.ToString()}"];
+
             RelayCommand relayCommand = new RelayCommand((o) =>
             {
                 navCom.Execute(o);

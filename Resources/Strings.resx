@@ -447,4 +447,25 @@
   <data name="None" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="titleAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="modelTypeBellaLapadula" xml:space="preserve">
+    <value>Bella-Lapadula</value>
+  </data>
+  <data name="modelTypeBiba" xml:space="preserve">
+    <value>Biba</value>
+  </data>
+  <data name="modelTypeCombined" xml:space="preserve">
+    <value>Combined</value>
+  </data>
+  <data name="titleLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="titleUserCabinet" xml:space="preserve">
+    <value>User Cabinet</value>
+  </data>
+  <data name="titleReadWrite" xml:space="preserve">
+    <value>Available rights for subject</value>
+  </data>
 </root>

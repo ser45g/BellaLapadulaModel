@@ -5,5 +5,8 @@
     <Setting Name="CurrentCulture" Type="System.String" Scope="User">
       <Value Profile="(Default)">en-US</Value>
     </Setting>
+    <Setting Name="CurrentTypeOfModel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Biba</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

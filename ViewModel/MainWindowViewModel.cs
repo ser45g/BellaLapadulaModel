@@ -10,6 +10,8 @@ namespace MultipleUserLoginForm.ViewModel
     public class MainWindowViewModel:ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
+        public TitleStore TitleStore { get; set; }=TitleStore.Instance;
+
 
         public MainWindowViewModel(NavigationStore navigationStore)
         {

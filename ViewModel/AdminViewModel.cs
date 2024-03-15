@@ -42,6 +42,8 @@ namespace MultipleUserLoginForm.ViewModel
 				new NavigationService<LoginViewModel>(ns, () => new LoginViewModel(ns,_matricsStore)));
 
 			_matricsStore= ms;
+            TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " + 
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"] ;
 
             subjects = _matricsStore.CurrentMatrics.Subjects;
             objects = _matricsStore.CurrentMatrics.Objects;
@@ -78,7 +80,8 @@ namespace MultipleUserLoginForm.ViewModel
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
             _errorsObjectViewModel.ErrorsChanged += ErrorsObjectViewModel_Errorschanged;
 
-
+            ComboSource = new List<string>();
+            SetLocalizedComboSource();
             //ComboSource = new List<KeyValuePair<SecurityMark, string>>();
             //SecurityMark mark = SecurityMark.Secret;
             //ComboSource=mark.GetValuesForComboBox<SecurityMark>();
@@ -120,9 +123,27 @@ namespace MultipleUserLoginForm.ViewModel
 		private SecurityMark _objectSecurityMark;
 		public SecurityMark ObjectSecurityMark { get { return _objectSecurityMark; } set {
 				_objectSecurityMark = value;
+
 				OnPropertyChanged(nameof(ObjectSecurityMark));
+                OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
 			} 
         }
+       // private string _objectSecurityMarkDisplay;
+
+        public string ObjectSecurityMarkDisplay
+        {
+            get { return LocalizedStrings.Instance["SecurityMark" + ObjectSecurityMark.ToString()]; }
+            set {
+                ObjectSecurityMark = _KeyLocalizedValueDictionary[value];
+                OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+            }
+        }
+        
+        bool CompareLocalizedStrings(string value,string loc)
+        {
+            return (value == LocalizedStrings.Instance[loc]);
+        }
+
         bool _objectBeingAdded = false;
         private void AddObject(object obj)
         {
@@ -265,6 +286,16 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 _subjectSecurityMark = value;
                 OnPropertyChanged(nameof(SubjectSecurityMark));
+                OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
+            }
+        }
+        public string SubjectSecurityMarkDisplay
+        {
+            get { return LocalizedStrings.Instance["SecurityMark" + SubjectSecurityMark.ToString()]; }
+            set
+            {
+                SubjectSecurityMark = _KeyLocalizedValueDictionary[value];
+                OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
             }
         }
 
@@ -387,15 +418,26 @@ namespace MultipleUserLoginForm.ViewModel
                 _comboSource = value;
                 OnPropertyChanged(nameof(ComboSource));
             } }
-
+        private Dictionary<string, SecurityMark> _KeyLocalizedValueDictionary=new Dictionary<string, SecurityMark>();
         private void SetLocalizedComboSource() {
             if (ComboSource == null) return;
             ComboSource.Clear();
+            _KeyLocalizedValueDictionary.Clear();
             ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"]);
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensetive"]);
+            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensitive"]);
             ComboSource.Add(LocalizedStrings.Instance["SecurityMarkConfidential"]);
             ComboSource.Add(LocalizedStrings.Instance["SecurityMarkSecret"]);
             ComboSource.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"]);
+            
+            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"],SecurityMark.Unclassified);
+            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensitive"],SecurityMark.UnclassifiedButSensitive);
+            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkConfidential"],SecurityMark.Confidential);
+            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkSecret"],SecurityMark.Secret);
+            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"],SecurityMark.TopSecret);
+            OnPropertyChanged(nameof(ComboSource));
+            OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+            OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
+
         }
         #region Log
         private ObservableCollection<string> _log;
@@ -492,8 +534,11 @@ namespace MultipleUserLoginForm.ViewModel
                 if(value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.BellaLapadula)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.BellaLapadula;
+                    Settings.Default.CurrentTypeOfModel = _matricsStore.CurrentMatrics.CurrentModelType.ToString();
+
                     LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToBella-LapadulaAdmin"]);
-                    
+                    TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
+               LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
                     OnPropertyChanged(nameof(TreeSource));
 
                 }
@@ -507,7 +552,11 @@ namespace MultipleUserLoginForm.ViewModel
                 if (value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.Biba)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.Biba;
+                    Settings.Default.CurrentTypeOfModel = _matricsStore.CurrentMatrics.CurrentModelType.ToString();
+
                     LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToBibaAdmin"]);
+                    TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
                     OnPropertyChanged(nameof(TreeSource));
                 }
             } 
@@ -520,7 +569,11 @@ namespace MultipleUserLoginForm.ViewModel
                 if (value && _matricsStore.CurrentMatrics.CurrentModelType != MatricesViewModel.ModelType.Combined)
                 {
                     _matricsStore.CurrentMatrics.CurrentModelType = MatricesViewModel.ModelType.Combined;
+                    Settings.Default.CurrentTypeOfModel=_matricsStore.CurrentMatrics.CurrentModelType.ToString();
+
                     LogWithDataAndOrder(LocalizedStrings.Instance["logTypeOfModelChangedToCombinedAdmin"]);
+                    TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
                     OnPropertyChanged(nameof(TreeSource));
                 }
             } 
@@ -535,10 +588,13 @@ namespace MultipleUserLoginForm.ViewModel
                     Settings.Default.CurrentCulture = "en-US";
                     LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                     LocalizeDictionary.Instance.SetCultureCommand.Execute("en-US");
-                }
-                Objects = new ObservableCollection<ObjectViewModel>(Objects);
-                Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
+                    Objects = new ObservableCollection<ObjectViewModel>(Objects);
+                    Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsEnglishChecked));
+                    SetLocalizedComboSource();
+                    TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
+                }
             }
         }
 
@@ -549,14 +605,16 @@ namespace MultipleUserLoginForm.ViewModel
                 if (value == true)
                 {   
                     Settings.Default.CurrentCulture = "ru-RU";
+                   
                     LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                     LocalizeDictionary.Instance.SetCultureCommand.Execute("ru-RU");
-
+                    Objects = new ObservableCollection<ObjectViewModel>(Objects);
+                    Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
+                    OnPropertyChanged(nameof(IsRussianChecked));
+                    SetLocalizedComboSource();
+                    TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
+                LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
                 }
-                OnPropertyChanged(nameof(Objects));
-                OnPropertyChanged(nameof(Subjects));
-                OnPropertyChanged(nameof(IsRussianChecked));
-                
             }
         }
 
@@ -705,7 +763,7 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void ValidateSubjectLogin(string login)
         {
-            var i = _matricsStore.CurrentMatrics.Subjects.FirstOrDefault(x => x.Login == login);
+            var i = Subjects.FirstOrDefault(x => x.Login == login);
             if ((string.IsNullOrEmpty(login)) || (i != null))
             {
                 _errorsViewModel.AddError(nameof(SubjectLogin), LocalizedStrings.Instance["errorInvalidLoginAdmin"]);
