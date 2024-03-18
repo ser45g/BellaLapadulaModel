@@ -13,6 +13,7 @@
     xmlns:utilities="clr-namespace:MultipleUserLoginForm.Utilities"
     xmlns:valueConvertor="clr-namespace:MultipleUserLoginForm.ValueConvertors"
     xmlns:viewModel="clr-namespace:MultipleUserLoginForm.ViewModel"
+    xmlns:wbview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     x:Name="adminView"
     MinWidth="700"
     MinHeight="400"
@@ -762,8 +763,9 @@
                 </TabItem.Header>
 
                 <Grid>
-                    <WebBrowser Name="webBrowser" />
+                    <!--  <WebBrowser Name="webBrowser" />  -->
 
+                    <wbview:WebView2 Name="webBrowser"/>
 
 
                 </Grid>

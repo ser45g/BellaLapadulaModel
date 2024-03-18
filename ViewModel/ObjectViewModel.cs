@@ -1,11 +1,13 @@
 ﻿using MultipleUserLoginForm.LocalizationHelper;
 using MultipleUserLoginForm.Model;
+using MultipleUserLoginForm.Utilities;
 using System;
 using System.Collections.Generic;
-
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -19,20 +21,10 @@ namespace MultipleUserLoginForm.ViewModel
 
         static ObjectViewModel()
         {
-            _iconsDictionary.Add(".txt", "/ObjectIcons/txt.png");
-            _iconsDictionary.Add("default", "/ObjectIcons/unknown.png");
-            _iconsDictionary.Add(".docx", "/ObjectIcons/doc.png");
-            _iconsDictionary.Add(".doc", "/ObjectIcons/doc.png");
-            _iconsDictionary.Add(".pdf", "/ObjectIcons/pdf.png");
-            _iconsDictionary.Add(".xlsx", "/ObjectIcons/xlsx.png");
-            _iconsDictionary.Add(".rtf", "/ObjectIcons/rtf.png");
+            string path=Directory.GetCurrentDirectory();
 
-
-            _iconsDictionary.Add(".png", "/ObjectIcons/1491253396-5document-image_82883.png");
-            _iconsDictionary.Add(".bmp", "/ObjectIcons/1491253396-5document-image_82883.png");
-            _iconsDictionary.Add(".jpg", "/ObjectIcons/1491253396-5document-image_82883.png");
-            _iconsDictionary.Add(".jpeg", "/ObjectIcons/1491253396-5document-image_82883.png");
-            _iconsDictionary.Add(".ico", "/ObjectIcons/1491253396-5document-image_82883.png");
+            FileIO<Dictionary<string,string>> _fileIO = new FileIO<Dictionary<string, string>>(path+"/ObjectIcons.json");
+            _iconsDictionary=_fileIO.LoadData();
         }
 
         public ObjectViewModel(Model.Object o)

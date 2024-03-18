@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MultipleUserLoginForm.Model.Subject">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAgAAAAAIAAAAAAAAAQAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Model\Subject.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SecurityMark" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MultipleUserLoginForm.Model.SecurityRight">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAIAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Model\Right.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Right" />
+      <Property Name="Object" />
+      <Property Name="Subject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MultipleUserLoginForm.Model.Object">
+    <Position X="9.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAIAIAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Object.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SecurityMark" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MultipleUserLoginForm.Model.Matrics">
+    <Position X="12.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="MultipleUserLoginForm.Model.Matrics.ModelType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Matrics.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AgAAgEAAAQAAIIAAAAIEAAAoACAAAAEAAACAAAAAAAA=</HashCode>
+      <FileName>Model\Matrics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="MultipleUserLoginForm.Model.Right">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAIAAAAEAAAA=</HashCode>
+      <FileName>Model\Right.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultipleUserLoginForm.Model.SecurityMark">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAQQAAAAAAAAAAAAAMAAAAAA=</HashCode>
+      <FileName>Model\Mark.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

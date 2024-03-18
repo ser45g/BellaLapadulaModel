@@ -38,10 +38,24 @@ namespace MultipleUserLoginForm.Views
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Name;
-            if(tabItem == "info")
-            {
-                webBrowser.Navigate("file:///" + CurrentPath + $"\\info.{Properties.Settings.Default.CurrentCulture}.pdf");
-
+            if(tabItem == "info") {
+                string modelType = "";
+                if (rbBelLap.IsChecked==true)
+                {
+                    modelType = "Bella-Lapadula";
+                }
+                if (rbBiba.IsChecked==true)
+                {
+                    modelType = "Biba";
+                }
+                if (rbCombined.IsChecked==true)
+                {
+                    modelType = "Combined";
+                }
+                string path = @$"{CurrentPath}" + @$"\info{modelType}.{Properties.Settings.Default.CurrentCulture}.pdf";
+               
+                webBrowser.Source = new Uri(path);
+                //@"C:\Users\HP\Desktop\6 sem\Курсач 2024\MINE\BellLapadule\bin\Release\net6.0-windows7.0\info\infoBiba.en-US.pdf"
             }
         }
 

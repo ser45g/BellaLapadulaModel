@@ -370,13 +370,13 @@
     <value>с путём</value>
   </data>
   <data name="logWasChangedToAdmin" xml:space="preserve">
-    <value>был изменён на</value>
+    <value>изменён на</value>
   </data>
   <data name="logWasAddedAdmin" xml:space="preserve">
-    <value>был добавлен</value>
+    <value>добавлен</value>
   </data>
   <data name="logWasRemovedAdmin" xml:space="preserve">
-    <value>был удалён</value>
+    <value>удалён</value>
   </data>
   <data name="textBlockExitUserCabinet" xml:space="preserve">
     <value>Покинуть кабинет</value>

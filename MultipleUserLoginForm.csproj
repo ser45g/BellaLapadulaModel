@@ -13,8 +13,8 @@
     <None Remove="ICON4801.png" />
     <None Remove="Images\lock_folder_padlock_file_security_icon_219522.ico" />
     <None Remove="Images\log-in.png" />
-    <None Remove="ObjectIcons\1491253396-5document-image_82883.png" />
     <None Remove="ObjectIcons\doc.png" />
+    <None Remove="ObjectIcons\image.png" />
     <None Remove="ObjectIcons\pdf.png" />
     <None Remove="ObjectIcons\rtf.png" />
     <None Remove="ObjectIcons\txt.png" />
@@ -38,17 +38,19 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2365.46" />
+    <PackageReference Include="MoonPdfLib.Package-x86" Version="0.3.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
     <PackageReference Include="WPFLocalizeExtension" Version="3.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Office.Interop.Excel">
-      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+    <Reference Include="MoonPdfLib">
+      <HintPath>..\..\..\..\MoonPdfLib-0.3.0-x64\MoonPdfLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word">
-      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Word\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Word.dll</HintPath>
+    <Reference Include="MouseKeyboardActivityMonitor">
+      <HintPath>..\..\..\..\MoonPdfLib-0.3.0-x64\MouseKeyboardActivityMonitor.dll</HintPath>
     </Reference>
     <Reference Include="PasswordBoxMVVM">
       <HintPath>bin\Debug\net6.0-windows7.0\PasswordBoxMVVM.dll</HintPath>
@@ -60,7 +62,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\log-in.png" />
-    <Resource Include="ObjectIcons\1491253396-5document-image_82883.png" />
+    <Resource Include="ObjectIcons\image.png" />
     <Resource Include="ObjectIcons\doc.png" />
     <Resource Include="ObjectIcons\pdf.png" />
     <Resource Include="ObjectIcons\rtf.png" />

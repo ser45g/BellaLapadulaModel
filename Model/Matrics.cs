@@ -21,15 +21,17 @@ namespace MultipleUserLoginForm.Model
         }
 
         public Matrics() {
-            objects = new List<Object>();
-            subjects = new List<Subject>();
+            _objects = new List<Object>();
+            _subjects = new List<Subject>();
         }
-        private List<Subject> subjects;
-        private List<Object> objects;
-        public List<Subject> Subjects { get { return subjects; } private set { subjects = value;  } }
-        public List<Object> Objects { get { return objects; } private set { objects = value; } }
+        private List<Subject> _subjects;
+        public List<Subject> Subjects { get { return _subjects; } private set { _subjects = value;  } }
+
+        private List<Object> _objects;
+        public List<Object> Objects { get { return _objects; } private set { _objects = value; } }
 
         public List<SecurityRight> Rights { get; private set; }
+
         public Subject GetSubject(string login)
         {
             return Subjects.Find(x => x.Login==(login));
@@ -51,38 +53,19 @@ namespace MultipleUserLoginForm.Model
             return l;
         }
        
-        public void AddSubject(Subject subject)
-        {
-            Subjects.Add(subject);
-           
-        }
-        public void RemoveSubject(Subject subject)
-        {
-            Subjects.Remove(subject);
-           
-        }
-        public void AddObject(Object obj) {
-            Objects.Add(obj); 
-            
-        }
-        public void RemoveObject(Object obj)
-        {
-            Objects.Remove(obj);
-           
-        }
         SecurityRight GetRight(Subject s,Object o)
         {
             SecurityRight right= null;
             switch (CurrentModelType)
             {
-                case ModelType.BellaLapadula: right= ImplyBellaLapaduleModel(s,o); break;
-                case ModelType.Biba: right = ImplyBibaModel(s,o); break;
-                case ModelType.Combined: right = ImplyCombinedModel(s,o); break;
+                case ModelType.BellaLapadula: right= GetBellaLapadulaModelRight(s,o); break;
+                case ModelType.Biba: right = GetBibaModelRight(s,o); break;
+                case ModelType.Combined: right = GetCombinedModelRight(s,o); break;
 
             }
             return right;
         }
-        SecurityRight ImplyBellaLapaduleModel(Subject s, Object o)
+        SecurityRight GetBellaLapadulaModelRight(Subject s, Object o)
         {
             Right right;
             if(s.SecurityMark > o.SecurityMark)
@@ -99,7 +82,7 @@ namespace MultipleUserLoginForm.Model
             return  new SecurityRight() { Object = o, Subject = s, Right = right };
             
         }
-        SecurityRight ImplyBibaModel(Subject s, Object o)
+        SecurityRight GetBibaModelRight(Subject s, Object o)
         {
             Right right;
             if (s.SecurityMark > o.SecurityMark)
@@ -117,7 +100,7 @@ namespace MultipleUserLoginForm.Model
             return new SecurityRight() { Object = o, Subject = s, Right = right };
 
         }
-        SecurityRight ImplyCombinedModel(Subject s, Object o)
+        SecurityRight GetCombinedModelRight(Subject s, Object o)
         {
             Right right;
             if (s.SecurityMark > o.SecurityMark)

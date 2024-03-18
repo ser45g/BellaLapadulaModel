@@ -47,14 +47,7 @@ namespace MultipleUserLoginForm.ViewModel
         private  void Read(object obj)
         {
             SelectedItem = (SecurityRightViewModel)obj;
-            bool isSupported = SupportedExtensions(SelectedItem.Object.Path);
-            if (!isSupported)
-            {
-                //MessageBox.Show(LocalizedStrings.Instance["mesThisTypeOfFileINotSupportedUserCabinet"],
-                //    LocalizedStrings.Instance["mesError"],MessageBoxButton.OK,MessageBoxImage.Stop);
-                Execute(obj);
-                return;
-            }
+           
             try
             {
                 if (!File.Exists(SelectedItem.Object.Path))
@@ -64,9 +57,17 @@ namespace MultipleUserLoginForm.ViewModel
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                if (OpenImage(SelectedItem.Object.Path))
+                if (IsImage(SelectedItem.Object.Path))
+                {
+                    OpenImageFile(SelectedItem.Object.Path);
                     return;
-                OpenTextFile(SelectedItem.Object.Path);
+                }
+                if (IsTextFile(SelectedItem.Object.Path))
+                {
+                    OpenTextFile(SelectedItem.Object.Path,true);
+                    return;
+                }
+                Execute(obj);
 
             }
             catch (Exception ex)
@@ -76,42 +77,48 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
 
+        private bool IsTextFile(string path)
+        {
+            string ext=Path.GetExtension(path);
+            if(ext ==".txt")
+                return true;
+            return false;
+        }
+
+        private bool FileExists(string path)
+        {
+            if (!File.Exists(path))
+            {
+                MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
+                    LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
+        }
+
         private void Write(object obj)
         {
-           
-           
             SelectedItem = (SecurityRightViewModel)obj;
             
-            bool isSupported=SupportedExtensions(SelectedItem.Object.Path);
-            if (isSupported==false)
-            {
-                // MessageBox.Show(LocalizedStrings.Instance["mesThisTypeOfFileINotSupportedUserCabinet"],
-                //      LocalizedStrings.Instance["msgError"], MessageBoxButton.OK, MessageBoxImage.Stop);
-                Execute(obj);
-                return;
-            }
+           
             if (SelectedItem.Right == Right.All)
             {
                 try
                 {
-                    if (!File.Exists(SelectedItem.Object.Path))
+                    if (!FileExists(SelectedItem.Object.Path))
+                        return;
+                    if (IsImage(SelectedItem.Object.Path))
                     {
-                        MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
-                            LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
-                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        OpenImageFile(SelectedItem.Object.Path);
                         return;
                     }
-                    if (OpenImage(SelectedItem.Object.Path))
-                        return;
-                    using (var reader = File.OpenText(SelectedItem.Object.Path))
+                    if (IsTextFile(SelectedItem.Object.Path))
                     {
-                        string s = reader.ReadToEnd();
-                        NavigateCommand<ReadWriteObjectViewModel> navigateCommand = new NavigateCommand<ReadWriteObjectViewModel>(
-                            new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel(s, false, 
-                            SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
-                        navigateCommand.Execute(this);
+                        OpenTextFile(SelectedItem.Object.Path, false);
+                        return;
                     }
-                    return;
+                    Execute(obj);
 
                 }
                 catch (Exception ex)
@@ -130,23 +137,19 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 try
                 {
-                    if (!File.Exists(SelectedItem.Object.Path))
+                    if (!FileExists(SelectedItem.Object.Path))
+                        return;
+                    if (IsImage(SelectedItem.Object.Path))
                     {
-                        MessageBox.Show($"Can't find this file:{SelectedItem.Object.Path}", LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
-                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        OpenImageFile(SelectedItem.Object.Path);
                         return;
                     }
-                    if (OpenImage(SelectedItem.Object.Path))
-                        return;
-                    using (var reader = File.Create(SelectedItem.Object.Path))
+                    if (IsTextFile(SelectedItem.Object.Path))
                     {
-
-                        NavigateCommand<ReadWriteObjectViewModel> navigateCommand = new NavigateCommand<ReadWriteObjectViewModel>(
-                            new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel("", false,
-                            SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
-                        navigateCommand.Execute(this);
+                        RewriteTextFile(SelectedItem.Object.Path);
+                        return;
                     }
-
+                    Execute(obj);
 
                 }
                 catch (Exception ex)
@@ -158,19 +161,34 @@ namespace MultipleUserLoginForm.ViewModel
 
         }
 
+        private void RewriteTextFile(string fullPath)
+        {
+            try
+            {
+                using (var reader = File.Create(fullPath))
+                {
+                    NavigateCommand<ReadWriteObjectViewModel> navigateCommand = new NavigateCommand<ReadWriteObjectViewModel>(
+                        new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel("", false,
+                        SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
+                    navigateCommand.Execute(this);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
         private void Execute(object obj)
         {
             SelectedItem = (SecurityRightViewModel)obj;
 
             try
             {
-                if (!File.Exists(SelectedItem.Object.Path))
-                {
-                    MessageBox.Show($"{LocalizedStrings.Instance["mesBoxCannotFindFileUserCabinet"]} {SelectedItem.Object.Path}",
-                        LocalizedStrings.Instance["mesBoxTitleErrorUserCabinet"],
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!FileExists(SelectedItem.Object.Path))
                     return;
-                }
                 using (Process p = new Process())
                 {
                     p.StartInfo.FileName = SelectedItem.Object.Path;
@@ -185,32 +203,30 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
 
-        private bool SupportedExtensions(string fullPath)
-        {
-            string ext=Path.GetExtension(fullPath);
-            if (ext == ".pdf" || ext == ".doc"||ext==".docx"||ext==".xlsx"||ext==".rtf"||ext==".mp3"||ext==".mp4a"
-                ||ext=="mp4")
-                return false;
-            return true;
-        }
+      
 
-        private bool OpenImage(string fullPath)
+        private bool IsImage(string fullPath)
         {
             string ext = Path.GetExtension(fullPath);
             if ((ext == ".png" )||( ext == ".jpg") || (ext == ".bmp")|| (ext == ".ico") || (ext == ".jpeg"))
             {
-                BitmapImage bmp = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
-                bmp.CacheOption = BitmapCacheOption.OnLoad;
-                NavigateCommand<OpenImageViewmodel> navigateCommand = new NavigateCommand<OpenImageViewmodel>(
-                      new NavigationService<OpenImageViewmodel>(_navigationStore, () => new OpenImageViewmodel(bmp,
-                      SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
-                navigateCommand.Execute(this);
+              
                 return true;
             }
             return false;
         }
 
-        private bool OpenTextFile(string fullPath)
+        private void OpenImageFile(string fullPath)
+        { 
+            BitmapImage bmp = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            NavigateCommand<OpenImageViewmodel> navigateCommand = new NavigateCommand<OpenImageViewmodel>(
+                      new NavigationService<OpenImageViewmodel>(_navigationStore, () => new OpenImageViewmodel(bmp,
+                      SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
+            navigateCommand.Execute(this);
+
+        }
+        private void OpenTextFile(string fullPath,bool readOnly)
         {
             try
             {
@@ -219,7 +235,7 @@ namespace MultipleUserLoginForm.ViewModel
                     //string s = await reader.ReadToEndAsync();
                     string s = reader.ReadToEnd();
                     NavigateCommand<ReadWriteObjectViewModel> navigateCommand = new NavigateCommand<ReadWriteObjectViewModel>(
-                        new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel(s, true,
+                        new NavigationService<ReadWriteObjectViewModel>(_navigationStore, () => new ReadWriteObjectViewModel(s, readOnly,
                         SelectedItem.Object, SelectedItem.Subject, _navigationStore, _matricsStore)));
                     navigateCommand.Execute(this);
                 }
@@ -227,9 +243,9 @@ namespace MultipleUserLoginForm.ViewModel
             }catch (Exception ex)
             {
                MessageBox.Show(ex.Message);
-                return false;
+               
             }
-            return true;
+           
         }
 
         public ICollectionView FilteredView { get; set; }

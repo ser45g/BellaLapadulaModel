@@ -591,6 +591,8 @@ namespace MultipleUserLoginForm.ViewModel
                     Objects = new ObservableCollection<ObjectViewModel>(Objects);
                     Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsEnglishChecked));
+                    OnPropertyChanged(nameof(TreeSource));
+
                     SetLocalizedComboSource();
                     TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
                 LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
@@ -611,6 +613,7 @@ namespace MultipleUserLoginForm.ViewModel
                     Objects = new ObservableCollection<ObjectViewModel>(Objects);
                     Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsRussianChecked));
+                    OnPropertyChanged(nameof(TreeSource));
                     SetLocalizedComboSource();
                     TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
                 LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
@@ -825,29 +828,6 @@ namespace MultipleUserLoginForm.ViewModel
         #endregion
 
     }
-    public static class ExtensionMethods
-    {
-        public static List<KeyValuePair<T, string>> GetValuesForComboBox<T>(this Enum theEnum)
-        {
-            List<KeyValuePair<T, string>> _comboBoxItemSource = null;
-            if (_comboBoxItemSource == null)
-            {
-                _comboBoxItemSource = new List<KeyValuePair<T, string>>();
-                foreach (T level in Enum.GetValues(typeof(T)))
-                {
-                    string Description = string.Empty;
-                    FieldInfo fieldInfo = level.GetType().GetField(level.ToString());
-                    DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                    if (attributes != null && attributes.Length > 0)
-                    {
-                        Description = attributes.FirstOrDefault().Description;
-                    }
-                    KeyValuePair<T, string> TypeKeyValue = new KeyValuePair<T, string>(level, Description);
-                    _comboBoxItemSource.Add(TypeKeyValue);
-                }
-            }
-            return _comboBoxItemSource;
-        }
-    }
+    
 
 }
