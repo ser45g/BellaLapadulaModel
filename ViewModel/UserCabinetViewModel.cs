@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -57,6 +58,13 @@ namespace MultipleUserLoginForm.ViewModel
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                string str = LocalizedStrings.Instance["logReadUserCabinet"];
+                str = str.ReplaceFirstInstance("*", Account.Login);
+                str = str.ReplaceFirstInstance("*", Account.Password);
+                str = str.ReplaceFirstInstance("*", SelectedItem.Object.Name);
+                str = str.ReplaceFirstInstance("*", SelectedItem.Object.Path);
+                str = str.ReplaceFirstInstance("*", SelectedItem.RightName);
+                _matricsStore.CurrentMatrics.Log.Insert(0, $"{str} - {DateTime.Now}");
                 if (IsImage(SelectedItem.Object.Path))
                 {
                     OpenImageFile(SelectedItem.Object.Path);
@@ -108,11 +116,14 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     if (!FileExists(SelectedItem.Object.Path))
                         return;
-                    if (IsImage(SelectedItem.Object.Path))
-                    {
-                        OpenImageFile(SelectedItem.Object.Path);
-                        return;
-                    }
+                    string str = LocalizedStrings.Instance["logWriteUserCabinet"];
+                    str = str.ReplaceFirstInstance("*", Account.Login);
+                    str = str.ReplaceFirstInstance("*", Account.Password);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.Object.Name);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.Object.Path);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.RightName);
+                    _matricsStore.CurrentMatrics.Log.Insert(0, $"{str} - {DateTime.Now}");
+                  
                     if (IsTextFile(SelectedItem.Object.Path))
                     {
                         OpenTextFile(SelectedItem.Object.Path, false);
@@ -139,6 +150,13 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     if (!FileExists(SelectedItem.Object.Path))
                         return;
+                    string str = LocalizedStrings.Instance["logWriteUserCabinet"];
+                    str = str.ReplaceFirstInstance("*", Account.Login);
+                    str = str.ReplaceFirstInstance("*", Account.Password);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.Object.Name);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.Object.Path);
+                    str = str.ReplaceFirstInstance("*", SelectedItem.RightName);
+                    _matricsStore.CurrentMatrics.Log.Insert(0, $"{str} - {DateTime.Now}");
                     if (IsImage(SelectedItem.Object.Path))
                     {
                         OpenImageFile(SelectedItem.Object.Path);
@@ -180,7 +198,7 @@ namespace MultipleUserLoginForm.ViewModel
 
             }
         }
-
+      
         private void Execute(object obj)
         {
             SelectedItem = (SecurityRightViewModel)obj;
@@ -189,6 +207,13 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 if (!FileExists(SelectedItem.Object.Path))
                     return;
+                string str = LocalizedStrings.Instance["logExecuteUserCabinet"];
+                str = str.ReplaceFirstInstance("*", Account.Login);
+                str = str.ReplaceFirstInstance("*", Account.Password);
+                str = str.ReplaceFirstInstance("*", SelectedItem.Object.Name);
+                str = str.ReplaceFirstInstance("*", SelectedItem.Object.Path);
+                str = str.ReplaceFirstInstance("*", SelectedItem.RightName);
+                _matricsStore.CurrentMatrics.Log.Insert(0, $"{str} - {DateTime.Now}");
                 using (Process p = new Process())
                 {
                     p.StartInfo.FileName = SelectedItem.Object.Path;
@@ -289,6 +314,7 @@ namespace MultipleUserLoginForm.ViewModel
             _navigationStore = ns;
             _account = account;
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(new NavigationService<LoginViewModel>(ns,()=>new LoginViewModel(ns,ms)));
+           
 
             TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleUserCabinet"]} - " +
                 LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
@@ -296,7 +322,7 @@ namespace MultipleUserLoginForm.ViewModel
             ReadCommand = new RelayCommand(Read);
             WriteCommand = new RelayCommand(Write);
             ExecuteCommand = new RelayCommand(Execute);
-
+            
             FilteredView = new CollectionViewSource { Source = AvailableObjects }.View;
         }
     }

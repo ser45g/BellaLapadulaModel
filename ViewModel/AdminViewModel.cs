@@ -80,11 +80,10 @@ namespace MultipleUserLoginForm.ViewModel
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
             _errorsObjectViewModel.ErrorsChanged += ErrorsObjectViewModel_Errorschanged;
 
-            ComboSource = new List<string>();
+            _securityMarkComboSource = new ObservableCollection<string>();
+            _categoryComboSource = new ObservableCollection<string>();
             SetLocalizedComboSource();
-            //ComboSource = new List<KeyValuePair<SecurityMark, string>>();
-            //SecurityMark mark = SecurityMark.Secret;
-            //ComboSource=mark.GetValuesForComboBox<SecurityMark>();
+           
         }
 
         #region Object Properties: Set of Objects
@@ -100,10 +99,13 @@ namespace MultipleUserLoginForm.ViewModel
 					ObjectName= _selectedObject.Name;
 					ObjectPath=_selectedObject.Path;
 					ObjectSecurityMark= _selectedObject.SecurityMark;
+                    ObjectSecurityCategory= _selectedObject.SecurityCategory;
 				}
 				OnPropertyChanged(nameof(SelectedObject));
-			}
-		}
+                OnPropertyChanged(nameof(ObjectMandatoryMark));
+
+            }
+        }
 
 		private string _objectName;
 		public string ObjectName { get { return _objectName; } set {
@@ -126,23 +128,57 @@ namespace MultipleUserLoginForm.ViewModel
 
 				OnPropertyChanged(nameof(ObjectSecurityMark));
                 OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+                OnPropertyChanged(nameof(ObjectMandatoryMark));
 			} 
         }
-       // private string _objectSecurityMarkDisplay;
+        private Category _objectSecurityCategory;
+        public Category ObjectSecurityCategory
+        {
+            get { return _objectSecurityCategory; }
+            set
+            {
+                _objectSecurityCategory = value;
+                OnPropertyChanged(nameof(ObjectSecurityCategory));
+                OnPropertyChanged(nameof(ObjectSecurityCategoryDisplay));
+                OnPropertyChanged(nameof(ObjectMandatoryMark));
+            }
+        }
+        // private string _objectSecurityMarkDisplay;
 
         public string ObjectSecurityMarkDisplay
         {
-            get { return LocalizedStrings.Instance["SecurityMark" + ObjectSecurityMark.ToString()]; }
-            set {
-                ObjectSecurityMark = _KeyLocalizedValueDictionary[value];
-                OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+            get { string s= LocalizedStrings.Instance["SecurityMark" + ObjectSecurityMark.ToString()]; return s; }
+            set { 
+                if (value != null)
+                {
+
+                    ObjectSecurityMark = _KeyLocalizedValueSecurityMarkDictionary[value];
+                    OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+                   
+                }
             }
         }
-        
-        bool CompareLocalizedStrings(string value,string loc)
+        public string ObjectSecurityCategoryDisplay
         {
-            return (value == LocalizedStrings.Instance[loc]);
+            get { return LocalizedStrings.Instance["category" + ObjectSecurityCategory.ToString()]; }
+            set {
+                if(value != null)
+                {
+                    ObjectSecurityCategory = _KeyLocalizedValueCategoryDictionary[value];
+                    OnPropertyChanged(nameof(ObjectSecurityCategoryDisplay));
+                    
+                }
+                
+               
+            }
         }
+        public string ObjectMandatoryMark
+        {
+            get { return ObjectViewModel.GetMandatoryMarkAsString(ObjectSecurityMark, ObjectSecurityCategory); }
+
+        }
+
+
 
         bool _objectBeingAdded = false;
         private void AddObject(object obj)
@@ -150,7 +186,8 @@ namespace MultipleUserLoginForm.ViewModel
             if (_objectBeingAdded == true)
                 return;
             _objectBeingAdded = true;
-            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
+            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark,
+            SecurityCategory=ObjectSecurityCategory});
 
             ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
             ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
@@ -182,7 +219,8 @@ namespace MultipleUserLoginForm.ViewModel
 
         private void ChangeObject(object obj)
         {
-            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark });
+            ObjectViewModel o = new ObjectViewModel(new Model.Object() { Path = ObjectPath, Name = ObjectName, SecurityMark = ObjectSecurityMark,
+            SecurityCategory=ObjectSecurityCategory});
 
             ValidateStringIsNullOrEmpty(o.Name, nameof(ObjectName), _errorsObjectViewModel);
             ValidateStringIsNullOrEmpty(o.Path, nameof(ObjectPath), _errorsObjectViewModel);
@@ -226,12 +264,14 @@ namespace MultipleUserLoginForm.ViewModel
                 {
                     SubjectLogin = _selectedSubject.Login;
                     SubjectPassword = _selectedSubject.Password;
-                    SubjectSecurityMark = _selectedSubject.SecurityMark;
+                    SubjectSecurityMark = _selectedSubject.SecurityMark;                
+                    SubjectSecurityCategory = _selectedSubject.SecurityCategory;
                     SubjectName = _selectedSubject.Name;
                     SubjectSecondName = _selectedSubject.SecondName;
 
                 }
                 OnPropertyChanged(nameof(SelectedSubject));
+                OnPropertyChanged(nameof(SubjectMandatoryMark));
 
             }
         }
@@ -289,14 +329,54 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
             }
         }
+        private string _subjectSecurityMarkDisplay;
         public string SubjectSecurityMarkDisplay
         {
-            get { return LocalizedStrings.Instance["SecurityMark" + SubjectSecurityMark.ToString()]; }
+            get {  return LocalizedStrings.Instance["SecurityMark" + SubjectSecurityMark.ToString()];  }
             set
             {
-                SubjectSecurityMark = _KeyLocalizedValueDictionary[value];
-                OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
+                if (value == null)
+                    return;
+                 SubjectSecurityMark = _KeyLocalizedValueSecurityMarkDictionary[value];
+                 //OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
+                
             }
+        }
+        public string SubjectMandatoryMark
+        {
+            get { return SubjectViewModel.GetMandatoryMarkAsString(SubjectSecurityMark, SubjectSecurityCategory);  }
+            
+        }
+
+        private Category _subjectSecurityCategory;
+        public Category SubjectSecurityCategory
+        {
+            get { return _subjectSecurityCategory; }
+            set
+            {
+                
+                _subjectSecurityCategory = value;
+                OnPropertyChanged(nameof(SubjectSecurityCategory));
+                OnPropertyChanged(nameof(SubjectSecurityCategoryDisplay));
+            }
+        }
+        public string SubjectSecurityCategoryDisplay
+        {
+            get { return LocalizedStrings.Instance["category" + SubjectSecurityCategory.ToString()]; }
+            set
+            {
+                if (value != null)
+                {
+                    SubjectSecurityCategory = _KeyLocalizedValueCategoryDictionary[value];
+                }
+                else
+                {
+                    SubjectSecurityCategory = Category.First;
+                }
+                    OnPropertyChanged(nameof(SubjectSecurityCategoryDisplay));
+                }
+                
+               
         }
 
         private void AddSubject(object obj)
@@ -307,7 +387,8 @@ namespace MultipleUserLoginForm.ViewModel
                 Password = SubjectPassword,
                 SecurityMark = SubjectSecurityMark,
                 Name = SubjectName,
-                SecondName = SubjectSecondName
+                SecondName = SubjectSecondName,
+                SecurityCategory = SubjectSecurityCategory
             });
             ValidateSubjectLogin(s.Login);
             ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
@@ -328,7 +409,8 @@ namespace MultipleUserLoginForm.ViewModel
                 Password = SubjectPassword,
                 SecurityMark = SubjectSecurityMark,
                 Name = SubjectName,
-                SecondName = SubjectSecondName }
+                SecondName = SubjectSecondName,
+            SecurityCategory=SubjectSecurityCategory}
             );
             ValidateStringIsNullOrEmpty(s.Login, nameof(SubjectLogin), _errorsViewModel);
             ValidateStringIsNullOrEmpty(s.Password, nameof(SubjectPassword), _errorsViewModel);
@@ -413,29 +495,70 @@ namespace MultipleUserLoginForm.ViewModel
 
         public ICommand BrowseObjectPathCommand {  get; }
 
-        public List<string> _comboSource;
-        public List< string> ComboSource { get=>_comboSource; set { 
-                _comboSource = value;
-                OnPropertyChanged(nameof(ComboSource));
+        private ObservableCollection<string> _securityMarkComboSource;
+        public ObservableCollection< string> SecurityMarkComboSource { 
+            get { return _securityMarkComboSource; } 
+            set {
+                _securityMarkComboSource = value;
+                OnPropertyChanged(nameof(SecurityMarkComboSource));
             } }
-        private Dictionary<string, SecurityMark> _KeyLocalizedValueDictionary=new Dictionary<string, SecurityMark>();
+        private ObservableCollection<string> _categoryComboSource;
+        public ObservableCollection< string> CategoryComboSource { 
+            get { return _categoryComboSource; } set {
+                _categoryComboSource = value;
+                OnPropertyChanged(nameof(CategoryComboSource));
+            } }
+
+        private Dictionary<string, SecurityMark> _KeyLocalizedValueSecurityMarkDictionary=new Dictionary<string, SecurityMark>();
+        private Dictionary<string, Category> _KeyLocalizedValueCategoryDictionary=new Dictionary<string, Category>();
+
         private void SetLocalizedComboSource() {
-            if (ComboSource == null) return;
-            ComboSource.Clear();
-            _KeyLocalizedValueDictionary.Clear();
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"]);
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensitive"]);
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkConfidential"]);
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkSecret"]);
-            ComboSource.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"]);
-            
-            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"],SecurityMark.Unclassified);
-            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkUnclassifiedButSensitive"],SecurityMark.UnclassifiedButSensitive);
-            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkConfidential"],SecurityMark.Confidential);
-            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkSecret"],SecurityMark.Secret);
-            _KeyLocalizedValueDictionary.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"],SecurityMark.TopSecret);
-            OnPropertyChanged(nameof(ComboSource));
-            OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+            if (SecurityMarkComboSource == null||CategoryComboSource==null) return;
+
+
+            _KeyLocalizedValueSecurityMarkDictionary.Clear();
+            _KeyLocalizedValueCategoryDictionary.Clear();
+ 
+            _KeyLocalizedValueSecurityMarkDictionary.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"],SecurityMark.Unclassified);
+            _KeyLocalizedValueSecurityMarkDictionary.Add(LocalizedStrings.Instance["SecurityMarkConfidential"],SecurityMark.Confidential);
+            _KeyLocalizedValueSecurityMarkDictionary.Add(LocalizedStrings.Instance["SecurityMarkSecret"],SecurityMark.Secret);
+            _KeyLocalizedValueSecurityMarkDictionary.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"],SecurityMark.TopSecret);
+
+            _KeyLocalizedValueCategoryDictionary.Add(LocalizedStrings.Instance["categoryFirst"], Category.First);
+            _KeyLocalizedValueCategoryDictionary.Add(LocalizedStrings.Instance["categorySecond"], Category.Second);
+            _KeyLocalizedValueCategoryDictionary.Add(LocalizedStrings.Instance["categoryThird"], Category.Third);
+            _KeyLocalizedValueCategoryDictionary.Add(LocalizedStrings.Instance["categoryFourth"], Category.Fourth);
+            _KeyLocalizedValueCategoryDictionary.Add(LocalizedStrings.Instance["categoryFifth"], Category.Fifth);
+
+            var c = new ObservableCollection<string>();
+            var s = new ObservableCollection<string>();
+           
+            s.Add(LocalizedStrings.Instance["SecurityMarkUnclassified"]);
+            s.Add(LocalizedStrings.Instance["SecurityMarkConfidential"]);
+            s.Add(LocalizedStrings.Instance["SecurityMarkSecret"]);
+            s.Add(LocalizedStrings.Instance["SecurityMarkTopSecret"]);
+           
+            c.Add(LocalizedStrings.Instance["categoryFirst"]);
+            c.Add(LocalizedStrings.Instance["categorySecond"]);
+            c.Add(LocalizedStrings.Instance["categoryThird"]);
+            c.Add(LocalizedStrings.Instance["categoryFourth"]);
+            c.Add(LocalizedStrings.Instance["categoryFifth"]);
+
+            SecurityMarkComboSource = s;
+            CategoryComboSource = c;
+          
+            //List<string> a = new List<string>();
+            //foreach(var i in SecurityMarkComboSource) { 
+            //    i
+            //}
+            OnPropertyChanged(nameof(SecurityMarkComboSource));
+            OnPropertyChanged(nameof(CategoryComboSource));
+
+           //OnPropertyChanged(nameof(ObjectSecurityCategoryDisplay));
+           //OnPropertyChanged(nameof(ObjectSecurityMarkDisplay));
+            //string s = LocalizedStrings.Instance["SecurityMark" + ObjectSecurityMark.ToString()];
+           // ObjectSecurityMarkDisplay = s;
+            //OnPropertyChanged(nameof(SubjectSecurityCategoryDisplay));
             OnPropertyChanged(nameof(SubjectSecurityMarkDisplay));
 
         }
@@ -581,13 +704,13 @@ namespace MultipleUserLoginForm.ViewModel
 
         public bool IsEnglishChecked
         {
-            get { return Settings.Default.CurrentCulture =="en-US"; }
+            get { return LocalizedStrings.Instance.GetCurrentCultureCode() =="en-US"; }
             set {
-                if(value)
+                if(value==true)
                 {
                     Settings.Default.CurrentCulture = "en-US";
-                    LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-                    LocalizeDictionary.Instance.SetCultureCommand.Execute("en-US");
+                    LocalizedStrings.Instance.SetCulture("en-US");
+
                     Objects = new ObservableCollection<ObjectViewModel>(Objects);
                     Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsEnglishChecked));
@@ -602,18 +725,18 @@ namespace MultipleUserLoginForm.ViewModel
 
         public bool IsRussianChecked
         {
-            get { return Settings.Default.CurrentCulture == "ru-RU"; }
+            get { return LocalizedStrings.Instance.GetCurrentCultureCode() == "ru-RU"; }
             set {
                 if (value == true)
                 {   
                     Settings.Default.CurrentCulture = "ru-RU";
-                   
-                    LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-                    LocalizeDictionary.Instance.SetCultureCommand.Execute("ru-RU");
+                    LocalizedStrings.Instance.SetCulture("ru-RU");
+
                     Objects = new ObservableCollection<ObjectViewModel>(Objects);
                     Subjects = new ObservableCollection<SubjectViewModel>(Subjects);
                     OnPropertyChanged(nameof(IsRussianChecked));
                     OnPropertyChanged(nameof(TreeSource));
+
                     SetLocalizedComboSource();
                     TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleAdmin"]} - " +
                 LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
@@ -682,17 +805,21 @@ namespace MultipleUserLoginForm.ViewModel
                     IsExecutable=s.IsExecutable;
 
                     ChosenObjectName = s.Object.Name;
-                    ChosenObjectSecurityMark = s.Object.SecurityMark;
+                    ChosenObjectSecurityMark = s.Object.SecurityMarkName;
+                    ChosenObjectSecurityCategory = s.Object.SecurityCategoryName;
                     IsObjectOrSubject = LocalizedStrings.Instance["textBlockOBJECTAccessMatrix"];
                 }
                 else if(value is SubjectTreeViewModel subj)
                 {
+                     
                     IsReadable=false;
                     IsWritable=false;
                     IsExecutable=false;
 
                     ChosenObjectName = subj.Subject.Login;
-                    ChosenObjectSecurityMark = subj.Subject.SecurityMark;
+                    ChosenObjectSecurityMark = subj.Subject.SecurityMarkName;
+                    ChosenObjectSecurityCategory = subj.Subject.SecurityCategoryName;
+                    subj.Subject.SecurityCategory.ToString();
                     IsObjectOrSubject = LocalizedStrings.Instance["textBlockSUBJECTAccessMatrix"];
                 }
                 OnPropertyChanged(nameof(TreeViewSelectedItem));
@@ -730,12 +857,21 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(ChosenObjectName));
             }
         }
-        private SecurityMark _chosenObjectSecurityMark;
-        public SecurityMark ChosenObjectSecurityMark
+        private string _chosenObjectSecurityMark;
+        public string ChosenObjectSecurityMark
         {
             get { return _chosenObjectSecurityMark; }
             set { _chosenObjectSecurityMark = value;
                 OnPropertyChanged(nameof(ChosenObjectSecurityMark));
+            }
+        }
+        private string _chosenObjectSecurityCategory;
+        public string ChosenObjectSecurityCategory
+        {
+            get { return _chosenObjectSecurityCategory; }
+            set {
+                _chosenObjectSecurityCategory = value;
+                OnPropertyChanged(nameof(ChosenObjectSecurityCategory));
             }
         }
         private string _isObjectOrSubject;

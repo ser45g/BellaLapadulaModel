@@ -18,5 +18,8 @@ namespace MultipleUserLoginForm.Model
 
         [Required]
         public SecurityMark SecurityMark { get; set; }
+        [Required]
+        public Category SecurityCategory { get; set; }
+       
     }
 }

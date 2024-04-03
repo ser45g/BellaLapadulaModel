@@ -158,7 +158,15 @@ namespace MultipleUserLoginForm.ViewModel
             }
             else if (s.SecurityMark == o.SecurityMark)
             {
-                right = Right.All;
+                if (s.SecurityCategory > o.SecurityCategory)
+                {
+                    right = Right.Read;
+                }
+                else if (s.SecurityCategory == o.SecurityCategory)
+                {
+                    right = Right.All;
+                }
+                else { right = Right.Write; }
             }
             else
             {
@@ -170,6 +178,7 @@ namespace MultipleUserLoginForm.ViewModel
         }
         SecurityRightViewModel ImplyBibaModel(SubjectViewModel s, ObjectViewModel o)
         {
+
             Right right;
             if (s.SecurityMark > o.SecurityMark)
             {
@@ -177,7 +186,18 @@ namespace MultipleUserLoginForm.ViewModel
             }
             else if (s.SecurityMark == o.SecurityMark)
             {
-                right = Right.All;
+                if (s.SecurityCategory > o.SecurityCategory)
+                {
+                    right = Right.Write;
+                }
+                else if (s.SecurityCategory == o.SecurityCategory)
+                {
+                    right = Right.All;
+                }
+                else
+                {
+                    right = Right.Read;
+                }
             }
             else
             {
@@ -190,7 +210,7 @@ namespace MultipleUserLoginForm.ViewModel
         SecurityRightViewModel ImplyCombinedModel(SubjectViewModel s, ObjectViewModel o)
         {
             Right right;
-            if (s.SecurityMark == o.SecurityMark)
+            if (s.SecurityMark == o.SecurityMark && s.SecurityCategory == o.SecurityCategory)
             {
                 right = Right.All;
             }
@@ -201,7 +221,7 @@ namespace MultipleUserLoginForm.ViewModel
             return new SecurityRightViewModel(){ Object = o, Subject = s, Right = right };
 
         }
-
+        
         public List<SubjectViewModel> Admins { get; set; }
 
         protected virtual void Dispose(bool disposing)

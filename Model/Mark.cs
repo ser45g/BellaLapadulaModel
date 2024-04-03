@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace MultipleUserLoginForm.Model
 {
     public enum SecurityMark {
+        
         Unclassified,
-        UnclassifiedButSensitive,
         Confidential,
         Secret,
         TopSecret}

@@ -88,11 +88,812 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ____________________.
+        /// </summary>
+        internal static string ___Set_of_Objects_____Admin_____ {
+            get {
+                return ResourceManager.GetString("___Set_of_Objects_____Admin_____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _____________________.
+        /// </summary>
+        internal static string ___Settings______Admin______ {
+            get {
+                return ResourceManager.GetString("___Settings______Admin______", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ___________________.
+        /// </summary>
+        internal static string ___Validation____Admin________ {
+            get {
+                return ResourceManager.GetString("___Validation____Admin________", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ______________________.
+        /// </summary>
+        internal static string @__Access_Matrix_____Admin___________________ {
+            get {
+                return ResourceManager.GetString("__Access_Matrix_____Admin___________________", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _____________________.
+        /// </summary>
+        internal static string @__Log_____Admin_________ {
+            get {
+                return ResourceManager.GetString("__Log_____Admin_________", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _____________________.
+        /// </summary>
+        internal static string @__Set_of_Subjects______Admin___________ {
+            get {
+                return ResourceManager.GetString("__Set_of_Subjects______Admin___________", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string btnAddObject {
+            get {
+                return ResourceManager.GetString("btnAddObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string btnAddSetSubjects {
+            get {
+                return ResourceManager.GetString("btnAddSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        internal static string btnBrowseSetObjects {
+            get {
+                return ResourceManager.GetString("btnBrowseSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string btnChangeObject {
+            get {
+                return ResourceManager.GetString("btnChangeObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string btnChangeSetSubjects {
+            get {
+                return ResourceManager.GetString("btnChangeSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string btnClearObject {
+            get {
+                return ResourceManager.GetString("btnClearObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string btnClearSetSubjects {
+            get {
+                return ResourceManager.GetString("btnClearSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execute.
+        /// </summary>
+        internal static string btnExecuteUserCabinet {
+            get {
+                return ResourceManager.GetString("btnExecuteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string btnLogin {
             get {
                 return ResourceManager.GetString("btnLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        internal static string btnReadUserCabinet {
+            get {
+                return ResourceManager.GetString("btnReadUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string btnRemoveObject {
+            get {
+                return ResourceManager.GetString("btnRemoveObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string btnRemoveSetSubjects {
+            get {
+                return ResourceManager.GetString("btnRemoveSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        internal static string btnWriteUserCabinet {
+            get {
+                return ResourceManager.GetString("btnWriteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Director.
+        /// </summary>
+        internal static string categoryFifth {
+            get {
+                return ResourceManager.GetString("categoryFifth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        internal static string categoryFirst {
+            get {
+                return ResourceManager.GetString("categoryFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department 3.
+        /// </summary>
+        internal static string categoryFourth {
+            get {
+                return ResourceManager.GetString("categoryFourth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department 1.
+        /// </summary>
+        internal static string categorySecond {
+            get {
+                return ResourceManager.GetString("categorySecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department 2.
+        /// </summary>
+        internal static string categoryThird {
+            get {
+                return ResourceManager.GetString("categoryThird", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execute.
+        /// </summary>
+        internal static string chboxExecute {
+            get {
+                return ResourceManager.GetString("chboxExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        internal static string chboxRead {
+            get {
+                return ResourceManager.GetString("chboxRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        internal static string chboxWrite {
+            get {
+                return ResourceManager.GetString("chboxWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        internal static string datGridComboBoxColSecurityCategorySetObjects {
+            get {
+                return ResourceManager.GetString("datGridComboBoxColSecurityCategorySetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        internal static string datGridComboBoxColSecurityCategorySetSubjects {
+            get {
+                return ResourceManager.GetString("datGridComboBoxColSecurityCategorySetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Mark.
+        /// </summary>
+        internal static string datGridComboBoxColSecurityMarkSetObjects {
+            get {
+                return ResourceManager.GetString("datGridComboBoxColSecurityMarkSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Mark.
+        /// </summary>
+        internal static string datGridComboBoxColSecurityMarkSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridComboBoxColSecurityMarkSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MandatoryMark.
+        /// </summary>
+        internal static string datGridMandatoryMarkSetObjects {
+            get {
+                return ResourceManager.GetString("datGridMandatoryMarkSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mandatory Mark.
+        /// </summary>
+        internal static string datGridMandatoryMarkSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridMandatoryMarkSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string datGridTexColPasswordSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridTexColPasswordSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        internal static string datGridTexColPathSetObjects {
+            get {
+                return ResourceManager.GetString("datGridTexColPathSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        internal static string datGridTextColLoginSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridTextColLoginSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string datGridTextColNameSetObjects {
+            get {
+                return ResourceManager.GetString("datGridTextColNameSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string datGridTextColNameSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridTextColNameSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second Name.
+        /// </summary>
+        internal static string datGridTextColSecondNameSetSubjects {
+            get {
+                return ResourceManager.GetString("datGridTextColSecondNameSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to field can&apos;t be empty.
+        /// </summary>
+        internal static string errorFieldIsEmptyAdmin {
+            get {
+                return ResourceManager.GetString("errorFieldIsEmptyAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This login is not correct/available.
+        /// </summary>
+        internal static string errorInvalidLoginAdmin {
+            get {
+                return ResourceManager.GetString("errorInvalidLoginAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        internal static string groupBoxLanguage {
+            get {
+                return ResourceManager.GetString("groupBoxLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of Model.
+        /// </summary>
+        internal static string groupBoxTypeOfModel {
+            get {
+                return ResourceManager.GetString("groupBoxTypeOfModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for an object called....
+        /// </summary>
+        internal static string hintSearchForAnObjectUserCabinet {
+            get {
+                return ResourceManager.GetString("hintSearchForAnObjectUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a subject with the login....
+        /// </summary>
+        internal static string hintSearchForASubjectAccessMatrixAdmin {
+            get {
+                return ResourceManager.GetString("hintSearchForASubjectAccessMatrixAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All the objects were purged.
+        /// </summary>
+        internal static string logAllObjectsWerePurgedAdmin {
+            get {
+                return ResourceManager.GetString("logAllObjectsWerePurgedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All the subjects were purged.
+        /// </summary>
+        internal static string logAllSubjectsWerePurgedAdmin {
+            get {
+                return ResourceManager.GetString("logAllSubjectsWerePurgedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and password.
+        /// </summary>
+        internal static string logAndPasswordAdmin {
+            get {
+                return ResourceManager.GetString("logAndPasswordAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The User * with password * executes object * with path * with right *.
+        /// </summary>
+        internal static string logExecuteUserCabinet {
+            get {
+                return ResourceManager.GetString("logExecuteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Admin * with password * logged in successfully.
+        /// </summary>
+        internal static string logNavigateAdminLogin {
+            get {
+                return ResourceManager.GetString("logNavigateAdminLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The User * with password * logged in successfully.
+        /// </summary>
+        internal static string logNavigateUserCabinetLogin {
+            get {
+                return ResourceManager.GetString("logNavigateUserCabinetLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The User * with password * reads object * with path * with right *.
+        /// </summary>
+        internal static string logReadUserCabinet {
+            get {
+                return ResourceManager.GetString("logReadUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object.
+        /// </summary>
+        internal static string logTheObjectAdmin {
+            get {
+                return ResourceManager.GetString("logTheObjectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The subject.
+        /// </summary>
+        internal static string logTheSubjectAdmin {
+            get {
+                return ResourceManager.GetString("logTheSubjectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Type of the model was changed to Bella-Lapadula.
+        /// </summary>
+        internal static string logTypeOfModelChangedToBella_LapadulaAdmin {
+            get {
+                return ResourceManager.GetString("logTypeOfModelChangedToBella-LapadulaAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Type of the model was changed to Biba.
+        /// </summary>
+        internal static string logTypeOfModelChangedToBibaAdmin {
+            get {
+                return ResourceManager.GetString("logTypeOfModelChangedToBibaAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Type of the model was changed to Combined.
+        /// </summary>
+        internal static string logTypeOfModelChangedToCombinedAdmin {
+            get {
+                return ResourceManager.GetString("logTypeOfModelChangedToCombinedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with said login * and password * tried to log in but his password/login was incorrect.
+        /// </summary>
+        internal static string logUnsuccessfullyUserCabinetLogin {
+            get {
+                return ResourceManager.GetString("logUnsuccessfullyUserCabinetLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was added.
+        /// </summary>
+        internal static string logWasAddedAdmin {
+            get {
+                return ResourceManager.GetString("logWasAddedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was changed to.
+        /// </summary>
+        internal static string logWasChangedToAdmin {
+            get {
+                return ResourceManager.GetString("logWasChangedToAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was removed.
+        /// </summary>
+        internal static string logWasRemovedAdmin {
+            get {
+                return ResourceManager.GetString("logWasRemovedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to with the login.
+        /// </summary>
+        internal static string logWithTheLoginAdmin {
+            get {
+                return ResourceManager.GetString("logWithTheLoginAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to with the path.
+        /// </summary>
+        internal static string logWithThePathAdmin {
+            get {
+                return ResourceManager.GetString("logWithThePathAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The User * with password * writes to object * with path * with right *.
+        /// </summary>
+        internal static string logWriteUserCabinet {
+            get {
+                return ResourceManager.GetString("logWriteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete all the objects? There&apos;s no way you could resore them.
+        /// </summary>
+        internal static string mesBoxAreYouSureDeleteAllObjectsAdmin {
+            get {
+                return ResourceManager.GetString("mesBoxAreYouSureDeleteAllObjectsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete all the subjects? There&apos;s no way you could resore them.
+        /// </summary>
+        internal static string mesBoxAreYouSureDeleteAllSubjectsAdmin {
+            get {
+                return ResourceManager.GetString("mesBoxAreYouSureDeleteAllSubjectsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot execute this object.
+        /// </summary>
+        internal static string mesBoxCannotExecuteUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxCannotExecuteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find this file:.
+        /// </summary>
+        internal static string mesBoxCannotFindFileUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxCannotFindFileUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot read this object.
+        /// </summary>
+        internal static string mesBoxCannotReadUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxCannotReadUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot write to this object.
+        /// </summary>
+        internal static string mesBoxCannotWriteUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxCannotWriteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid password. Try again.
+        /// </summary>
+        internal static string mesBoxInvalidPasswordLogin {
+            get {
+                return ResourceManager.GetString("mesBoxInvalidPasswordLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There&apos;s no a user with such a login.
+        /// </summary>
+        internal static string mesBoxNoSuchUserLogin {
+            get {
+                return ResourceManager.GetString("mesBoxNoSuchUserLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The original file will be rewritten. Are you sure you want to continue?.
+        /// </summary>
+        internal static string mesBoxRewriteUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxRewriteUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string mesBoxTitleErrorUserCabinet {
+            get {
+                return ResourceManager.GetString("mesBoxTitleErrorUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To remove an object you have to select one in the data grid. Please, try again.
+        /// </summary>
+        internal static string mesBoxToRemoveObjectNeedToSelectAdmin {
+            get {
+                return ResourceManager.GetString("mesBoxToRemoveObjectNeedToSelectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To remove a subject you have to select one in the data grid. Please, try again.
+        /// </summary>
+        internal static string mesBoxToRemoveSubjectNeedToSelectAdmin {
+            get {
+                return ResourceManager.GetString("mesBoxToRemoveSubjectNeedToSelectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string mesBoxWarningAdmin {
+            get {
+                return ResourceManager.GetString("mesBoxWarningAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string mesError {
+            get {
+                return ResourceManager.GetString("mesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry! This type of file isn&apos;t supported for now, it can&apos;t be worked with.
+        /// </summary>
+        internal static string mesThisTypeOfFileINotSupportedUserCabinet {
+            get {
+                return ResourceManager.GetString("mesThisTypeOfFileINotSupportedUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bella-Lapadula.
+        /// </summary>
+        internal static string modelTypeBellaLapadula {
+            get {
+                return ResourceManager.GetString("modelTypeBellaLapadula", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biba.
+        /// </summary>
+        internal static string modelTypeBiba {
+            get {
+                return ResourceManager.GetString("modelTypeBiba", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Combined.
+        /// </summary>
+        internal static string modelTypeCombined {
+            get {
+                return ResourceManager.GetString("modelTypeCombined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To change an object you need to select one in the grid. Please, try again.
+        /// </summary>
+        internal static string msgToChangeObjectNeedSelectAdmin {
+            get {
+                return ResourceManager.GetString("msgToChangeObjectNeedSelectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To change an subject you need to select one in the grid. Please, try again.
+        /// </summary>
+        internal static string msgToChangeSubjectNeedSelectAdmin {
+            get {
+                return ResourceManager.GetString("msgToChangeSubjectNeedSelectAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bella-Lapadula.
+        /// </summary>
+        internal static string rbBelLap {
+            get {
+                return ResourceManager.GetString("rbBelLap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biba.
+        /// </summary>
+        internal static string rbBiba {
+            get {
+                return ResourceManager.GetString("rbBiba", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Combined.
+        /// </summary>
+        internal static string rbCombined {
+            get {
+                return ResourceManager.GetString("rbCombined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        internal static string Read {
+            get {
+                return ResourceManager.GetString("Read", resourceCulture);
             }
         }
         
@@ -106,7 +907,16 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to and Category:.
+        /// </summary>
+        internal static string runAndCategory {
+            get {
+                return ResourceManager.GetString("runAndCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The rights which are available for this subject:.
         /// </summary>
         internal static string runAvailableRightsAccessMatrix {
             get {
@@ -133,11 +943,65 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The security mark and category of the chosen.
+        /// </summary>
+        internal static string runSecurityMarkOfChosen {
+            get {
+                return ResourceManager.GetString("runSecurityMarkOfChosen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to with the Security Mark:.
         /// </summary>
         internal static string runWithSecurityMark {
             get {
                 return ResourceManager.GetString("runWithSecurityMark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensitive.
+        /// </summary>
+        internal static string SecurityMarkConfidential {
+            get {
+                return ResourceManager.GetString("SecurityMarkConfidential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confidential.
+        /// </summary>
+        internal static string SecurityMarkSecret {
+            get {
+                return ResourceManager.GetString("SecurityMarkSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TopSecret.
+        /// </summary>
+        internal static string SecurityMarkTopSecret {
+            get {
+                return ResourceManager.GetString("SecurityMarkTopSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        internal static string SecurityMarkUnclassified {
+            get {
+                return ResourceManager.GetString("SecurityMarkUnclassified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ______________________.
+        /// </summary>
+        internal static string SecurityMarkUnclassifiedButSensitive {
+            get {
+                return ResourceManager.GetString("SecurityMarkUnclassifiedButSensitive", resourceCulture);
             }
         }
         
@@ -160,6 +1024,15 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leave the cabinet.
+        /// </summary>
+        internal static string textBlockExitUserCabinet {
+            get {
+                return ResourceManager.GetString("textBlockExitUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         internal static string textBlockInformation {
@@ -178,6 +1051,69 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login:.
+        /// </summary>
+        internal static string textBlockLoginSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockLoginSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mandatory Mark:.
+        /// </summary>
+        internal static string textBlockMandatoryMarkSetObjects {
+            get {
+                return ResourceManager.GetString("textBlockMandatoryMarkSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mandatory Mark:.
+        /// </summary>
+        internal static string textBlockMandatoryMarkSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockMandatoryMarkSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string textBlockNameSetObjects {
+            get {
+                return ResourceManager.GetString("textBlockNameSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string textBlockNameSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockNameSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OBJECT.
+        /// </summary>
+        internal static string textBlockOBJECTAccessMatrix {
+            get {
+                return ResourceManager.GetString("textBlockOBJECTAccessMatrix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        internal static string textBlockPasswordSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockPasswordSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path:.
         /// </summary>
         internal static string textBlockPath {
@@ -187,11 +1123,83 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path:.
+        /// </summary>
+        internal static string textBlockPathSetObjects {
+            get {
+                return ResourceManager.GetString("textBlockPathSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to the cabinet.
+        /// </summary>
+        internal static string textBlockReturnToUserCabinetReadWriteObject {
+            get {
+                return ResourceManager.GetString("textBlockReturnToUserCabinetReadWriteObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second Name:.
+        /// </summary>
+        internal static string textBlockSecondNameSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockSecondNameSetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category:.
+        /// </summary>
+        internal static string textBlockSecurityCategory {
+            get {
+                return ResourceManager.GetString("textBlockSecurityCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category:.
+        /// </summary>
+        internal static string textBlockSecurityCategorySetObjects {
+            get {
+                return ResourceManager.GetString("textBlockSecurityCategorySetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category:.
+        /// </summary>
+        internal static string textBlockSecurityCategorySetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockSecurityCategorySetSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Security Mark:.
         /// </summary>
         internal static string textBlockSecurityMark {
             get {
                 return ResourceManager.GetString("textBlockSecurityMark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Mark:.
+        /// </summary>
+        internal static string textBlockSecurityMarkSetObjects {
+            get {
+                return ResourceManager.GetString("textBlockSecurityMarkSetObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Mark:.
+        /// </summary>
+        internal static string textBlockSecurityMarkSetSubjects {
+            get {
+                return ResourceManager.GetString("textBlockSecurityMarkSetSubjects", resourceCulture);
             }
         }
         
@@ -223,6 +1231,15 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SUBJECT.
+        /// </summary>
+        internal static string textBlockSUBJECTAccessMatrix {
+            get {
+                return ResourceManager.GetString("textBlockSUBJECTAccessMatrix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Login.
         /// </summary>
         internal static string textBlockUserLogin {
@@ -232,11 +1249,65 @@ namespace MultipleUserLoginForm.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        internal static string textBoxLanguageLogin {
+            get {
+                return ResourceManager.GetString("textBoxLanguageLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        internal static string titleAdmin {
+            get {
+                return ResourceManager.GetString("titleAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        internal static string titleLogin {
+            get {
+                return ResourceManager.GetString("titleLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available rights for subject.
+        /// </summary>
+        internal static string titleReadWrite {
+            get {
+                return ResourceManager.GetString("titleReadWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Cabinet.
+        /// </summary>
+        internal static string titleUserCabinet {
+            get {
+                return ResourceManager.GetString("titleUserCabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the username.
         /// </summary>
         internal static string txtUserNameUserLoginHint {
             get {
                 return ResourceManager.GetString("txtUserNameUserLoginHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        internal static string Write {
+            get {
+                return ResourceManager.GetString("Write", resourceCulture);
             }
         }
     }

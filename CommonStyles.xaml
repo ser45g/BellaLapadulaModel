@@ -178,6 +178,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Kind="FileOutline" Margin="5"
@@ -190,9 +191,16 @@
                     FontWeight="Bold"
                     TextWrapping="Wrap"
                     Text="{Binding Object.Name}" />
-
                 <TextBlock
                     Grid.Column="2" FontSize="16"
+                    Margin="10,5,5,5"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    TextWrapping="Wrap"
+                    Text="{Binding Object.MandatoryMark}" />
+
+                <TextBlock
+                    Grid.Column="3" FontSize="16"
                     VerticalAlignment="Center"
                     Margin="5"
                     FontWeight="Bold"
@@ -221,6 +229,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
                   
@@ -237,8 +246,18 @@
                 Text="{Binding Subject.Login}" 
                     FontSize="16"
                     />
+                  <TextBlock
+                Grid.Column="2"
+                Margin="10,5,5,5"
+                VerticalAlignment="Center"
+                FontWeight="SemiBold"
+                    TextWrapping="Wrap"
+                Text="{Binding Subject.MandatoryMark}" 
+                    FontSize="16"
+                    />
+                  
 
-                <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                <TextBlock Grid.Column="3" VerticalAlignment="Center"
                        FontSize="16" TextWrapping="Wrap" Margin="5">
                     <TextBlock.Inlines>
                     <Run FontWeight="Medium" Text="{Binding Subject.Name}" />

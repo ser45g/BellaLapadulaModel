@@ -120,6 +120,18 @@
                      Grid.Column="1" Grid.Row="1"
                     Validation.ErrorTemplate="{StaticResource Validation}" /> 
             </Grid>
+            <StackPanel Orientation="Horizontal" Margin="50 10 10 10">
+                <TextBlock Text="{lex:Loc Key=textBoxLanguageLogin}" Foreground="AliceBlue"
+                           FontSize="20" FontStyle="Italic" />
+                <ComboBox ItemsSource="{Binding Languages}"
+                          SelectedItem="{Binding CurrentLanguage,Mode=TwoWay}"
+                          Foreground="#CCC"
+                          FontStyle="Italic"
+                          
+                          FontSize="20"
+                          IsSynchronizedWithCurrentItem="False"
+                          />
+            </StackPanel>
                 
          
          

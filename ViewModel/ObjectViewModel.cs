@@ -42,7 +42,25 @@ namespace MultipleUserLoginForm.ViewModel
                 OnPropertyChanged(nameof(SecurityMark));
             }
         }
+        public Category SecurityCategory
+        {
+            get { return _object.SecurityCategory; }
+            set
+            {
+                _object.SecurityCategory = value;
+                OnPropertyChanged(nameof(SecurityCategoryName));
+                OnPropertyChanged(nameof(SecurityCategory));
+            }
+        }
+        public string MandatoryMark { get => GetMandatoryMarkAsString(SecurityMark, SecurityCategory); }
+
+        public static string GetMandatoryMarkAsString(SecurityMark securityMark, Category category)
+        {
+            return "{" + $"{((int)securityMark)},0x{((int)category).ToString("X1")}" + "}";
+        }
         public string SecurityMarkName { get => LocalizedStrings.Instance[$"SecurityMark{SecurityMark.ToString()}"]; }
+        public string SecurityCategoryName { get => LocalizedStrings.Instance[$"category{SecurityCategory.ToString()}"]; }
+
         public string ObjectIconPath { get {
                 string extension = System.IO.Path.GetExtension(Path);
                 string iconPath = _iconsDictionary.GetValueOrDefault(extension);

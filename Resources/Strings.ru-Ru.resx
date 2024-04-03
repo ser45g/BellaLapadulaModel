@@ -235,7 +235,7 @@
     <value>Исполнение</value>
   </data>
   <data name="runSecurityMarkOfChosen" xml:space="preserve">
-    <value>Метка Безопасности выбранного</value>
+    <value>Метка Безопасности и Категория выбранного</value>
   </data>
   <data name="__Access_Matrix_____Admin___________________" xml:space="preserve">
     <value>____________________________</value>
@@ -403,19 +403,16 @@
     <value>Вы уверены, что хотите удалить все субъекты? Вы не сможете восстановить их далее</value>
   </data>
   <data name="SecurityMarkUnclassified" xml:space="preserve">
-    <value>Не секретно</value>
-  </data>
-  <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
-    <value>ДСП</value>
+    <value>Общий доступ</value>
   </data>
   <data name="SecurityMarkConfidential" xml:space="preserve">
-    <value>Секретно</value>
+    <value>Служебная тайна</value>
   </data>
   <data name="SecurityMarkSecret" xml:space="preserve">
-    <value>Совершенно секретно</value>
+    <value>Конфиденциальные</value>
   </data>
   <data name="SecurityMarkTopSecret" xml:space="preserve">
-    <value>Особой важности</value>
+    <value>Государственная тайна</value>
   </data>
   <data name="hintSearchForAnObjectUserCabinet" xml:space="preserve">
     <value>Найти объект с именем...</value>
@@ -467,5 +464,74 @@
   </data>
   <data name="titleReadWrite" xml:space="preserve">
     <value>Доступные права для субъекта </value>
+  </data>
+  <data name="textBlockSecurityCategorySetObjects" xml:space="preserve">
+    <value>Категория:</value>
+  </data>
+  <data name="datGridComboBoxColSecurityCategorySetSubjects" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="textBlockSecurityCategorySetSubjects" xml:space="preserve">
+    <value>Категория:</value>
+  </data>
+  <data name="datGridComboBoxColSecurityCategorySetObjects" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="categoryFirst" xml:space="preserve">
+    <value>Общий доступ</value>
+  </data>
+  <data name="categorySecond" xml:space="preserve">
+    <value>Отдел 1</value>
+  </data>
+  <data name="categoryThird" xml:space="preserve">
+    <value>Отдел 2</value>
+  </data>
+  <data name="categoryFourth" xml:space="preserve">
+    <value>Отдел 3</value>
+  </data>
+  <data name="categoryFifth" xml:space="preserve">
+    <value>Руководство</value>
+  </data>
+  <data name="runAndCategory" xml:space="preserve">
+    <value>и Категорией:</value>
+  </data>
+  <data name="textBlockSecurityCategory" xml:space="preserve">
+    <value>Категория:</value>
+  </data>
+  <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
+    <value>_________________</value>
+  </data>
+  <data name="logExecuteUserCabinet" xml:space="preserve">
+    <value>Пользователь * с паролем * исполняет объект *  с путём * с правом доступа *</value>
+  </data>
+  <data name="logWriteUserCabinet" xml:space="preserve">
+    <value>Пользователь * с паролем * делает запись в объект *  с путём * с правом доступа *</value>
+  </data>
+  <data name="logReadUserCabinet" xml:space="preserve">
+    <value>Пользователь * с паролем * читает объект *  с путём * с правом доступа *</value>
+  </data>
+  <data name="logNavigateAdminLogin" xml:space="preserve">
+    <value>Администратор * с паролем * успешно вошёл в кабинет администратора</value>
+  </data>
+  <data name="logNavigateUserCabinetLogin" xml:space="preserve">
+    <value>Пользователь * с паролем * успешно вошел в кабинет пользователя</value>
+  </data>
+  <data name="logUnsuccessfullyUserCabinetLogin" xml:space="preserve">
+    <value>Пользователь ввёл логин * и пароль * и попытался войти, но пароль/логин был некорректным</value>
+  </data>
+  <data name="textBoxLanguageLogin" xml:space="preserve">
+    <value>Язык:</value>
+  </data>
+  <data name="textBlockMandatoryMarkSetSubjects" xml:space="preserve">
+    <value>Мандатная метка:</value>
+  </data>
+  <data name="datGridMandatoryMarkSetObjects" xml:space="preserve">
+    <value>Мандатная метка</value>
+  </data>
+  <data name="textBlockMandatoryMarkSetObjects" xml:space="preserve">
+    <value>Мандатная метка:</value>
+  </data>
+  <data name="datGridMandatoryMarkSetSubjects" xml:space="preserve">
+    <value>Мандатная метка</value>
   </data>
 </root>

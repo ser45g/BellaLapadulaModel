@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Collections;
 using MultipleUserLoginForm.Validation;
 using MultipleUserLoginForm.LocalizationHelper;
+using MultipleUserLoginForm.Properties;
 
 namespace MultipleUserLoginForm.ViewModel
 {
@@ -41,7 +42,40 @@ namespace MultipleUserLoginForm.ViewModel
             }
         }
         private string _login;
-        
+        private List<string> _languages;
+        public List<string> Languages { get => _languages;set
+            {
+                _languages = value;
+                OnPropertyChanged(nameof(Languages));
+            }
+
+        }
+       
+
+        public string CurrentLanguage
+        {
+            get { return LocalizedStrings.Instance.GetCurrentCultureCode()=="en-US"?"English":"Русский"; }
+            set {
+                if (value == "English")
+                {
+                    LocalizedStrings.Instance.SetCulture("en-US");
+                    Settings.Default.CurrentCulture = "en-US";
+
+                }
+                else if (value == "Русский")
+                {
+                    LocalizedStrings.Instance.SetCulture("ru-RU");
+                    Settings.Default.CurrentCulture = "ru-RU";
+
+                }
+                TitleStore.Instance.Title = $"{LocalizedStrings.Instance["titleLogin"]} - " +
+               LocalizedStrings.Instance[$"modelType{_matricsStore.CurrentMatrics.CurrentModelType.ToString()}"];
+                OnPropertyChanged(nameof(CurrentLanguage));
+            }
+        }
+
+
+
 
         public LoginViewModel(Stores.NavigationStore navigationStore, MatricsStore ms)
         {
@@ -58,6 +92,7 @@ namespace MultipleUserLoginForm.ViewModel
             _errorsViewModel = new ErrorsViewModel();
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_Errorschanged;
             LoginCommand = new RelayCommand(Navigate,(o)=>CanCreate);
+            Languages = new List<string>() {"English","Русский" };
         }
 
         private void ErrorsViewModel_Errorschanged(object? sender, DataErrorsChangedEventArgs e)
@@ -119,6 +154,10 @@ namespace MultipleUserLoginForm.ViewModel
             {
                 if(_matricsStore.CurrentMatrics.Admins.Find((s)=>s.Login==Login && s.Password==Password)is not null)
                 {
+                    string str = LocalizedStrings.Instance["logNavigateAdminLogin"];
+                    str = str.ReplaceFirstInstance("*", Login);
+                    str = str.ReplaceFirstInstance("*", Password);
+                    _matricsStore.CurrentMatrics.Log.Insert(0,$@"{_matricsStore.CurrentMatrics.Log.Count}){str} - {DateTime.Now}");
                     NavigateCommand<AdminViewModel> navCom =
                         new NavigateCommand<AdminViewModel>(
                             new NavigationService<AdminViewModel>(_navigationStore,
@@ -127,6 +166,10 @@ namespace MultipleUserLoginForm.ViewModel
                 }
                 else
                 {
+                    string str = LocalizedStrings.Instance["logNavigateUserCabinetLogin"];
+                    str = str.ReplaceFirstInstance("*", Login);
+                    str = str.ReplaceFirstInstance("*", Password);
+                    _matricsStore.CurrentMatrics.Log.Insert(0, $@"{_matricsStore.CurrentMatrics.Log.Count}){str} - {DateTime.Now}");
                     NavigateCommand<UserCabinetViewModel> navCom =
                         new NavigateCommand<UserCabinetViewModel>(
                             new NavigationService<UserCabinetViewModel>(_navigationStore,
@@ -134,6 +177,13 @@ namespace MultipleUserLoginForm.ViewModel
                             _navigationStore,_matricsStore)));
                     navCom.Execute(o);
                 }
+            }
+            else
+            {
+                string str = LocalizedStrings.Instance["logUnsuccessfullyUserCabinetLogin"];
+                str = str.ReplaceFirstInstance("*", Login);
+                str = str.ReplaceFirstInstance("*", Password);
+                _matricsStore.CurrentMatrics.Log.Insert(0, $@"{_matricsStore.CurrentMatrics.Log.Count}){str} - {DateTime.Now}");
             }
         }
        

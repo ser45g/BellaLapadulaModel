@@ -28,6 +28,9 @@ namespace MultipleUserLoginForm.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("SecurityCategory")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SecurityMark")
                         .HasColumnType("INTEGER");
 
@@ -53,6 +56,9 @@ namespace MultipleUserLoginForm.Migrations
 
                     b.Property<string>("SecondName")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("SecurityCategory")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("SecurityMark")
                         .HasColumnType("INTEGER");

@@ -11,7 +11,7 @@ namespace MultipleUserLoginForm.Views
     /// <summary>
     /// Interaction logic for UserCabinet.xaml
     /// </summary>
-    public partial class Admin : UserControl
+    public partial class Admin : UserControl,IDisposable
     {
         public string CurrentPath { get; set; }
         public Admin()
@@ -53,13 +53,23 @@ namespace MultipleUserLoginForm.Views
                     modelType = "Combined";
                 }
                 string path = @$"{CurrentPath}" + @$"\info{modelType}.{Properties.Settings.Default.CurrentCulture}.pdf";
-               
+                //webBrowser = new Microsoft.Web.WebView2.Wpf.WebView2();
+                
                 webBrowser.Source = new Uri(path);
                 //@"C:\Users\HP\Desktop\6 sem\Курсач 2024\MINE\BellLapadule\bin\Release\net6.0-windows7.0\info\infoBiba.en-US.pdf"
             }
         }
 
-       
+        public void Dispose()
+        {
+            webBrowser.Dispose();
+        }
+
+        
+
+
+
+
 
 
         //private void SetDocumentViewer(string pathPdf)

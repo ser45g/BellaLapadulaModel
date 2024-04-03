@@ -34,6 +34,14 @@
                     <x:Type TypeName="StyleAlias:SecurityMark" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+            <ObjectDataProvider
+                x:Key="categoryEnum"
+                MethodName="GetValues"
+                ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="StyleAlias:Category" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
 
             <Style TargetType="Button">
@@ -50,7 +58,7 @@
 
             <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="Margin" Value="10,3" />
+                <Setter Property="Margin" Value="10,5" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="TextWrapping" Value="Wrap" />
@@ -82,9 +90,12 @@
 
             <Style BasedOn="{StaticResource MaterialDesignDataGridComboBox}" TargetType="ComboBox">
                 <Setter Property="Margin" Value="10,5" />
+
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
+
                 <Setter Property="Background" Value="{StaticResource controlColor}" />
             </Style>
             <Style BasedOn="{StaticResource MaterialDesignTabItem}" TargetType="TabItem">
@@ -95,12 +106,19 @@
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="Foreground" Value="{StaticResource DarkColor}" />
             </Style>
-
+            <Style
+                x:Key="categoryComboBoxItem"
+                BasedOn="{StaticResource MaterialDesignNavigationPrimaryListBoxItem}"
+                TargetType="ComboBoxItem">
+                <Setter Property="MinWidth" Value="150" />
+            </Style>
 
         </Grid.Resources>
 
-        <TabControl Margin="5" Style="{StaticResource MaterialDesignTabControl}"
-                    SelectionChanged="TabControl_SelectionChanged">
+        <TabControl
+            Margin="5"
+            SelectionChanged="TabControl_SelectionChanged"
+            Style="{StaticResource MaterialDesignTabControl}">
 
             <TabItem>
                 <TabItem.Header>
@@ -209,6 +227,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
 
@@ -241,8 +260,16 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{StaticResource controlColor}"
                                 IsHitTestVisible="False"
-                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                                ItemsSource="{Binding SecurityMarkComboSource}"
                                 SelectedItem="{Binding ChosenObjectSecurityMark}" />
+                            <ComboBox
+                                Grid.Row="2"
+                                Margin="7,5,7,0"
+                                HorizontalContentAlignment="Center"
+                                Background="{StaticResource controlColor}"
+                                IsHitTestVisible="False"
+                                ItemsSource="{Binding CategoryComboSource}"
+                                SelectedItem="{Binding ChosenObjectSecurityCategory}" />
 
 
 
@@ -264,9 +291,9 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="6.5*" />
-                        <RowDefinition Height="5*" />
-                        <RowDefinition />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <DataGrid
                         Grid.Row="0"
@@ -284,13 +311,20 @@
                                 TargetType="TextBlock" />
 
 
+
                         </DataGrid.Resources>
+
 
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 x:Name="datGridTextColLoginSetSubjects"
                                 Width="*"
                                 Binding="{Binding Login}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Login}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColLoginSetSubjects}" />
@@ -306,6 +340,11 @@
                                 x:Name="datGridTexColPasswordSetSubjects"
                                 Width="*"
                                 Binding="{Binding Password}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Password}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTexColPasswordSetSubjects}" />
@@ -318,24 +357,12 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <!-- <DataGridComboBoxColumn
-                                x:Name="datGridComboBoxColSecurityMarkSetSubjects"
-                                Width="1.5*"
-                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                                SelectedItemBinding="{Binding SecurityMark}"
-                                SelectedValueBinding="{Binding SecurityMark}">
-                                <DataGridComboBoxColumn.Header>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetSubjects}" />
-                                        <Border
-                                            Height="3"
-                                            BorderBrush="Red"
-                                            BorderThickness="1.5" />
-                                    </StackPanel>
-
-                                </DataGridComboBoxColumn.Header>
-                            </DataGridComboBoxColumn>-->
-                            <DataGridTextColumn Width="*" Binding="{Binding SecurityMarkName}">
+                            <!-- <DataGridTextColumn Width="Auto" Binding="{Binding SecurityMarkName}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding SecurityMarkName}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetSubjects}" />
@@ -346,11 +373,54 @@
                                     </StackPanel>
 
                                 </DataGridTextColumn.Header>
+                            </DataGridTextColumn>-->
+
+                            <!--  <DataGridTextColumn Width="*" Binding="{Binding SecurityCategoryName}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding SecurityCategoryName}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityCategorySetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+                                    </StackPanel>
+
+                                </DataGridTextColumn.Header>
                             </DataGridTextColumn>
+                            -->
+
+                            <DataGridTextColumn Width="*" Binding="{Binding MandatoryMark}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding MandatoryMark}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridMandatoryMarkSetSubjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+                                    </StackPanel>
+
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
                             <DataGridTextColumn
                                 x:Name="datGridTextColNameSetSubjects"
                                 Width="*"
                                 Binding="{Binding Name}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Name}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColNameSetSubjects}" />
@@ -366,6 +436,11 @@
                                 x:Name="datGridTextColSecondNameSetSubjects"
                                 Width="*"
                                 Binding="{Binding SecondName}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding SecondName}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColSecondNameSetSubjects}" />
@@ -386,7 +461,9 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="1.2*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -418,6 +495,17 @@
                             Grid.Row="4"
                             Grid.Column="0"
                             Text="{lex:Loc}" />
+                        <TextBlock
+                            Name="textBlockSecurityCategorySetSubjects"
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Text="{lex:Loc}" />
+                        <TextBlock
+                            Name="textBlockMandatoryMarkSetSubjects"
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Text="{lex:Loc}" />
+
 
 
                         <TextBox
@@ -442,13 +530,31 @@
                             Grid.Row="4"
                             Grid.Column="1"
                             Background="{StaticResource controlColor}"
-                            ItemsSource="{Binding ComboSource}"
-                            SelectedItem="{Binding SubjectSecurityMarkDisplay}" 
-                            
-                            />
+                            ItemsSource="{Binding SecurityMarkComboSource}"
+                            SelectedItem="{Binding SubjectSecurityMarkDisplay, Mode=TwoWay}" >
+                            <ComboBox.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource categoryComboBoxItem}" TargetType="ComboBoxItem" />
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <ComboBox
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Background="{StaticResource controlColor}"
+                            ItemsSource="{Binding CategoryComboSource}"
+                            SelectedItem="{Binding SubjectSecurityCategoryDisplay}">
+                            <ComboBox.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource categoryComboBoxItem}" TargetType="ComboBoxItem" />
+                            </ComboBox.ItemContainerStyle>
+
+                        </ComboBox>
+                        <TextBox
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            IsHitTestVisible="False"
+                            Text="{Binding SubjectMandatoryMark, Mode=OneWay}" />
 
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="2" Margin="5">
                         <UniformGrid Columns="4">
                             <Button
                                 Name="btnAddSetSubjects"
@@ -480,9 +586,9 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="8*" />
-                        <RowDefinition Height="4*" />
-                        <RowDefinition />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <DataGrid
                         x:Name="datgrdObjects"
@@ -501,9 +607,72 @@
                                 x:Name="datGridTextColNameSetObjects"
                                 Width="*"
                                 Binding="{Binding Name}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Name}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTextColNameSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+
+
+
+
+                            <!--    <DataGridTextColumn Width="1.5*" Binding="{Binding SecurityMarkName}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding SecurityMarkName}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Binding="{Binding SecurityCategoryName}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding SecurityCategoryName}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityCategorySetObjects}" />
+                                        <Border
+                                            Height="3"
+                                            BorderBrush="Red"
+                                            BorderThickness="1.5" />
+
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            -->
+
+                            <DataGridTextColumn Width="*" Binding="{Binding MandatoryMark}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding MandatoryMark}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridMandatoryMarkSetObjects}" />
                                         <Border
                                             Height="3"
                                             BorderBrush="Red"
@@ -516,6 +685,11 @@
                                 x:Name="datGridTexColPathSetObjects"
                                 Width="3*"
                                 Binding="{Binding Path}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Path}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                                 <DataGridTextColumn.Header>
                                     <StackPanel>
                                         <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridTexColPathSetObjects}" />
@@ -527,37 +701,6 @@
                                     </StackPanel>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-
-                            <!--<DataGridComboBoxColumn
-                                x:Name="datGridComboBoxColSecurityMarkSetObjects"
-                                Width="1.5*"
-                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                                SelectedItemBinding="{Binding SecurityMark}"
-                                SelectedValueBinding="{Binding SecurityMark}">
-                                <DataGridComboBoxColumn.Header>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}" />
-                                        <Border
-                                            Height="3"
-                                            BorderBrush="Red"
-                                            BorderThickness="1.5" />
-
-                                    </StackPanel>
-                                </DataGridComboBoxColumn.Header>
-                            </DataGridComboBoxColumn>-->
-                            <DataGridTextColumn Width="*" Binding="{Binding SecurityMarkName}">
-                                <DataGridTextColumn.Header>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource TabItemHeaderTextBlockStyle}" Text="{lex:Loc Key=datGridComboBoxColSecurityMarkSetObjects}" />
-                                        <Border
-                                            Height="3"
-                                            BorderBrush="Red"
-                                            BorderThickness="1.5" />
-
-                                    </StackPanel>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
@@ -565,7 +708,9 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
 
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -573,7 +718,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
-                            <valueConvertor:EnumToStringConvertor x:Key="enumConv"/>
+                            <valueConvertor:EnumToStringConvertor x:Key="enumConv" />
                         </Grid.Resources>
 
                         <TextBlock
@@ -591,6 +736,16 @@
                             Grid.Row="2"
                             Grid.Column="0"
                             Text="{lex:Loc}" />
+                        <TextBlock
+                            Name="textBlockSecurityCategorySetObjects"
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Text="{lex:Loc}" />
+                        <TextBlock
+                           
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="{lex:Loc Key=textBlockMandatoryMarkSetObjects}" />
 
                         <TextBox
                             x:Name="txtObjectName"
@@ -609,7 +764,6 @@
                             <TextBox
                                 x:Name="txtObjectPath"
                                 Grid.Column="0"
-                                Margin="10,0,5,0"
                                 Text="{Binding ObjectPath, UpdateSourceTrigger=PropertyChanged}"
                                 Validation.ErrorTemplate="{StaticResource Validation}" />
                             <Button
@@ -626,15 +780,37 @@
                             x:Name="txtObjectSecurityMark"
                             Grid.Row="2"
                             Grid.Column="1"
-                            ItemsSource="{Binding ComboSource}"
-                            SelectedItem="{Binding ObjectSecurityMarkDisplay}"
-                              />
-                        <!--SelectedItem="{Binding ObjectSecurityMark}" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"-->
+                            ItemsSource="{Binding SecurityMarkComboSource}"
+                            SelectedItem="{Binding ObjectSecurityMarkDisplay}">
+                            <ComboBox.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource categoryComboBoxItem}" TargetType="ComboBoxItem" />
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <ComboBox
+                            x:Name="txtObjectSecurityCategory"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            ItemsSource="{Binding CategoryComboSource}"
+                            SelectedItem="{Binding ObjectSecurityCategoryDisplay}">
+                            <ComboBox.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource categoryComboBoxItem}" TargetType="ComboBoxItem" />
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+
+                        <TextBox
+                          
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Text="{Binding ObjectMandatoryMark,Mode=OneWay}"
+                            IsHitTestVisible="False" />
+
+
+                        <!--  SelectedItem="{Binding ObjectSecurityMark}" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"  -->
 
 
 
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="2" Margin="5">
                         <UniformGrid Columns="4">
 
                             <Button
@@ -711,49 +887,23 @@
 
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox
-                            Name="groupBoxLanguage"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Header="{lex:Loc}">
-                            <StackPanel>
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource RadioButton}" TargetType="RadioButton">
-                                        <Setter Property="Margin" Value="5" />
-                                    </Style>
-                                </StackPanel.Resources>
-                                <RadioButton
-                                    x:Name="rbEnglish"
-                                    Checked="rbEnglish_Checked"
-                                    Content="English"
-                                    IsChecked="{Binding IsEnglishChecked}" />
-                                <RadioButton
-                                    x:Name="rbRussian"
-                                    Checked="rbRussian_Checked"
-                                    Content="Русский"
-                                    IsChecked="{Binding IsRussianChecked}" />
-                            </StackPanel>
 
-                        </GroupBox>
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem x:Name="info">
                 <TabItem.Header>
                     <Border
-                       
                         VerticalAlignment="Center"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Style="{x:Null}">
-                        <StackPanel Margin="-10" Orientation="Horizontal"
-                                   >
+                        <StackPanel Margin="-10" Orientation="Horizontal">
                             <materialDesign:PackIcon
                                 Width="25"
                                 Height="25"
                                 VerticalAlignment="Center"
-                                Kind="AboutOutline" 
-                                />
+                                Kind="AboutOutline" />
                             <TextBlock
                                 Name="textBlockInformation"
                                 Style="{StaticResource TabItemHeaderTextBlockStyle}"
@@ -765,7 +915,7 @@
                 <Grid>
                     <!--  <WebBrowser Name="webBrowser" />  -->
 
-                    <wbview:WebView2 Name="webBrowser"/>
+                    <wbview:WebView2 Name="webBrowser" />
 
 
                 </Grid>

@@ -36,14 +36,34 @@ namespace MultipleUserLoginForm.ViewModel
                 _subject.SecurityMark = value;
                 OnPropertyChanged(nameof(SecurityMarkName));
                 OnPropertyChanged(nameof(SecurityMark));
+                OnPropertyChanged(nameof(MandatoryMark));
             }
         }
         public string SecurityMarkName { get => LocalizedStrings.Instance[$"SecurityMark{SecurityMark.ToString()}"]; }
+        public string SecurityCategoryName { get => LocalizedStrings.Instance[$"category{SecurityCategory.ToString()}"]; }
+        public string MandatoryMark { get => GetMandatoryMarkAsString(SecurityMark,SecurityCategory); }
+
+        public static string GetMandatoryMarkAsString(SecurityMark securityMark,Category category)
+        {
+            return "{" + $"{((int)securityMark)},0x{((int)category).ToString("X1")}" + "}";
+        }
         public string Name
         {
             get { return _subject.Name; }
             set { _subject.Name = value; 
                 OnPropertyChanged(nameof(Name)); }
+        }
+        public Category SecurityCategory
+        {
+            get { return _subject.SecurityCategory; }
+            set
+            {
+                _subject.SecurityCategory = value;
+                OnPropertyChanged(nameof(SecurityCategoryName));
+                OnPropertyChanged(nameof(SecurityCategory));
+                OnPropertyChanged(nameof(MandatoryMark));
+
+            }
         }
         public string SecondName
         {

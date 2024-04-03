@@ -1,39 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MultipleUserLoginForm.Model.Subject">
-    <Position X="9.5" Y="3.25" Width="1.5" />
+    <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAgAAAAAIAAAAAAAAAQAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <HashCode>AAACAAgAAAAAIAAAAAAAAAQAAAAAAAACAAEQAAAAAAA=</HashCode>
       <FileName>Model\Subject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="SecurityMark" />
+      <Property Name="SecurityCategory" />
     </ShowAsAssociation>
   </Class>
   <Class Name="MultipleUserLoginForm.Model.SecurityRight">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAIAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Model\Right.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Right" />
       <Property Name="Object" />
       <Property Name="Subject" />
+      <Property Name="Right" />
     </ShowAsAssociation>
   </Class>
   <Class Name="MultipleUserLoginForm.Model.Object">
-    <Position X="9.5" Y="1.25" Width="1.5" />
+    <Position X="2.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAIAIAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAIAIAAAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Model\Object.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="SecurityMark" />
+      <Property Name="SecurityCategory" />
     </ShowAsAssociation>
   </Class>
   <Class Name="MultipleUserLoginForm.Model.Matrics">
-    <Position X="12.25" Y="0.75" Width="1.5" />
+    <Position X="11.5" Y="0.5" Width="1.5" />
     <NestedTypes>
       <Enum Name="MultipleUserLoginForm.Model.Matrics.ModelType" Collapsed="true">
         <TypeIdentifier>
@@ -45,19 +47,30 @@
       <HashCode>AgAAgEAAAQAAIIAAAAIEAAAoACAAAAEAAACAAAAAAAA=</HashCode>
       <FileName>Model\Matrics.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_objects" />
+      <Field Name="_subjects" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Enum Name="MultipleUserLoginForm.Model.Right">
-    <Position X="5" Y="2.25" Width="1.5" />
+    <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAIAAAAEAAAA=</HashCode>
       <FileName>Model\Right.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MultipleUserLoginForm.Model.SecurityMark">
-    <Position X="7.5" Y="5" Width="1.5" />
+    <Position X="5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAAAAAAAAQQAAAAAAAAAAAAAMAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQQAAAAAAAAAAAAAMAAAAAA=</HashCode>
       <FileName>Model\Mark.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultipleUserLoginForm.Model.Category">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAQAAAAAAAAIAIAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Model\Category.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

@@ -73,7 +73,15 @@ namespace MultipleUserLoginForm.Model
                 right = Right.Read;
             }
             else if(s.SecurityMark==o.SecurityMark){
-                right = Right.All;
+                if (s.SecurityCategory > o.SecurityCategory)
+                {
+                    right = Right.Read;
+                }
+                else if (s.SecurityCategory == o.SecurityCategory)
+                {
+                    right = Right.All;
+                }
+                else { right = Right.Write; }
             }
             else
             {
@@ -91,7 +99,16 @@ namespace MultipleUserLoginForm.Model
             }
             else if (s.SecurityMark == o.SecurityMark)
             {
-                right = Right.All;
+                if(s.SecurityCategory>o.SecurityCategory)
+                {
+                    right = Right.Write;
+                }else if (s.SecurityCategory == o.SecurityCategory)
+                {
+                    right = Right.All;
+                }
+                else {
+                    right = Right.Read;
+                }
             }
             else
             {
@@ -103,20 +120,16 @@ namespace MultipleUserLoginForm.Model
         SecurityRight GetCombinedModelRight(Subject s, Object o)
         {
             Right right;
-            if (s.SecurityMark > o.SecurityMark)
-            {
-                right = Right.Write;
-            }
-            else if (s.SecurityMark == o.SecurityMark)
+            if (s.SecurityMark == o.SecurityMark && s.SecurityCategory==o.SecurityCategory)
             {
                 right = Right.All;
             }
             else
             {
-                right = Right.Read;
+                right = Right.None;
             }
             return new SecurityRight() { Object = o, Subject = s, Right = right };
-
         }
+       
     }
 }

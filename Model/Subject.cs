@@ -20,7 +20,9 @@ namespace MultipleUserLoginForm.Model
         [Required]
         public SecurityMark SecurityMark { get; set; }
 
-      
+        [Required]
+        public Category SecurityCategory { get; set; }
+
         public string? Name { get; set; } = null;
       
         public string? SecondName { get; set; } = null;

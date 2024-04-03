@@ -238,7 +238,7 @@
     <value>Execute</value>
   </data>
   <data name="runSecurityMarkOfChosen" xml:space="preserve">
-    <value>The security mark of the chosen</value>
+    <value>The security mark and category of the chosen</value>
   </data>
   <data name="__Log_____Admin_________" xml:space="preserve">
     <value>_____________________</value>
@@ -403,16 +403,16 @@
     <value>Are you sure you want to delete all the subjects? There's no way you could resore them</value>
   </data>
   <data name="SecurityMarkUnclassified" xml:space="preserve">
-    <value>Unclassified</value>
+    <value>Public</value>
   </data>
   <data name="SecurityMarkUnclassifiedButSensitive" xml:space="preserve">
-    <value>UnclassifiedButSensetive</value>
+    <value>______________________</value>
   </data>
   <data name="SecurityMarkConfidential" xml:space="preserve">
-    <value>Confidential</value>
+    <value>Sensitive</value>
   </data>
   <data name="SecurityMarkSecret" xml:space="preserve">
-    <value>Secret</value>
+    <value>Confidential</value>
   </data>
   <data name="SecurityMarkTopSecret" xml:space="preserve">
     <value>TopSecret</value>
@@ -467,5 +467,71 @@
   </data>
   <data name="titleReadWrite" xml:space="preserve">
     <value>Available rights for subject</value>
+  </data>
+  <data name="textBlockSecurityCategorySetObjects" xml:space="preserve">
+    <value>Category:</value>
+  </data>
+  <data name="datGridComboBoxColSecurityCategorySetSubjects" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="textBlockSecurityCategorySetSubjects" xml:space="preserve">
+    <value>Category:</value>
+  </data>
+  <data name="datGridComboBoxColSecurityCategorySetObjects" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="categoryFirst" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="categorySecond" xml:space="preserve">
+    <value>Department 1</value>
+  </data>
+  <data name="categoryThird" xml:space="preserve">
+    <value>Department 2</value>
+  </data>
+  <data name="categoryFourth" xml:space="preserve">
+    <value>Department 3</value>
+  </data>
+  <data name="categoryFifth" xml:space="preserve">
+    <value>Director</value>
+  </data>
+  <data name="runAndCategory" xml:space="preserve">
+    <value>and Category:</value>
+  </data>
+  <data name="textBlockSecurityCategory" xml:space="preserve">
+    <value>Category:</value>
+  </data>
+  <data name="logExecuteUserCabinet" xml:space="preserve">
+    <value>The User * with password * executes object * with path * with right *</value>
+  </data>
+  <data name="logWriteUserCabinet" xml:space="preserve">
+    <value>The User * with password * writes to object * with path * with right *</value>
+  </data>
+  <data name="logReadUserCabinet" xml:space="preserve">
+    <value>The User * with password * reads object * with path * with right *</value>
+  </data>
+  <data name="logNavigateAdminLogin" xml:space="preserve">
+    <value>The Admin * with password * logged in successfully</value>
+  </data>
+  <data name="logNavigateUserCabinetLogin" xml:space="preserve">
+    <value>The User * with password * logged in successfully</value>
+  </data>
+  <data name="logUnsuccessfullyUserCabinetLogin" xml:space="preserve">
+    <value>User with said login * and password * tried to log in but his password/login was incorrect</value>
+  </data>
+  <data name="textBoxLanguageLogin" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="textBlockMandatoryMarkSetSubjects" xml:space="preserve">
+    <value>Mandatory Mark:</value>
+  </data>
+  <data name="datGridMandatoryMarkSetObjects" xml:space="preserve">
+    <value>MandatoryMark</value>
+  </data>
+  <data name="textBlockMandatoryMarkSetObjects" xml:space="preserve">
+    <value>Mandatory Mark:</value>
+  </data>
+  <data name="datGridMandatoryMarkSetSubjects" xml:space="preserve">
+    <value>Mandatory Mark</value>
   </data>
 </root>

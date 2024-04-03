@@ -17,6 +17,11 @@ namespace MultipleUserLoginForm.LocalizationHelper
             var newCulture=new CultureInfo(cultureCode);
             LocalizeDictionary.Instance.Culture = newCulture;
         }
+        public string GetCurrentCultureCode()
+        {
+
+            return LocalizeDictionary.Instance.Culture.Name;
+        }
 
         public string this[string key]
         {
